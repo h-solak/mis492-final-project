@@ -10,11 +10,23 @@ a {
   padding: 0;
 }
 
+.full-height {
+  height: calc(100vh - 80px);
+}
+
 .absolute-center {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.light-hvr {
+  transition: 0.1s ease;
+}
+
+.light-hvr:hover {
+  background-color: #fbfbfb;
 }
 
 .scale-hvr {
@@ -66,4 +78,27 @@ a {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/*Scrollbar*/
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 12px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

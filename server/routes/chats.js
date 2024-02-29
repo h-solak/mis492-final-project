@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const Chat = require("../models/Chat/Chat");
+const Chat = require("../models/Chat");
 const router = require("express").Router();
 const checkJwt = require("../utils/authenticate");
 const getUserIdFromToken = require("../utils/getUserIdFromToken");
@@ -44,7 +44,6 @@ router.get("/", checkJwt, async (req, res) => {
             username: userData?.username,
             userAvatar: userData?.crrAvatar,
           };
-          console.log(newPreview);
           previewChats.push(newPreview);
         })
       );
@@ -52,6 +51,8 @@ router.get("/", checkJwt, async (req, res) => {
 
     /*
    Should be sorted by lastMessage date!!!!!!!!!!!!!!
+
+   ALSO should add the last message
    */
 
     res.status(200).json({ chats: previewChats });
@@ -61,15 +62,70 @@ router.get("/", checkJwt, async (req, res) => {
   }
 });
 
-//GET A SPESIFIC CHAT OR CREATE IF USERS DON'T HAVE ONE
-router.get("/dm/:username2/:username1", checkJwt, async (req, res) => {
+//GET A SPESIFIC CHAT
+router.get("/:chatId", checkJwt, async (req, res) => {
+  const id = getUserIdFromToken(req.headers.authorization);
+  const chatId = req.params.chatId;
   try {
+    let chat = await Chat.findById(chatId);
+    //receiver id, username, crrAvatar
+    //other user
+    const receiverId = chat?.participants?.filter((item) => item != id)[0];
+    const receiverData = await User.findById(receiverId);
+    let newReceiverData = {
+      receiver: {
+        id: receiverData?._id,
+        username: receiverData?.username,
+        avatar: receiverData?.crrAvatar,
+      },
+    };
+    const currentChat = { ...chat._doc, ...newReceiverData };
+    res.status(200).json({ chat: currentChat });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
 });
 
+//SEND MESSAGE
+router.post("/:chatId/message", checkJwt, async (req, res) => {
+  try {
+    const id = getUserIdFromToken(req.headers.authorization);
+    const chatId = req.params.chatId;
+    const content = req.body.content;
+    const newMessage = {
+      sender: id,
+      content: content,
+      createdAt: new Date(),
+    };
+    console.log(newMessage);
+    await Chat.findByIdAndUpdate(chatId, { $push: { messages: newMessage } });
+
+    res.status(200).json({ chatId: chatId });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+//Delete a message
+router.delete("/:chatId/message/:messageId", checkJwt, async (req, res) => {
+  try {
+    const id = getUserIdFromToken(req.headers.authorization);
+    const chatId = req.params.chatId;
+    const messageId = req.params.messageId;
+    await Chat.findByIdAndUpdate(chatId, {
+      $pull: { messages: { _id: messageId } },
+    });
+
+    res.status(200).json();
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+/******************* */
 //CHAT SUGGESTIONS (WILL INCLUDE PEOPLE WE DIDNT CHAT BEFORE AND WE FOLLOW)
 router.get("/suggestions/:userId", checkJwt, async (req, res) => {
   try {
@@ -89,35 +145,6 @@ router.get("/suggestions/:userId", checkJwt, async (req, res) => {
       data: followings,
     });
   } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-//SEND MESSAGE
-router.put("/:chatId", checkJwt, async (req, res) => {
-  try {
-    const user = await User.findOne({ username: req.body.username });
-    // const message = ;
-    const chat = await Chat.findById(req.params.chatId);
-    //  await chat.updateOne({
-    //     $push: { messagges: message },
-    //   });
-    await chat.updateOne({
-      $push: {
-        messages: {
-          username: user.username,
-          text: req.body.messageText,
-          time: new Date(),
-        },
-      },
-    });
-    const updatedChat = await Chat.findById(req.params.chatId);
-    // await post.updateOne({ $push: { likes: req.body.username } });
-    res
-      .status(200)
-      .json({ chatId: updatedChat.chatId, newMessages: updatedChat.messages });
-  } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 });

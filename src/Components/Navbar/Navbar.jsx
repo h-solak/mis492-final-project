@@ -21,8 +21,8 @@ const Navbar = () => {
       alignItems={"center"}
       height={"80px"}
       sx={{
-        borderBottom: 1,
-        borderColor: "divider",
+        borderBottom: 2,
+        borderColor: "secondary.light",
         position: "sticky",
         top: 0,
         zIndex: 999,
