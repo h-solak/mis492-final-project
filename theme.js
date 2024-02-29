@@ -9,16 +9,17 @@ https://colorhunt.co/palette/4a55a27895cba0bfe0c5dff8
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#c0392b",
+      main: "#CF3030",
       light: "#e74c3c",
     },
     secondary: {
       //grey(ish)
-      main: "#999999",
+      main: "#a6a6a6",
+      light: "#ededed",
     },
     highlight: {
       //accent color - call to action (cta)
-      main: "#2980b9",
+      main: "#FFBC0B",
     },
     error: {
       main: "#950101",
@@ -28,7 +29,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: ["Arial", "sans-serif"].join(","),
+    fontFamily: ["Inter", "sans-serif"].join(","),
     fontSize: 14,
     fontWeightLight: 300,
     fontWeightRegular: 400,

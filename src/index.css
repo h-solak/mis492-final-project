@@ -1,4 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap");
+
 * {
+  font-family: "Inter", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.scale-hvr {
+  transition: 0.1s ease;
+}
+
+.scale-hvr:hover {
+  transform: scale(0.95);
 }
 
 .absolute-center {
@@ -22,4 +46,24 @@
 
 .blinking-text {
   animation: blink 2s infinite; /* Adjust the duration as needed */
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 5px solid #cf3030;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -9,10 +9,25 @@ const searchMovie = async (searchText, page = 1) => {
     const res = await tmdbBaseAxios.get(
       `/search/movie?api_key=${tmdbAPIKey}&language=en-US&page=${page}&include_adult=false&query=${searchText}`
     );
-    console.log(res);
+    return res?.data;
   } catch (err) {
     console.error(err);
   }
 };
 
-export { searchMovie };
+// https://api.themoviedb.org/3/movie/{movie_id}
+
+const getMovieDetails = async (movieId) => {
+  console.log(tmdbAPIKey);
+  try {
+    const res = await tmdbBaseAxios.get(
+      `/movie/${movieId}?api_key=${tmdbAPIKey}`
+    );
+    console.log(res?.data);
+    return res?.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export { searchMovie, getMovieDetails };

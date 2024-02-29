@@ -12,6 +12,9 @@ import Button from "@mui/material/Button";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import useUser from "../../Contexts/User/useUser";
 
+/* Avatar */
+import Avatar0 from "../../assets/Avatars/spiritedaway.svg";
+
 const ProfilePopover = ({ logout }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { user } = useUser();
@@ -33,8 +36,13 @@ const ProfilePopover = ({ logout }) => {
         aria-describedby={id}
         variant="text"
         onClick={handleClick}
-        sx={{ color: "primary.dark", textTransform: "none", fontWeight: "600" }}
+        sx={{ color: "primary", textTransform: "none", fontWeight: "600" }}
       >
+        <img
+          src={Avatar0}
+          width={32}
+          style={{ objectFit: "cover", marginRight: 4 }}
+        />
         {user?.username || "User"}
         <KeyboardArrowDownIcon />
       </Button>
@@ -45,10 +53,18 @@ const ProfilePopover = ({ logout }) => {
         onClose={handleClose}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "left",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
         }}
       >
-        <List>
+        <List
+          sx={{
+            width: "100%",
+          }}
+        >
           {/* <ListItem disablePadding onClick={() => null}>
             <ListItemButton sx={{ gap: 1 }}>
               <ListItemText
@@ -60,7 +76,13 @@ const ProfilePopover = ({ logout }) => {
               />
             </ListItemButton>
           </ListItem> */}
-          <ListItem disablePadding onClick={logout}>
+          <ListItem
+            disablePadding
+            onClick={logout}
+            sx={{
+              width: "100%",
+            }}
+          >
             <ListItemButton>
               <ListItemText
                 primary={"Log out"}

@@ -1,0 +1,63 @@
+import { Close } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Modal,
+  Typography,
+} from "@mui/material";
+import React from "react";
+const BaseModal = ({ isModalOpen, setIsModalOpen, title, children }) => {
+  return (
+    <Modal
+      open={isModalOpen}
+      onClose={setIsModalOpen}
+      onClick={() => setIsModalOpen(false)}
+    >
+      <Box
+        display={"flex"}
+        flexDirection={"column"}
+        alignItems={"center"}
+        sx={{ backgroundColor: "#fff" }}
+        className="absolute-center"
+        borderRadius={8}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Grid
+          container
+          sx={{
+            borderBottom: 2,
+            borderColor: "secondary.light",
+          }}
+          paddingX={3}
+          paddingY={1}
+        >
+          <Grid
+            item
+            xs={12}
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+          >
+            <Typography variant="h6" fontWeight={500}>
+              {title}
+            </Typography>
+            <IconButton onClick={() => setIsModalOpen(false)}>
+              <Close
+                sx={{
+                  color: "secondary.main",
+                }}
+              />
+            </IconButton>
+          </Grid>
+        </Grid>
+        <Grid container padding={5}>
+          {children}
+        </Grid>
+      </Box>
+    </Modal>
+  );
+};
+
+export default BaseModal;

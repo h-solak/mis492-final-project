@@ -1,29 +1,60 @@
 const User = require("../models/User");
-const Chat = require("../models/Chat");
+const Chat = require("../models/Chat/Chat");
 const router = require("express").Router();
 const checkJwt = require("../utils/authenticate");
+const getUserIdFromToken = require("../utils/getUserIdFromToken");
 
 //GET CHAT LIST
-router.get("/:userId", checkJwt, async (req, res) => {
+router.get("/", checkJwt, async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
-    const allChats = await Promise.all(
-      user.privateChats.map(async (otherUser) => {
-        const chat = await Chat.findOne({
-          usernames: { $all: [user.username, otherUser] },
-        });
-        const user2 = await User.findOne({ username: otherUser });
-        const additionalData = {
-          crrAvatar: user2.crrAvatar,
-          lastMessage: chat.messages[chat.messages.length - 1],
-        };
-        //we will also get the last message on chat in future in order to display it on the chat screen...
-        const { messages, ...other } = chat._doc;
-        const merged = Object.assign(other, additionalData);
-        return merged;
-      })
-    );
-    res.status(200).json({ chats: allChats });
+    const id = getUserIdFromToken(req.headers.authorization);
+
+    //create chat
+    // const newChat = new Chat({
+    //   participants: [id, "65e081df6c869075db0b6f16"],
+    //   messages: [],
+    // });
+    // await newChat.save();
+
+    const chats = await Chat.find({
+      participants: id,
+    });
+
+    let previewChats = [];
+
+    if (chats) {
+      const otherUserIds = chats.map((item) => {
+        if (item.participants[0] == id) {
+          return item.participants[1];
+        } else {
+          return item.participants[0];
+        }
+      });
+
+      await Promise.all(
+        otherUserIds?.map(async (userId, index) => {
+          const chatData = chats[index];
+          const userData = await User.findById(userId);
+          const lastMessage = chatData?.messages
+            ? chatData?.messages[chatData?.messages?.length - 1]
+            : {};
+          const newPreview = {
+            chatId: chatData?.id, // or _id???
+            lastMessage: lastMessage || {},
+            username: userData?.username,
+            userAvatar: userData?.crrAvatar,
+          };
+          console.log(newPreview);
+          previewChats.push(newPreview);
+        })
+      );
+    }
+
+    /*
+   Should be sorted by lastMessage date!!!!!!!!!!!!!!
+   */
+
+    res.status(200).json({ chats: previewChats });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -33,34 +64,6 @@ router.get("/:userId", checkJwt, async (req, res) => {
 //GET A SPESIFIC CHAT OR CREATE IF USERS DON'T HAVE ONE
 router.get("/dm/:username2/:username1", checkJwt, async (req, res) => {
   try {
-    const user1 = await User.findOne({ username: req.params.username1 }); //action owner
-    const user2 = await User.findOne({ username: req.params.username2 });
-    const additionalData = {
-      crrAvatar: user2.crrAvatar,
-    };
-    if (
-      !user1.privateChats.includes(user2.username) ||
-      !user2.privateChats.includes(user1.username)
-    ) {
-      const newChat = new Chat({
-        usernames: [user1.username, user2.username],
-      });
-      const chat = await newChat.save();
-      await user1.updateOne({
-        $push: { privateChats: user2.username },
-      });
-      await user2.updateOne({
-        $push: { privateChats: user1.username },
-      });
-      const merged = Object.assign(chat._doc, additionalData);
-      res.status(200).json({ chat: merged });
-    } else {
-      const chat = await Chat.findOne({
-        usernames: { $all: [req.params.username1, req.params.username2] },
-      });
-      const merged = Object.assign(chat._doc, additionalData);
-      res.status(200).json({ chat: merged });
-    }
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

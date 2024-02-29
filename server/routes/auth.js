@@ -3,7 +3,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const checkJwt = require("../utils/authenticate");
-const getUserId = require("../utils/getUserId");
+const getUserIdFromToken = require("../utils/getUserIdFromToken");
 
 //REGISTER
 router.post("/register", async (req, res) => {
@@ -33,7 +33,7 @@ router.post("/register", async (req, res) => {
 //LOGIN - username, password
 router.post("/login", async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.username });
+    const user = await User.findOne({ username: req.body.username });
     !user && res.status(404).send({ desc: "Invalid username or password" });
 
     const validPassword = await bcrypt.compare(
@@ -47,13 +47,15 @@ router.post("/login", async (req, res) => {
       expiresIn: "1h",
     });
 
-    const { password, ...other } = user._doc;
+    // const { password, ...other } = user._doc;
     res.status(200).json({
       // data: other,
       desc: "Successfully logged in :)",
+      loggedIn: true,
       jwtToken: jwtToken,
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
@@ -61,12 +63,19 @@ router.post("/login", async (req, res) => {
 //get user data (with only jwt)
 router.get("/user", checkJwt, async (req, res) => {
   try {
-    const id = getUserId(req.headers.authorization);
+    //getting the user id from user's jwt token
+    // const decoded = jwt.verify(
+    //   req.headers.authorization,
+    //   process.env.SECRET_SECURITY_KEY
+    // );
+    console.log(getUserIdFromToken(req.headers.authorization));
+    const id = getUserIdFromToken(req.headers.authorization);
+
     if (id) {
-      const user = await User.findOne({ id: id });
+      const user = await User.findById(id);
       !user && res.status(404).send({ data: {} }); //if the token is not valid
 
-      const { password, ...other } = user._doc;
+      const { password, ...other } = user._doc; //get the user except password
       res.status(200).json({
         data: other,
       });
@@ -74,6 +83,7 @@ router.get("/user", checkJwt, async (req, res) => {
       res.status(500).json();
     }
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });

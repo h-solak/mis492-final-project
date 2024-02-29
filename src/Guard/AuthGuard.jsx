@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useUser from "../Contexts/User/useUser";
 import { useNavigate } from "react-router-dom";
 import { getUser } from "../Services/User";
 
 const AuthGuard = ({ component }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const { user, setUser } = useUser();
 
@@ -12,15 +13,18 @@ const AuthGuard = ({ component }) => {
     if (crrUser?._id) {
       setUser(crrUser);
     } else {
-      navigate("/");
+      navigate("/login");
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    getUserData();
+    setTimeout(() => {
+      getUserData();
+    }, 100);
   }, []);
 
-  return <React.Fragment>{component}</React.Fragment>;
+  return <React.Fragment>{isLoading ? <div></div> : component}</React.Fragment>;
 };
 
 export default AuthGuard;

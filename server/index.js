@@ -8,7 +8,8 @@ const cors = require("cors");
 const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
-// const chatRoute = require("./routes/chats");
+const chatRoute = require("./routes/chats");
+const movieRoute = require("./routes/movies");
 
 dotenv.config();
 //middleware
@@ -19,7 +20,8 @@ app.use(cors());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
-// app.use("/api/chats", chatRoute);
+app.use("/api/chats", chatRoute);
+app.use("/api/movies", movieRoute);
 
 // Create GET request
 app.get("/", (req, res) => {

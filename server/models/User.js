@@ -39,8 +39,7 @@ const UserSchema = new mongoose.Schema(
       max: 50,
     },
     privateChats: {
-      //will contain other users' usernames
-      type: Array,
+      type: [mongoose.Schema.Types.ObjectId], //array of ids
       default: [],
     },
   },

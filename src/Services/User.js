@@ -11,7 +11,7 @@ const loginUser = async ({ username, password }) => {
     toast.success(res?.data?.desc);
     setAccessToken(res?.data?.jwtToken);
 
-    return true;
+    return res?.data?.loggedIn; //true or false
   } catch (error) {
     console.error(error);
     if (error?.response?.data?.desc) {
