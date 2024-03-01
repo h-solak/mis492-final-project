@@ -54,8 +54,8 @@ const ChatPreview = ({ chat }) => {
           ) : null}
         </Box>
         <Typography color={"secondary"}>
-          {chat?.lastMessage?.content?.length > 10
-            ? `${chat?.lastMessage?.content?.slice(0, 10)}...`
+          {chat?.lastMessage?.content?.length > 15
+            ? `${chat?.lastMessage?.content?.slice(0, 15)}...`
             : chat?.lastMessage?.content}
         </Typography>
       </ColumnBox>

@@ -14,6 +14,8 @@ import CenteredBox from "../../Components/CenteredBox";
 import ChatSvg from "../../assets/illustrations/phonechat.svg";
 import { io } from "socket.io-client";
 import useUser from "../../Contexts/User/useUser";
+import toast from "react-hot-toast";
+import AvatarImg from "../../Components/AvatarImg";
 
 export const ChatContext = createContext();
 
@@ -32,7 +34,8 @@ const Chat = () => {
     handleGetChats();
 
     /* If user is on the chat refresh chat messages and previews - but if user is not, then only refresh the preview*/
-    const updateChatsAfterNewMessage = (chatId) => {
+    const updateChatsAfterNewMessage = (data) => {
+      const chatId = data?.chatId;
       handleGetChats();
       console.log(chatId, crrChat);
       /* !!! If we don't use the setter function below, socket won't be able to see the state (it will see the initial state which is empty obj)*/
@@ -40,6 +43,30 @@ const Chat = () => {
         if (chatId == prevCrrChat?._id) {
           //if user is currently on the chat that has a new message, get it
           handleGetChat(chatId, false);
+        } else {
+          if (data?.content) {
+            toast((t) => (
+              <Box display={"flex"} alignItems={"center"} gap={2}>
+                <Box display={"flex"} alignItems={"center"} gap={0.5}>
+                  <AvatarImg no={data?.avatar} width={24} />
+                  <Typography fontWeight={600}>{data?.username}:</Typography>
+                  <Typography>
+                    {data?.content?.length > 12
+                      ? `${data?.content.slice(0, 12)}...`
+                      : data?.content}
+                  </Typography>
+                </Box>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  onClick={() => handleGetChat(chatId, false)}
+                >
+                  Reply
+                </Button>
+              </Box>
+            ));
+          }
         }
         const copyPrevCrrChat = prevCrrChat;
         return copyPrevCrrChat;
@@ -50,7 +77,7 @@ const Chat = () => {
     socket.current = io("ws://localhost:8900");
     socket.current.emit("addUser", user?._id);
     socket.current.on("getMessage", (data) => {
-      updateChatsAfterNewMessage(data?.chatId);
+      updateChatsAfterNewMessage(data);
     });
     return () => socket.current.disconnect();
   }, []);
@@ -88,11 +115,13 @@ const Chat = () => {
         chatId: crrChat?._id,
         content: content,
       });
-      socket.current.emit("sendMessage", {
+      socket.current.emit("sendOrDeleteMessage", {
         senderId: user?._id,
         receiverId: crrChat?.participants?.find((id) => id !== user?._id),
-        text: content,
+        content: content,
         chatId: crrChat?._id,
+        username: user?.username,
+        avatar: user?.crrAvatar,
       });
       setContent("");
       await handleGetChat(chatId, false);
@@ -104,6 +133,14 @@ const Chat = () => {
       const chatId = await deleteMessage({
         chatId: crrChat?._id,
         messageId: messageId,
+      });
+      socket.current.emit("sendOrDeleteMessage", {
+        senderId: user?._id,
+        receiverId: crrChat?.participants?.find((id) => id !== user?._id),
+        content: "", //it shows that this is a delete message emit
+        chatId: crrChat?._id,
+        username: user?.username,
+        avatar: user?.crrAvatar,
       });
       await handleGetChat(chatId, false);
     }

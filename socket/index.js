@@ -27,14 +27,19 @@ io.on("connection", (socket) => {
   });
 
   //send and get message
-  socket.on("sendMessage", ({ senderId, receiverId, text, chatId }) => {
-    const user = getUser(receiverId);
-    io.to(user?.socketId).emit("getMessage", {
-      receiverId,
-      text,
-      chatId,
-    });
-  });
+  socket.on(
+    "sendOrDeleteMessage",
+    ({ senderId, receiverId, content, chatId, username, avatar }) => {
+      const user = getUser(receiverId);
+      io.to(user?.socketId).emit("getMessage", {
+        receiverId,
+        content, //message string
+        chatId,
+        username,
+        avatar,
+      });
+    }
+  );
 
   //when disconnect
   socket.on("disconnect", () => {

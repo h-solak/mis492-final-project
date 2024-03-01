@@ -19,36 +19,38 @@ const Message = ({ message }) => {
   const id = open ? "simple-popover" : undefined;
 
   const { user } = useUser();
-  const isReceiver = message?.sender != user?._id;
+  const isUserSender = message?.sender == user?._id;
   return (
     <>
       <Grid
         item
         xs={12}
         display={"flex"}
-        justifyContent={isReceiver ? "start" : "end"}
+        justifyContent={isUserSender ? "end" : "start"}
         px={4}
       >
         <Paper
           sx={{
             display: "inline-block",
+            minWidth: 100,
             maxWidth: "70%",
-            padding: "8px",
+            py: 0.8,
+            px: 1,
             marginBottom: "8px",
             borderRadius: "10px",
             wordWrap: "break-word",
-            backgroundColor: isReceiver ? "#f0f0f0" : "primary.main",
-            color: isReceiver ? "#000" : "#fff",
+            backgroundColor: isUserSender ? "primary.main" : "#f0f0f0",
+            color: isUserSender ? "#fff" : "#000",
           }}
           onContextMenu={(e) => {
             e.preventDefault();
             setAnchorEl(e.currentTarget);
           }}
         >
-          {message?.content}
+          <Typography>{message?.content}</Typography>
           <Typography
             fontSize={10}
-            color={isReceiver ? "#999" : "#d9d9d9"}
+            color={isUserSender ? "#d9d9d9" : "#999"}
             textAlign={"end"}
           >
             {dayjs(message?.createdAt).format("HH:mm")}
@@ -88,7 +90,7 @@ const Message = ({ message }) => {
           />
           <Typography fontWeight={500}>Copy</Typography>
         </MenuItem>
-        {!isReceiver ? (
+        {isUserSender ? (
           <MenuItem
             onClick={() => {
               handleDeleteMessage(message?._id);
