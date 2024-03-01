@@ -20,19 +20,16 @@ const getUser = (userId) => {
 };
 
 io.on("connection", (socket) => {
-  //when ceonnect
-  console.log("a user connected.");
-
   //take userId and socketId from user
   socket.on("addUser", (userId) => {
-    addUser(userId, socket.id);
+    addUser(userId, socket?.id);
     io.emit("getUsers", users);
   });
 
   //send and get message
   socket.on("sendMessage", ({ senderId, receiverId, text, chatId }) => {
     const user = getUser(receiverId);
-    io.to(user.socketId).emit("getMessage", {
+    io.to(user?.socketId).emit("getMessage", {
       receiverId,
       text,
       chatId,
@@ -42,7 +39,7 @@ io.on("connection", (socket) => {
   //when disconnect
   socket.on("disconnect", () => {
     console.log("a user disconnected!");
-    removeUser(socket.id);
+    removeUser(socket?.id);
     io.emit("getUsers", users);
   });
 });

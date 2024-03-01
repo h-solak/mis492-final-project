@@ -3,6 +3,7 @@ const Chat = require("../models/Chat");
 const router = require("express").Router();
 const checkJwt = require("../utils/authenticate");
 const getUserIdFromToken = require("../utils/getUserIdFromToken");
+const sortByDate = require("../utils/sortByDate");
 
 //GET CHAT LIST
 router.get("/", checkJwt, async (req, res) => {
@@ -55,7 +56,13 @@ router.get("/", checkJwt, async (req, res) => {
    ALSO should add the last message
    */
 
-    res.status(200).json({ chats: previewChats });
+    //sort latest date first
+    const sortedPreviewChats = previewChats.sort(
+      (a, b) =>
+        new Date(b.lastMessage.createdAt) - new Date(a.lastMessage.createdAt)
+    );
+
+    res.status(200).json({ chats: sortedPreviewChats });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
