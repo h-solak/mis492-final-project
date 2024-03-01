@@ -28,27 +28,42 @@ const Chat = () => {
   const socket = useRef(null);
 
   useEffect(() => {
+    /* Get chats on page load */
     handleGetChats();
-    handleSocketOnStart();
-  }, []);
 
-  const handleSocketOnStart = async () => {
+    /* If user is on the chat refresh chat messages and previews - but if user is not, then only refresh the preview*/
+    const updateChatsAfterNewMessage = (chatId) => {
+      handleGetChats();
+      console.log(chatId, crrChat);
+      /* !!! If we don't use the setter function below, socket won't be able to see the state (it will see the initial state which is empty obj)*/
+      setCrrChat((prevCrrChat) => {
+        if (chatId == prevCrrChat?._id) {
+          //if user is currently on the chat that has a new message, get it
+          handleGetChat(chatId, false);
+        }
+        const copyPrevCrrChat = prevCrrChat;
+        return copyPrevCrrChat;
+      });
+    };
+
+    //start socket
     socket.current = io("ws://localhost:8900");
     socket.current.emit("addUser", user?._id);
-    socket.current.on("getMessage", async (data) => {
-      console.log("1", crrChat?._id, "2", data);
-      console.log("MESAJ ULAŞTI KOOOOOOOOOOŞ");
-      if (data?.chatId != crrChat?._id) {
-        //if user is not on the chat currently, just refresh the previews
-        // NOT WORKING !!!!!!!!
-        await handleGetChats();
-        await handleGetChat(data?.chatId, false); //SHOULD BE REMOVED
-      } else {
-        await handleGetChats();
-        await handleGetChat(data?.chatId, false);
-      }
+    socket.current.on("getMessage", (data) => {
+      updateChatsAfterNewMessage(data?.chatId);
     });
-  };
+    return () => socket.current.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!crrChat?._id) {
+      console.log("GONE");
+    }
+  }, [crrChat]);
+
+  // const handleSocketOnStart = async () => {
+
+  // };
 
   const handleGetChats = async () => {
     const allChats = await getChatList();
@@ -80,7 +95,7 @@ const Chat = () => {
         chatId: crrChat?._id,
       });
       setContent("");
-      handleGetChat(chatId, false);
+      await handleGetChat(chatId, false);
     }
   };
 
@@ -90,7 +105,7 @@ const Chat = () => {
         chatId: crrChat?._id,
         messageId: messageId,
       });
-      handleGetChat(chatId, false);
+      await handleGetChat(chatId, false);
     }
   };
 

@@ -14,17 +14,18 @@ const CurrentChat = ({ chatLoading }) => {
   const messageContainerRef = useRef();
 
   useEffect(() => {
-    // if (messageContainerRef.current) {
-    //   messageContainerRef.current.scrollTop =
-    //     messageContainerRef.current.scrollHeight;
-    // }
+    //scroll to the bottom when new message arrives
+    scrollToBottomChat();
+  }, [crrChat]);
+
+  const scrollToBottomChat = () => {
     if (messageContainerRef.current) {
       messageContainerRef.current.scrollTo({
         top: messageContainerRef.current.scrollHeight,
-        behavior: "smooth",
+        // behavior: "smooth", //this is slow if the previous chat 10+ messages
       });
     }
-  }, [crrChat]);
+  };
 
   return chatLoading ? (
     <CenterLoader />
