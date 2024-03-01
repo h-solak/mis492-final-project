@@ -45,6 +45,7 @@ const MessageInput = () => {
         value={content}
         onChange={(e) => setContent(e.target.value)}
         sx={{ ml: 1, flex: 1 }}
+        autoFocus
       />
       <IconButton type="submit" sx={{ p: "10px" }} aria-label="send">
         <Send />
@@ -69,7 +70,6 @@ const MessageInput = () => {
           width={320}
           open={emojiPicker}
           onEmojiClick={(emoji) => {
-            setEmojiPicker(false);
             setContent((prevContent) => `${prevContent}${emoji.emoji}`);
           }}
         />

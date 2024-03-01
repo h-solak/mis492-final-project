@@ -50,9 +50,10 @@ router.post("/rate", checkJwt, async (req, res) => {
     const rate = req.body.rate;
     const movie = req.body.movie;
     const alreadyRated = await Rate.findOne({
-      id: id,
+      user: id,
       movie: movie,
     });
+    console.log("????????", alreadyRated);
 
     //if user haven't rated the movie before, post it..
     if (!alreadyRated) {

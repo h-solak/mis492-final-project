@@ -14,6 +14,7 @@ import useUser from "../../Contexts/User/useUser";
 
 /* Avatar */
 import Avatar0 from "../../assets/Avatars/spiritedaway.svg";
+import AvatarImg from "../AvatarImg";
 
 const ProfilePopover = ({ logout }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -38,11 +39,7 @@ const ProfilePopover = ({ logout }) => {
         onClick={handleClick}
         sx={{ color: "primary", textTransform: "none", fontWeight: "600" }}
       >
-        <img
-          src={Avatar0}
-          width={32}
-          style={{ objectFit: "cover", marginRight: 4 }}
-        />
+        <AvatarImg no={user?.crrAvatar} width={32} style={{ marginRight: 4 }} />
         {user?.username || "User"}
         <KeyboardArrowDownIcon />
       </Button>

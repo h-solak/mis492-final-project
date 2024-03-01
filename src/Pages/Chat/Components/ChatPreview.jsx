@@ -1,10 +1,12 @@
 import { Box, Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import AvatarImg from "../../../Components/AvatarImg";
 import ColumnBox from "../../../Components/ColumnBox";
 import * as dayjs from "dayjs";
+import { ChatContext } from "../Chat";
 
-const ChatPreview = ({ chat, handleGetChat }) => {
+const ChatPreview = ({ chat }) => {
+  const { handleGetChat } = useContext(ChatContext);
   const crrDate = new Date();
   let lastMessageDate;
 
@@ -34,7 +36,7 @@ const ChatPreview = ({ chat, handleGetChat }) => {
       sx={{
         cursor: "pointer",
       }}
-      onClick={() => handleGetChat(chat?.chatId)}
+      onClick={() => handleGetChat(chat?.chatId, true)}
     >
       <AvatarImg no={chat?.userAvatar} width={64} />
       <ColumnBox width={"100%"}>

@@ -32,4 +32,16 @@ const sendMessage = async ({ chatId, content }) => {
   }
 };
 
-export { getChatList, getChat, sendMessage };
+/* Send Message */
+const deleteMessage = async ({ chatId, messageId }) => {
+  try {
+    const res = await misBaseAxios.delete(
+      `/chats/${chatId}/message/${messageId}`
+    );
+    return res?.data?.chatId;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getChatList, getChat, sendMessage, deleteMessage };

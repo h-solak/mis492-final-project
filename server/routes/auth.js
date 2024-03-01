@@ -68,7 +68,6 @@ router.get("/user", checkJwt, async (req, res) => {
     //   req.headers.authorization,
     //   process.env.SECRET_SECURITY_KEY
     // );
-    console.log(getUserIdFromToken(req.headers.authorization));
     const id = getUserIdFromToken(req.headers.authorization);
 
     if (id) {

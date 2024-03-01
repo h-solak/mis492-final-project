@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import AvatarImg from "../../../Components/AvatarImg";
 import CenterLoader from "../../../Components/CenterLoader";
@@ -7,6 +7,7 @@ import MessageInput from "./MessageInput";
 import { sendMessage } from "../../../Services/Chat";
 import Message from "./Message";
 import { ChatContext } from "../Chat";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const CurrentChat = ({ chatLoading }) => {
   const { crrChat } = useContext(ChatContext);
@@ -33,18 +34,22 @@ const CurrentChat = ({ chatLoading }) => {
       <Grid
         item
         xs={12}
-        px={4}
         py={1}
         height={60}
         borderBottom={2}
         borderColor={"secondary.light"}
+        display={"flex"}
+        justifyContent={"space-between"}
       >
-        <Box display={"flex"} alignItems={"center"} gap={1}>
+        <Box display={"flex"} alignItems={"center"} gap={1} pl={4}>
           <AvatarImg no={crrChat?.receiver?.avatar} width={40} />
           <Typography fontWeight={600}>
             {crrChat?.receiver?.username}
           </Typography>
         </Box>
+        <IconButton sx={{ mr: 2 }}>
+          <MoreVertIcon />
+        </IconButton>
       </Grid>
 
       {/* Messages */}

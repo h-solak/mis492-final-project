@@ -111,14 +111,12 @@ router.post("/:chatId/message", checkJwt, async (req, res) => {
 //Delete a message
 router.delete("/:chatId/message/:messageId", checkJwt, async (req, res) => {
   try {
-    const id = getUserIdFromToken(req.headers.authorization);
     const chatId = req.params.chatId;
     const messageId = req.params.messageId;
     await Chat.findByIdAndUpdate(chatId, {
       $pull: { messages: { _id: messageId } },
     });
-
-    res.status(200).json();
+    res.status(200).json({ chatId: chatId });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

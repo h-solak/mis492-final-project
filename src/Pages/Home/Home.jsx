@@ -35,6 +35,11 @@ const Home = () => {
           Go to Movies Page
         </Button>
       </ColumnBox>
+      <ul>
+        <li>Socket ile chat mesajı anlık güncelleme</li>
+        <li>Mesaj görüldü özelliği???</li>
+        <li>Post paylaşma, likelama, keşfet özelliği</li>
+      </ul>
     </Layout>
   );
 };

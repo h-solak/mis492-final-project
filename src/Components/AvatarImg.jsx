@@ -7,7 +7,7 @@ import Avatar2 from "../assets/Avatars/breakingbad.svg";
 import Avatar3 from "../assets/Avatars/fridayjason.svg";
 import Avatar4 from "../assets/Avatars/batman.svg";
 
-const AvatarImg = ({ no, ...props }) => {
+const AvatarImg = ({ no, style, ...props }) => {
   const avatarSrc =
     no == 0
       ? Avatar0
@@ -25,6 +25,7 @@ const AvatarImg = ({ no, ...props }) => {
       style={{
         objectFit: "cover",
         borderRadius: 99,
+        ...style,
       }}
     />
   );

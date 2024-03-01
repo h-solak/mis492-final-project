@@ -1,43 +1,70 @@
 import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
-import React, { createContext, useEffect, useState } from "react";
-import { getChat, getChatList, sendMessage } from "../../Services/Chat";
+import React, { createContext, useEffect, useRef, useState } from "react";
+import {
+  deleteMessage,
+  getChat,
+  getChatList,
+  sendMessage,
+} from "../../Services/Chat";
 import Layout from "../../Layout/Layout";
-import AvatarImg from "../../Components/AvatarImg";
-import ColumnBox from "../../Components/ColumnBox";
 import ChatPreview from "./Components/ChatPreview";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CurrentChat from "./Components/CurrentChat";
 import { ChatRounded } from "@mui/icons-material";
+import CenteredBox from "../../Components/CenteredBox";
+import ChatSvg from "../../assets/illustrations/phonechat.svg";
+import { io } from "socket.io-client";
+import useUser from "../../Contexts/User/useUser";
 
 export const ChatContext = createContext();
 
 const Chat = () => {
+  const { user } = useUser();
   const [pageLoading, setPageLoading] = useState(true);
   const [chatLoading, setChatLoading] = useState(false);
   const [chats, setChats] = useState([]); //all chat previews on the left
   const [crrChat, setCrrChat] = useState({}); //the chat user is on
   const [content, setContent] = useState(""); //input
+  const [userIsOnChat, setUserIsOnChat] = useState(false);
+  const socket = useRef(null);
 
-  const getChats = async () => {
+  useEffect(() => {
+    handleGetChats();
+    handleSocketOnStart();
+  }, []);
+
+  const handleSocketOnStart = async () => {
+    socket.current = io("ws://localhost:8900");
+    socket.current.emit("addUser", user?._id);
+    socket.current.on("getMessage", async (data) => {
+      console.log("1", crrChat?._id, "2", data);
+      console.log("MESAJ ULAŞTI KOOOOOOOOOOŞ");
+      if (data?.chatId != crrChat?._id) {
+        //if user is not on the chat currently, just refresh the previews
+        // NOT WORKING !!!!!!!!
+        await handleGetChats();
+        await handleGetChat(data?.chatId, false); //SHOULD BE REMOVED
+      } else {
+        await handleGetChats();
+        await handleGetChat(data?.chatId, false);
+      }
+    });
+  };
+
+  const handleGetChats = async () => {
     const allChats = await getChatList();
     setChats(allChats);
     setPageLoading(false);
   };
 
-  useEffect(() => {
-    getChats();
-  }, []);
-
-  const handleGetChat = async (chatId, newMessage = false) => {
-    if (!newMessage) {
+  const handleGetChat = async (chatId, showLoadingEffect = false) => {
+    if (showLoadingEffect) {
       //if this function is called because a new message sent, don't use loading effect
       setChatLoading(true);
     }
-
     const newCrrChat = await getChat({ chatId: chatId });
-    console.log("bu", newCrrChat);
     setCrrChat(newCrrChat);
     setChatLoading(false);
+    setUserIsOnChat(true);
   };
 
   const handleSendMessage = async (content) => {
@@ -46,8 +73,24 @@ const Chat = () => {
         chatId: crrChat?._id,
         content: content,
       });
+      socket.current.emit("sendMessage", {
+        senderId: user?._id,
+        receiverId: crrChat?.participants?.find((id) => id !== user?._id),
+        text: content,
+        chatId: crrChat?._id,
+      });
       setContent("");
-      handleGetChat(chatId, true); // FIX THIS
+      handleGetChat(chatId, false);
+    }
+  };
+
+  const handleDeleteMessage = async (messageId) => {
+    if (messageId) {
+      const chatId = await deleteMessage({
+        chatId: crrChat?._id,
+        messageId: messageId,
+      });
+      handleGetChat(chatId, false);
     }
   };
 
@@ -60,7 +103,9 @@ const Chat = () => {
         setCrrChat,
         content,
         setContent,
+        handleGetChat,
         handleSendMessage,
+        handleDeleteMessage,
       }}
     >
       <Layout pageLoading={pageLoading} disablePaddingX disablePaddingY>
@@ -92,9 +137,6 @@ const Chat = () => {
                 Chats
               </Typography>
             </Box>
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
           </Grid>
           <Grid
             container
@@ -104,15 +146,16 @@ const Chat = () => {
             }}
           >
             {chats?.length > 0 ? (
-              chats?.map((chat) => (
+              chats?.map((chatPreviewItem) => (
                 <ChatPreview
-                  key={chat?.chatId}
-                  chat={chat}
-                  handleGetChat={handleGetChat}
+                  key={chatPreviewItem?.chatId}
+                  chat={chatPreviewItem}
                 />
               ))
             ) : (
-              <Box>No chats found</Box>
+              <CenteredBox height={"70vh"}>
+                <Typography fontWeight={600}>No chats found</Typography>
+              </CenteredBox>
             )}
           </Grid>
           <Typography
@@ -131,21 +174,14 @@ const Chat = () => {
         {/* Chat Messages */}
         <Grid item xs={12} md={8}>
           {crrChat?._id ? (
-            <CurrentChat
-              chat={crrChat}
-              chatLoading={chatLoading}
-              handleGetChat={handleGetChat}
-            />
+            <CurrentChat chatLoading={chatLoading} />
           ) : (
-            <Box
-              display={"flex"}
-              alignItems="center"
-              justifyContent="center"
-              width="100%"
-              height="100%"
-            >
-              Click a chat to start it!
-            </Box>
+            <CenteredBox flexDirection="column" gap={2}>
+              <img src={ChatSvg} width={200} />
+              <Typography color={"secondary"}>
+                Click on a chat to start the conversation!
+              </Typography>
+            </CenteredBox>
           )}
         </Grid>
       </Layout>
