@@ -48,16 +48,13 @@ const Movie = () => {
     getMovie(movieId);
     handleGetUserRates();
   }, []);
-  console.log(movieId);
 
   const handleGetUserRates = async () => {
     const rates = await getUserRates();
     setUserRates(rates);
     const userHasRated = rates?.some((item) => item?.movie === movieId);
-    console.log(userHasRated);
     if (userHasRated) {
       const usersRate = rates?.find((item) => item?.movie === movieId)?.rate;
-      console.log(true, usersRate);
       setRating(usersRate);
     }
   };

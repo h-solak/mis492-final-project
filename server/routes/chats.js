@@ -105,7 +105,6 @@ router.post("/:chatId/message", checkJwt, async (req, res) => {
       content: content,
       createdAt: new Date(),
     };
-    console.log(newMessage);
     await Chat.findByIdAndUpdate(chatId, { $push: { messages: newMessage } });
 
     res.status(200).json({ chatId: chatId });

@@ -2,17 +2,20 @@ const router = require("express").Router();
 const Post = require("../models/Post");
 const User = require("../models/User");
 const checkJwt = require("../utils/authenticate");
+const getUserIdFromToken = require("../utils/getUserIdFromToken");
 
 //SHARE A POST
 router.post("/", checkJwt, async (req, res) => {
-  const user = await User.findById(req.body.userId);
-  const additionalData = {
-    username: user.username,
-    crrAvatar: user.crrAvatar,
-  };
-  const newPost = new Post(Object.assign(req.body, additionalData));
   try {
-    // const savedPost = await newPost.save();
+    const id = getUserIdFromToken(req.headers.authorization);
+    const user = await User.findById(id);
+    const content = req.body.content;
+    const newPost = new Post({
+      userId: id,
+      username: user.username,
+      avatar: user.crrAvatar,
+      content: content,
+    });
     await newPost.save();
     res.status(200).json({ desc: "Your post is successfully shared" });
   } catch (err) {

@@ -4,6 +4,17 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const checkJwt = require("../utils/authenticate");
 
+//GET A USER PROFILE
+router.get("/:username", checkJwt, async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    const { password, ...other } = user._doc; //get the user except password
+    res.status(200).json({ user: other });
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
 //UPDATE USER
 router.put("/:id", checkJwt, async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {

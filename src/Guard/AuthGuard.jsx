@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useUser from "../Contexts/User/useUser";
 import { useNavigate } from "react-router-dom";
-import { getUser } from "../Services/User";
+import { getUser } from "../Services/Auth";
 
 const AuthGuard = ({ component }) => {
   const [isLoading, setIsLoading] = useState(true);

@@ -1,7 +1,7 @@
 import { Button, Grid, Link, TextField } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { getUser, loginUser } from "../../Services/User";
+import { getUser, loginUser } from "../../Services/Auth";
 import TextfieldError from "../../Components/Forms/TextFieldError";
 import ColumnBox from "../../Components/ColumnBox";
 import useUser from "../../Contexts/User/useUser";

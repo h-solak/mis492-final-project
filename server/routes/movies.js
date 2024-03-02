@@ -53,11 +53,10 @@ router.post("/rate", checkJwt, async (req, res) => {
       user: id,
       movie: movie,
     });
-    console.log("????????", alreadyRated);
 
     //if user haven't rated the movie before, post it..
     if (!alreadyRated) {
-      const newRate = await new Rate({
+      const newRate = new Rate({
         user: id,
         movie: movie,
         rate: rate,

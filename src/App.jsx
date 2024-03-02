@@ -13,6 +13,7 @@ import Register from "./Pages/Register/Register";
 import Chat from "./Pages/Chat/Chat";
 import Movies from "./Pages/Movies/Movies";
 import Movie from "./Pages/Movie/Movie";
+import Profile from "./Pages/Profile/Profile";
 
 function App() {
   /*
@@ -47,6 +48,11 @@ function App() {
               />
               <Route key="Login" path="/login" element={<Login />} />
               <Route key="Register" path="/register" element={<Register />} />
+              <Route
+                key="Profile"
+                path="/profile/:username"
+                element={<AuthGuard component={<Profile />} />}
+              />
               <Route
                 key="Chat"
                 path="/chat"

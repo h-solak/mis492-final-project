@@ -37,15 +37,15 @@ const Chat = () => {
     const updateChatsAfterNewMessage = (data) => {
       const chatId = data?.chatId;
       handleGetChats();
-      console.log(chatId, crrChat);
       /* !!! If we don't use the setter function below, socket won't be able to see the state (it will see the initial state which is empty obj)*/
       setCrrChat((prevCrrChat) => {
         if (chatId == prevCrrChat?._id) {
           //if user is currently on the chat that has a new message, get it
           handleGetChat(chatId, false);
         } else {
+          //if new message has arrived and user is not on that chat
           if (data?.content) {
-            toast((t) => (
+            toast(() => (
               <Box display={"flex"} alignItems={"center"} gap={2}>
                 <Box display={"flex"} alignItems={"center"} gap={0.5}>
                   <AvatarImg no={data?.avatar} width={24} />
@@ -81,16 +81,6 @@ const Chat = () => {
     });
     return () => socket.current.disconnect();
   }, []);
-
-  useEffect(() => {
-    if (!crrChat?._id) {
-      console.log("GONE");
-    }
-  }, [crrChat]);
-
-  // const handleSocketOnStart = async () => {
-
-  // };
 
   const handleGetChats = async () => {
     const allChats = await getChatList();

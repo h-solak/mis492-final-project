@@ -1,7 +1,7 @@
 import { Box, Button, Grid, TextField, Link } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { registerUser } from "../../Services/User";
+import { registerUser } from "../../Services/Auth";
 import TextfieldError from "../../Components/Forms/TextFieldError";
 import ColumnBox from "../../Components/ColumnBox";
 import { useNavigate } from "react-router-dom";

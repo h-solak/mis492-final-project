@@ -15,8 +15,10 @@ import useUser from "../../Contexts/User/useUser";
 /* Avatar */
 import Avatar0 from "../../assets/Avatars/spiritedaway.svg";
 import AvatarImg from "../AvatarImg";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePopover = ({ logout }) => {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const { user } = useUser();
 
@@ -73,6 +75,23 @@ const ProfilePopover = ({ logout }) => {
               />
             </ListItemButton>
           </ListItem> */}
+          <ListItem
+            disablePadding
+            onClick={() => navigate(`/profile/${user?.username}`)}
+            sx={{
+              width: "100%",
+            }}
+          >
+            <ListItemButton>
+              <ListItemText
+                primary={"My Profile"}
+                primaryTypographyProps={{
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+              />
+            </ListItemButton>
+          </ListItem>
           <ListItem
             disablePadding
             onClick={logout}

@@ -12,6 +12,15 @@ import dayjs from "dayjs";
 import { ChatContext } from "../Chat";
 import { ContentCopy, DeleteOutline } from "@mui/icons-material";
 
+function isDateToday(date) {
+  const today = new Date();
+  return (
+    date.getFullYear() === today.getFullYear() &&
+    date.getMonth() === today.getMonth() &&
+    date.getDate() === today.getDate()
+  );
+}
+
 const Message = ({ message }) => {
   const { handleDeleteMessage } = useContext(ChatContext);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -53,7 +62,10 @@ const Message = ({ message }) => {
             color={isUserSender ? "#d9d9d9" : "#999"}
             textAlign={"end"}
           >
-            {dayjs(message?.createdAt).format("HH:mm")}
+            {dayjs(message?.createdAt).format("DD/MM/YYYY") !==
+            dayjs(new Date()).format("DD/MM/YYYY")
+              ? dayjs(message?.createdAt).format("MMMM D, YYYY - HH:mm")
+              : dayjs(message?.createdAt).format("HH:mm")}
           </Typography>
         </Paper>
       </Grid>

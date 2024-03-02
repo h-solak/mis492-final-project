@@ -10,13 +10,13 @@ const PostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    desc: {
+    content: {
       type: String,
-      max: 500,
+      max: 300,
     },
-    img: {
-      type: String,
-    },
+    // img: {
+    //   type: String,
+    // },
     likes: {
       type: Array,
       default: [],
@@ -29,6 +29,15 @@ const PostSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    /*
+    subcomment:
+      id,
+      relatedCommentId, //parent
+      content, //text
+      userId,
+      username,
+      avatar
+    */
   },
   { timestamps: true }
 ); //whenever a new user is created, timestamps will be updated
