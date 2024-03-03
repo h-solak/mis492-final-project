@@ -1,9 +1,10 @@
-import { Grid, Typography } from "@mui/material";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ProfilePopover from "./ProfilePopover";
 import { removeAccessToken } from "../../api/config";
 import useUser from "../../Contexts/User/useUser";
+import { Chat, HomeRounded, Poll } from "@mui/icons-material";
 const Navbar = () => {
   const navigate = useNavigate();
   const { user, setUser } = useUser();
@@ -19,7 +20,7 @@ const Navbar = () => {
       display={"flex"}
       justifyContent={"space-between"}
       alignItems={"center"}
-      height={"80px"}
+      height={"56px"}
       sx={{
         borderBottom: 2,
         borderColor: "secondary.light",
@@ -44,6 +45,38 @@ const Navbar = () => {
           MovieMate
         </Typography>
       </Link>
+      {/* Center Links */}
+
+      <Box display={"flex"} alignItems={"center"} gap={4}>
+        <Link to={"/"}>
+          <IconButton>
+            <HomeRounded
+              sx={{
+                fontSize: 32,
+              }}
+            />
+          </IconButton>
+        </Link>
+        <Link to={"/chat"}>
+          <IconButton>
+            <Chat
+              sx={{
+                fontSize: 26,
+              }}
+            />
+          </IconButton>
+        </Link>
+        <Link to={"/character-survey"}>
+          <IconButton>
+            <Poll
+              sx={{
+                fontSize: 28,
+              }}
+            />
+          </IconButton>
+        </Link>
+      </Box>
+
       {user?._id && <ProfilePopover logout={logout} />}
     </Grid>
   );

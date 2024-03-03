@@ -12,7 +12,7 @@ const TextfieldError = ({ errors, title }) => {
         fontSize={12}
         fontWeight={600}
       >
-        {errors.type === "required" && `${title} field is required`}
+        {errors.type === "required" && `${title || "This"} field is required`}
         {errors.type === "maxLength" &&
           `${title} field should contain 20 characters or less`}
         {errors.type === "minLength" &&

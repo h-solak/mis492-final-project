@@ -20,6 +20,8 @@
     "axios": "^1.5.1",
     "dayjs": "^1.11.10",
     "emoji-picker-react": "^4.8.0",
+    "google-auth-library": "^9.6.3",
+    "google-spreadsheet": "^4.1.1",
     "localforage": "^1.10.0",
     "lottie-react": "^2.4.0",
     "match-sorter": "^6.3.1",

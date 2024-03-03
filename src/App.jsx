@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import theme from "../theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -14,25 +14,9 @@ import Chat from "./Pages/Chat/Chat";
 import Movies from "./Pages/Movies/Movies";
 import Movie from "./Pages/Movie/Movie";
 import Profile from "./Pages/Profile/Profile";
+import CharacterSurvey from "./Pages/CharacterSurvey/CharacterSurvey";
 
 function App() {
-  /*
-    Film izleme sıklığı
-    Beğenilen film türleri
-
-    ...
-    bir puan oluşturacak mesela 7den büyük bi puansa eşleşmeye okey verecek sistem...
-  
-  */
-
-  // useEffect(() => {
-  //   getBla();
-  // }, []);
-
-  // const getBla = async () => {
-  //   await searchMovie("before sun");
-  // };
-
   return (
     <React.Fragment>
       <Toaster />
@@ -52,6 +36,11 @@ function App() {
                 key="Profile"
                 path="/profile/:username"
                 element={<AuthGuard component={<Profile />} />}
+              />
+              <Route
+                key="CharacterSurvey"
+                path="/character-survey"
+                element={<AuthGuard component={<CharacterSurvey />} />}
               />
               <Route
                 key="Chat"
