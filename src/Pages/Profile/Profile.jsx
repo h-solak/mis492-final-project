@@ -19,9 +19,9 @@ const Profile = () => {
   return (
     <Layout>
       <Grid item xs={12}>
-        <CenteredBox absolute textAlign={"center"}>
+        <CenteredBox textAlign={"center"} flexDirection="column">
           <Typography variant="h3">This is</Typography>
-          <Typography fontWeight={600} fontSize={150}>
+          <Typography fontWeight={600} fontSize={120}>
             {user?.username}
           </Typography>
         </CenteredBox>

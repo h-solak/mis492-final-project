@@ -22,7 +22,7 @@ router.post("/register", async (req, res) => {
 
     res.status(200).json({
       data: user?.username,
-      desc: "Welcome aboard " + user?.username + "! You may login now :)",
+      desc: "You may login now :)",
     });
   } catch (err) {
     console.log(err?.keyValue?.username);
@@ -50,7 +50,6 @@ router.post("/login", async (req, res) => {
     // const { password, ...other } = user._doc;
     res.status(200).json({
       // data: other,
-      desc: "Successfully logged in :)",
       loggedIn: true,
       jwtToken: jwtToken,
     });

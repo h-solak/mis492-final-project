@@ -8,7 +8,7 @@ const MovieItem = ({ movie }) => {
   const navigate = useNavigate();
   return (
     <Tooltip title={movie?.overview || "No description found."}>
-      <Grid item xs={6} sm={4} md={2}>
+      <Grid item xs={6} sm={3} md={3}>
         {/* Grid in this component is a container, ColumnBox is the actual movie item user see on the screen */}
         <ColumnBox
           className="scale-hvr"

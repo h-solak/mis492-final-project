@@ -158,7 +158,7 @@ const Chat = () => {
           xs={12}
           md={4}
           pb={4}
-          borderRight={2}
+          border={2}
           borderColor={"secondary.light"}
         >
           <Grid
@@ -184,7 +184,7 @@ const Chat = () => {
             container
             sx={{
               overflowY: "auto",
-              maxHeight: "calc(100% - 80px)",
+              maxHeight: "calc(100% - 56px)",
             }}
           >
             {chats?.length > 0 ? (

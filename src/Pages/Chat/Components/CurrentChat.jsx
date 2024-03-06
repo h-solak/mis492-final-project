@@ -48,6 +48,7 @@ const CurrentChat = ({ chatLoading }) => {
         xs={12}
         py={1}
         height={60}
+        borderTop={2}
         borderBottom={2}
         borderColor={"secondary.light"}
         display={"flex"}
@@ -72,7 +73,7 @@ const CurrentChat = ({ chatLoading }) => {
       {/* Messages */}
       <Grid
         ref={messageContainerRef}
-        height="calc(100vh - 200px)" //60 top-60 bottom-80 navbar
+        height="calc(100vh - 176px)" //60 top- 60 bottom -56 top navbar ->
         width="100%"
         sx={{
           overflowY: "auto",

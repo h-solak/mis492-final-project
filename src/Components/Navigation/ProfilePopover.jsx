@@ -42,7 +42,7 @@ const ProfilePopover = ({ logout }) => {
         sx={{ color: "primary", textTransform: "none", fontWeight: "600" }}
       >
         <AvatarImg no={user?.crrAvatar} width={32} style={{ marginRight: 4 }} />
-        {user?.username || "User"}
+        {/* {user?.username || "User"} */}
         <KeyboardArrowDownIcon />
       </Button>
       <Popover

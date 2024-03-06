@@ -8,7 +8,6 @@ const loginUser = async ({ username, password }) => {
       username: username,
       password: password,
     });
-    toast.success(res?.data?.desc);
     setAccessToken(res?.data?.jwtToken);
 
     return res?.data?.loggedIn; //true or false
@@ -26,7 +25,9 @@ const registerUser = async ({ username, password }) => {
       username: username,
       password: password,
     });
-    toast.success(res?.data?.desc);
+    toast(res?.data?.desc, {
+      icon: "👤",
+    });
     return res?.data?.data;
   } catch (error) {
     console.error(error);

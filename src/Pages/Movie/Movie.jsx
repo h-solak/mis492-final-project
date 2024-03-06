@@ -74,7 +74,7 @@ const Movie = () => {
         backgroundPosition: "top",
         backgroundRepeat: "none",
         backgroundSize: "cover",
-        height: "calc(100vh - 80px)",
+        height: "calc(100vh - 56px)",
       }}
     >
       <Grid item xs={12}>

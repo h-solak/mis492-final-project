@@ -44,7 +44,7 @@ const Movies = () => {
 
   return (
     <Layout>
-      <Grid item xs={12} sm={12} md={4}>
+      <Grid item xs={12} sm={12} md={6}>
         <TextField
           ref={searchInputRef}
           placeholder="Search your favorite movies..."

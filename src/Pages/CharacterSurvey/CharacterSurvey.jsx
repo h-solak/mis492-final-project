@@ -28,8 +28,6 @@ const CharacterSurvey = () => {
     console.log(data);
   };
 
-  getDoc();
-
   return (
     <Layout>
       <Grid
@@ -72,6 +70,7 @@ const CharacterSurvey = () => {
             <RadioGroup row>
               {[1, 2, 3, 4, 5, 6, 7].map((item) => (
                 <FormControlLabel
+                  key={item}
                   value={item}
                   {...register("secondQuestion", {
                     required: true,

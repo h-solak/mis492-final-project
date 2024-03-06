@@ -12,7 +12,7 @@ const CenteredBox = ({ absolute = false, children, ...props }) => {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      height="100%"
+      height="calc(100vh - 120px)"
       width="100%"
       {...props}
     >
