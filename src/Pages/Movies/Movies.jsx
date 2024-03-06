@@ -1,12 +1,15 @@
 import { CloseRounded, SearchRounded, SearchSharp } from "@mui/icons-material";
-import { Grid, IconButton, TextField } from "@mui/material";
+import { Grid, IconButton, TextField, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { searchMovie } from "../../Services/Tmdb";
 import MovieItem from "./Components/MovieItem";
 import Layout from "../../Layout/Layout";
 import { useSearchParams } from "react-router-dom";
-
+import CenteredBox from "../../Components/CenteredBox";
+import MovieNightSvg from "../../assets/illustrations/movienight.svg";
+import ColumnBox from "../../Components/ColumnBox";
+import NothingFound from "../../Components/NothingFound";
 const Movies = () => {
   const [moviesLoading, setMoviesLoading] = useState(false);
   const [movieResults, setMovieResults] = useState({});
@@ -77,7 +80,6 @@ const Movies = () => {
           })}
         />
       </Grid>
-
       {movieResults?.total_results > 0 ? (
         <Grid container marginTop={4} spacing={4}>
           {moviesLoading ? (
@@ -97,14 +99,18 @@ const Movies = () => {
           )}
         </Grid>
       ) : null}
-
-      {movieResults?.total_results == 0 &&
-        watch("searchMovies") &&
-        !moviesLoading && (
-          <Grid item xs={12} marginTop={6}>
-            Nothing found
-          </Grid>
-        )}
+      {!movieResults?.total_results == 0 ? null : watch("searchMovies") ? (
+        !moviesLoading && <NothingFound />
+      ) : (
+        <CenteredBox flexDirection="column">
+          <ColumnBox textAlign="center" gap={1}>
+            <img src={MovieNightSvg} width={350} alt="movie" />
+            <Typography color={"secondary"}>
+              Start your movie night with one search!
+            </Typography>
+          </ColumnBox>
+        </CenteredBox>
+      )}
     </Layout>
   );
 };

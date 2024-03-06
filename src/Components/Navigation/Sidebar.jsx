@@ -1,4 +1,4 @@
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, useMediaQuery } from "@mui/material";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import useUser from "../../Contexts/User/useUser";
@@ -9,22 +9,25 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 const LinkItem = ({ title, url, onClick, icon }) => {
   const { pathname } = useLocation();
+  const isActive = pathname == url;
   return (
     <Link to={url ? url : null}>
       <Button
         sx={{
           textTransform: "none",
+          borderRadius: 0,
           width: "100%",
           textAlign: "left",
           justifyContent: "start",
-          color: pathname == url ? "primary" : "black",
+          color: isActive ? "primary" : "black",
           height: 64,
           paddingX: 2,
-          borderLeft: pathname == url ? 2 : 0,
+          borderBottom: isActive ? 3 : 0,
           borderColor: "red",
         }}
         startIcon={icon}
         onClick={onClick ? onClick : () => null}
+        size="large"
       >
         {title}
       </Button>
@@ -63,17 +66,19 @@ const linkItems = [
 const Sidebar = () => {
   const { user } = useUser();
   const { pathname } = useLocation();
+  const isSmScreen = useMediaQuery("(max-width:900px)");
 
-  return (
+  return isSmScreen ? null : (
     <Grid
       item
-      xs={0}
       md={2.4}
       className="full-height"
       py={2}
       sx={{
         position: "sticky",
         top: "56px",
+        borderRight: 3,
+        borderColor: "secondary.light",
       }}
     >
       <Link to={`/profile/${user?.username}`}>

@@ -8,7 +8,15 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-const BaseModal = ({ isModalOpen, setIsModalOpen, title, children }) => {
+const BaseModal = ({
+  isModalOpen,
+  setIsModalOpen,
+  title,
+  contentPadding,
+  children,
+  sx,
+  ...props
+}) => {
   return (
     <Modal
       open={isModalOpen}
@@ -19,10 +27,11 @@ const BaseModal = ({ isModalOpen, setIsModalOpen, title, children }) => {
         display={"flex"}
         flexDirection={"column"}
         alignItems={"center"}
-        sx={{ backgroundColor: "#fff" }}
         className="absolute-center"
         borderRadius={8}
         onClick={(e) => e.stopPropagation()}
+        sx={{ backgroundColor: "#fff", ...sx }}
+        {...props}
       >
         <Grid
           container
@@ -52,7 +61,7 @@ const BaseModal = ({ isModalOpen, setIsModalOpen, title, children }) => {
             </IconButton>
           </Grid>
         </Grid>
-        <Grid container padding={5}>
+        <Grid container padding={contentPadding ? contentPadding : 5}>
           {children}
         </Grid>
       </Box>

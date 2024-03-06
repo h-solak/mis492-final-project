@@ -16,17 +16,16 @@ const Home = () => {
 
   return (
     <Layout>
-      <Typography variant="h6" fontWeight={600} fontSize={32}>
-        Welcome, {user?.username || "User"}!
-      </Typography>
       <Grid item xs={12}>
+        <Typography variant="h6" fontWeight={600} fontSize={32}>
+          Welcome, {user?.username || "User"}!
+        </Typography>
         <ul>
           <Typography fontSize={18} fontWeight={700}>
             TODO
           </Typography>
-          <li>Left Sidebar ekle - sticky positioned</li>
+          <li>Movie Reviews ekle movie kısmında alta</li>
           <li>Movies page PAGINATION</li>
-          <li>Movie review'a optional YAZI ekle</li>
           <li>Mesaj görüldü özelliği???</li>
           <li>Movie Watchlist feature</li>
           <li>Post paylaşma, likelama, keşfet özelliği</li>

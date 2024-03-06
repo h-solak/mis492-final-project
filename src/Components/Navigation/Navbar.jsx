@@ -28,6 +28,8 @@ const Navbar = () => {
         zIndex: 999,
         background: "rgba(255, 255, 255, 0.9)",
         backdropFilter: "blur(5px)",
+        boxShadow:
+          "rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px",
       }}
       paddingX={4}
     >
@@ -43,47 +45,6 @@ const Navbar = () => {
           MovieMate
         </Typography>
       </Link>
-      {/* Center Links */}
-      {!user?._id ? null : (
-        <Box display={"flex"} alignItems={"center"} gap={4}>
-          <Link to={"/"}>
-            <IconButton>
-              <HomeRounded
-                sx={{
-                  fontSize: 32,
-                }}
-              />
-            </IconButton>
-          </Link>
-          <Link to={"/chat"}>
-            <IconButton>
-              <Chat
-                sx={{
-                  fontSize: 26,
-                }}
-              />
-            </IconButton>
-          </Link>
-          <Link to={"/movies"}>
-            <IconButton>
-              <Movie
-                sx={{
-                  fontSize: 28,
-                }}
-              />
-            </IconButton>
-          </Link>
-          <Link to={"/character-survey"}>
-            <IconButton>
-              <Poll
-                sx={{
-                  fontSize: 28,
-                }}
-              />
-            </IconButton>
-          </Link>
-        </Box>
-      )}
 
       {!user?._id ? null : (
         <Box display={"flex"} alignItems={"center"} gap={2}>

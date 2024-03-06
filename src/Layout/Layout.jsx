@@ -15,14 +15,21 @@ const Layout = ({
   const { user } = useUser();
   console.log(user);
   return (
-    <Box>
+    <Box minHeight={"100vh"} backgroundColor={"#f0f2f5"}>
       <Navbar />
-      {/* Layout default settings should be: paddingX={4}  */}
       {/* paddingTop should be 4 to avoid navbar getting in the way */}
       <Grid container>
         {user?._id ? <Sidebar /> : null}
         {/* Page Contents */}
-        <Grid item xs={12} md={user?._id ? 9.6 : 12}>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={user?._id ? 9.6 : 12}
+          sx={{
+            backgroundColor: "#F0F2F5",
+          }}
+        >
           <Grid
             container
             px={disablePaddingX ? 0 : 4}

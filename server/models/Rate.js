@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const RateSchema = new mongoose.Schema(
   {
     user: {
+      //user id
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -11,7 +12,12 @@ const RateSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    review: {
+      //review text is not required
+      type: String,
+    },
     movie: {
+      //TMDB movie id
       type: String,
       required: true,
     },

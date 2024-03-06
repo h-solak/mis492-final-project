@@ -3,6 +3,10 @@
 * {
   font-family: "Inter", sans-serif;
 }
+html,
+body {
+  background-color: #f0f2f5;
+}
 
 a {
   text-decoration: none;
@@ -56,7 +60,7 @@ a {
   }
 }
 
-.blinking-text {
+.blink {
   animation: blink 2s infinite; /* Adjust the duration as needed */
 }
 

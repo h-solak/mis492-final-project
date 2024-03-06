@@ -24,6 +24,8 @@ router.put("/rate", checkJwt, async (req, res) => {
     const id = getUserIdFromToken(req.headers.authorization);
     const movie = req.body.movie;
     const newRate = req.body.rate;
+    const newReview = req.body.review;
+
     await Rate.findOneAndUpdate(
       {
         //query
@@ -33,6 +35,7 @@ router.put("/rate", checkJwt, async (req, res) => {
       {
         //update
         rate: newRate,
+        review: newReview,
       }
     );
 
@@ -49,6 +52,7 @@ router.post("/rate", checkJwt, async (req, res) => {
     const id = getUserIdFromToken(req.headers.authorization);
     const rate = req.body.rate;
     const movie = req.body.movie;
+    const review = req.body.review;
     const alreadyRated = await Rate.findOne({
       user: id,
       movie: movie,
@@ -60,6 +64,7 @@ router.post("/rate", checkJwt, async (req, res) => {
         user: id,
         movie: movie,
         rate: rate,
+        review: review,
       });
       await newRate.save();
       res.status(200).json();

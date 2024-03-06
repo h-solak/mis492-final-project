@@ -1,17 +1,19 @@
 import { misBaseAxios } from "../api/config";
 
-const rateMovie = async ({ movie, rate, userHasVotedBefore }) => {
+const rateMovie = async ({ movie, rate, review, userHasVotedBefore }) => {
   try {
     let res;
     if (!userHasVotedBefore) {
       res = await misBaseAxios.post(`/movies/rate`, {
         movie: movie,
         rate: rate,
+        review: review ? review : "",
       });
     } else {
       res = await misBaseAxios.put(`/movies/rate`, {
         movie: movie,
         rate: rate,
+        review: review ? review : "",
       });
     }
     return res?.data?.rate;
