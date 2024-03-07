@@ -13,7 +13,6 @@ const Layout = ({
   ...props
 }) => {
   const { user } = useUser();
-  console.log(user);
   return (
     <Box minHeight={"100vh"} backgroundColor={"#f0f2f5"}>
       <Navbar />

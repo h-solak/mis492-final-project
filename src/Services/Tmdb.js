@@ -4,7 +4,6 @@ import { tmdbBaseAxios } from "../api/config";
 const tmdbAPIKey = import.meta.env.VITE_TMDB_API_KEY;
 
 const searchMovie = async (searchText, page = 1) => {
-  console.log(tmdbAPIKey);
   try {
     const res = await tmdbBaseAxios.get(
       `/search/movie?api_key=${tmdbAPIKey}&language=en-US&page=${page}&include_adult=false&query=${searchText}`
@@ -18,12 +17,10 @@ const searchMovie = async (searchText, page = 1) => {
 // https://api.themoviedb.org/3/movie/{movie_id}
 
 const getMovieDetails = async (movieId) => {
-  console.log(tmdbAPIKey);
   try {
     const res = await tmdbBaseAxios.get(
       `/movie/${movieId}?api_key=${tmdbAPIKey}`
     );
-    console.log(res?.data);
     return res?.data;
   } catch (err) {
     console.error(err);

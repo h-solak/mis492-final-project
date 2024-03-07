@@ -45,6 +45,47 @@ const Navbar = () => {
           MovieMate
         </Typography>
       </Link>
+      {/* Center Links */}
+      {!user?._id ? null : (
+        <Box display={"flex"} alignItems={"center"} gap={4}>
+          <Link to={"/"}>
+            <IconButton>
+              <HomeRounded
+                sx={{
+                  fontSize: 32,
+                }}
+              />
+            </IconButton>
+          </Link>
+          <Link to={"/chat"}>
+            <IconButton>
+              <Chat
+                sx={{
+                  fontSize: 26,
+                }}
+              />
+            </IconButton>
+          </Link>
+          <Link to={"/movies"}>
+            <IconButton>
+              <Movie
+                sx={{
+                  fontSize: 28,
+                }}
+              />
+            </IconButton>
+          </Link>
+          <Link to={"/character-survey"}>
+            <IconButton>
+              <Poll
+                sx={{
+                  fontSize: 28,
+                }}
+              />
+            </IconButton>
+          </Link>
+        </Box>
+      )}
 
       {!user?._id ? null : (
         <Box display={"flex"} alignItems={"center"} gap={2}>

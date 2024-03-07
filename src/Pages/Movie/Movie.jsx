@@ -12,18 +12,49 @@ import {
 } from "@mui/material";
 import { Star, Timer } from "@mui/icons-material";
 import Layout from "../../Layout/Layout";
-import { getUserRates, rateMovie } from "../../Services/Movie";
+import { getMovieReviews, getUserRates, rateMovie } from "../../Services/Movie";
 import BaseModal from "../../Components/Modal";
 import toast from "react-hot-toast";
+import ReviewItem from "./Components/ReviewItem";
 
 const Movie = () => {
   let { movieId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [movie, setMovie] = useState({}); //current movie
-  const [rating, setRating] = useState(0); //current movie rating
-  const [review, setReview] = useState(""); //text
-  const [rateModal, setRateModal] = useState(false);
+  const [rating, setRating] = useState(0); //user's rating
+  const [review, setReview] = useState(""); //user's review textfield
+  const [userReviews, setUserReviews] = useState([]); //all reviews about the movie
+  const [rateModal, setRateModal] = useState(false); //rate&review modal
   const [userRates, setUserRates] = useState([]); //all movie rates of the user
+
+  useEffect(() => {
+    getMovie();
+    handleGetUserRates();
+    handleGetMovieReviews();
+  }, []);
+
+  const getMovie = async () => {
+    const crrMovie = await getMovieDetails(movieId);
+    setMovie(crrMovie);
+    setIsLoading(false);
+  };
+
+  const handleGetMovieReviews = async () => {
+    const reviews = await getMovieReviews(movieId);
+    console.log(reviews);
+    setUserReviews(reviews);
+  };
+
+  const handleGetUserRates = async () => {
+    const rates = await getUserRates();
+    setUserRates(rates);
+    const userHasRated = rates?.some((item) => item?.movie === movieId);
+    if (userHasRated) {
+      const usersRate = rates?.find((item) => item?.movie === movieId);
+      setRating(usersRate.rate);
+      setReview(usersRate?.review);
+    }
+  };
 
   const handleSubmitRate = async () => {
     if (rating > 0) {
@@ -45,27 +76,6 @@ const Movie = () => {
       }
     } else {
       toast.error("Rate it out of 10");
-    }
-  };
-
-  const getMovie = async () => {
-    const crrMovie = await getMovieDetails(movieId);
-    setMovie(crrMovie);
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    getMovie(movieId);
-    handleGetUserRates();
-  }, []);
-
-  const handleGetUserRates = async () => {
-    const rates = await getUserRates();
-    setUserRates(rates);
-    const userHasRated = rates?.some((item) => item?.movie === movieId);
-    if (userHasRated) {
-      const usersRate = rates?.find((item) => item?.movie === movieId)?.rate;
-      setRating(usersRate);
     }
   };
 
@@ -168,7 +178,28 @@ const Movie = () => {
         </ColumnBox>
       </Grid>
       {/* Reviews Section */}
-      <Grid container>Reviews here</Grid>
+      <Grid container p={4} spacing={4}>
+        <Grid item xs={12} mt={2}>
+          <Typography fontWeight={500} fontSize={20}>
+            User Reviews for{" "}
+            <Typography variant={"span"} fontWeight={600}>
+              {movie?.title}
+            </Typography>
+          </Typography>
+        </Grid>
+
+        {!userReviews ? (
+          <Grid item xs={12} mt={2}>
+            <Typography color={"secondary"}>
+              There are no reviews yet.
+            </Typography>
+          </Grid>
+        ) : (
+          userReviews?.map((review) => (
+            <ReviewItem key={review?._id} review={review} />
+          ))
+        )}
+      </Grid>
       {/* Rate Modal */}
       <BaseModal
         title={"Rate this movie"}

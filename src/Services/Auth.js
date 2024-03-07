@@ -38,7 +38,6 @@ const registerUser = async ({ username, password }) => {
 const getUser = async () => {
   try {
     const res = await misBaseAxios.get(`/auth/user`);
-    console.log(res?.data);
     return res?.data?.data;
   } catch (error) {
     console.error(error);
@@ -48,7 +47,6 @@ const getUser = async () => {
 const getProfile = async () => {
   try {
     const res = await misBaseAxios.get(`/auth/user`);
-    console.log(res?.data);
     return res?.data?.data;
   } catch (error) {
     console.error(error);

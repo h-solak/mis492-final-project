@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Rate = require("../models/Rate");
+const User = require("../models/User");
 const checkJwt = require("../utils/authenticate");
 const getUserIdFromToken = require("../utils/getUserIdFromToken");
 
@@ -71,6 +72,40 @@ router.post("/rate", checkJwt, async (req, res) => {
     } else {
       res.status(400).json();
     }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+//Get written reviews
+router.get("/:movieId/reviews", checkJwt, async (req, res) => {
+  try {
+    const movieId = req.params.movieId;
+
+    //find rates that have reviews that are not empty
+    const reviewsData = await Rate.find({
+      movie: movieId,
+      review: { $ne: "" },
+    });
+
+    let reviews = [];
+
+    if (reviewsData) {
+      await Promise.all(
+        reviewsData?.map(async (reviewItem, index) => {
+          const userData = await User.findById(reviewItem?.user);
+          const newReview = {
+            username: userData?.username,
+            userAvatar: userData?.crrAvatar,
+            ...reviewsData[index]._doc,
+          };
+          reviews.push(newReview);
+        })
+      );
+    }
+
+    res.status(200).json({ reviews: reviews });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
