@@ -1,6 +1,13 @@
 import { misBaseAxios } from "../api/config";
 
-const rateMovie = async ({ movie, rate, review, userHasVotedBefore }) => {
+const rateMovie = async ({
+  movie,
+  rate,
+  review,
+  moviePoster,
+  movieTitle,
+  userHasVotedBefore,
+}) => {
   try {
     let res;
     if (!userHasVotedBefore) {
@@ -8,6 +15,8 @@ const rateMovie = async ({ movie, rate, review, userHasVotedBefore }) => {
         movie: movie,
         rate: rate,
         review: review ? review : "",
+        moviePoster: moviePoster,
+        movieTitle: movieTitle,
       });
     } else {
       res = await misBaseAxios.put(`/movie/rate`, {
@@ -22,10 +31,10 @@ const rateMovie = async ({ movie, rate, review, userHasVotedBefore }) => {
   }
 };
 
-//user's all previous rates/reviews
-const getUserRates = async () => {
+//the user's all previous rates/reviews
+const getUserMovieRates = async () => {
   try {
-    const res = await misBaseAxios.get(`/movie/rate`);
+    const res = await misBaseAxios.get(`/movie/rates`);
     return res?.data?.rates;
   } catch (error) {
     console.log(error);
@@ -42,4 +51,4 @@ const getMovieReviews = async (movieId) => {
   }
 };
 
-export { rateMovie, getUserRates, getMovieReviews };
+export { rateMovie, getUserMovieRates, getMovieReviews };

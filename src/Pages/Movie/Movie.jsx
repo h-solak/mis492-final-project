@@ -12,7 +12,11 @@ import {
 } from "@mui/material";
 import { Star, Timer } from "@mui/icons-material";
 import Layout from "../../Layout/Layout";
-import { getMovieReviews, getUserRates, rateMovie } from "../../Services/Movie";
+import {
+  getMovieReviews,
+  getUserMovieRates,
+  rateMovie,
+} from "../../Services/Movie";
 import BaseModal from "../../Components/Modal";
 import toast from "react-hot-toast";
 import ReviewItem from "./Components/ReviewItem";
@@ -29,10 +33,11 @@ const Movie = () => {
 
   useEffect(() => {
     getMovie();
-    handleGetUserRates();
+    handleGetUserMovieRates();
     handleGetMovieReviews();
   }, []);
 
+  //get current movie
   const getMovie = async () => {
     const crrMovie = await getMovieDetails(movieId);
     setMovie(crrMovie);
@@ -45,8 +50,9 @@ const Movie = () => {
     setUserReviews(reviews);
   };
 
-  const handleGetUserRates = async () => {
-    const rates = await getUserRates();
+  //check if user has rated this movie before
+  const handleGetUserMovieRates = async () => {
+    const rates = await getUserMovieRates();
     setUserRates(rates);
     const userHasRated = rates?.some((item) => item?.movie === movieId);
     if (userHasRated) {
@@ -65,17 +71,19 @@ const Movie = () => {
         await rateMovie({
           movie: movieId,
           rate: rating,
-          userHasVotedBefore: userHasVotedBefore,
           review: review,
+          moviePoster: movie?.poster_path,
+          movieTitle: movie?.title,
+          userHasVotedBefore: userHasVotedBefore,
         });
-        await handleGetUserRates();
+        await handleGetUserMovieRates();
         setRateModal(false);
         toast.success("Your review is saved.");
       } catch (err) {
         console.log(err);
       }
     } else {
-      toast.error("Rate it out of 10");
+      toast.error("You have to rate the movie!");
     }
   };
 

@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const Post = require("../models/Post");
+const Rate = require("../models/Rate");
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const checkJwt = require("../utils/authenticate");
@@ -8,8 +8,20 @@ const checkJwt = require("../utils/authenticate");
 router.get("/:username", checkJwt, async (req, res) => {
   try {
     const user = await User.findOne({ username: req.params.username });
-    const { password, ...other } = user._doc; //get the user except password
-    res.status(200).json({ user: other });
+    const userMovieRates = await Rate.find({
+      user: user?._id,
+    });
+    const sortedUserMovieRates = userMovieRates.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+    const { password, privateChats, ...otherUserData } = user._doc; //get the user except password
+
+    const allUserData = {
+      ...otherUserData,
+      rates: sortedUserMovieRates,
+    };
+
+    res.status(200).json({ user: allUserData });
   } catch (err) {
     return res.status(500).json(err);
   }
@@ -54,32 +66,32 @@ router.delete("/:id", checkJwt, async (req, res) => {
   }
 });
 
-//GET A USER
-router.get("/:username", checkJwt, async (req, res) => {
-  try {
-    const user = await User.findOne({ username: req.params.username });
-    if (user?._id) {
-      const userPosts = await Post.find({ username: req.params.username }).sort(
-        {
-          createdAt: -1,
-        }
-      );
-      const userAvatar = {
-        crrAvatar: user.crrAvatar,
-      };
-      const mergedUserPosts = userPosts?.map((post) =>
-        Object.assign(post._doc, userAvatar)
-      );
-      const { password, updatedAt, email, ...other } = user._doc;
-      const userArr = Object.assign(other, { posts: mergedUserPosts });
-      res.status(200).json({ data: userArr });
-    } else {
-      res.status(404).json({ desc: "User Not Found" });
-    }
-  } catch (err) {
-    return res.status(500).json(err);
-  }
-});
+// //GET A USER
+// router.get("/:username", checkJwt, async (req, res) => {
+//   try {
+//     const user = await User.findOne({ username: req.params.username });
+//     if (user?._id) {
+//       const userPosts = await Post.find({ username: req.params.username }).sort(
+//         {
+//           createdAt: -1,
+//         }
+//       );
+//       const userAvatar = {
+//         crrAvatar: user.crrAvatar,
+//       };
+//       const mergedUserPosts = userPosts?.map((post) =>
+//         Object.assign(post._doc, userAvatar)
+//       );
+//       const { password, updatedAt, email, ...other } = user._doc;
+//       const userArr = Object.assign(other, { posts: mergedUserPosts });
+//       res.status(200).json({ data: userArr });
+//     } else {
+//       res.status(404).json({ desc: "User Not Found" });
+//     }
+//   } catch (err) {
+//     return res.status(500).json(err);
+//   }
+// });
 
 //FOLLOW A USER
 router.put("/follow/:id", checkJwt, async (req, res) => {
@@ -151,33 +163,33 @@ router.put("/avatar/:userId", checkJwt, async (req, res) => {
   }
 });
 
-//USER SUGGESTIONS (5 suggestions on timeline)
-router.get("/timeline/suggestions/:userId", checkJwt, async (req, res) => {
-  try {
-    const user = await User.findById(req.params.userId);
-    const followings = user.followings;
-    const newUsers = await User.find().sort({ createdAt: 1 }).limit(20);
-    const filteredUsers = newUsers.filter((newUser) => {
-      return (
-        newUser._id.toString() !== user._id.toString() &&
-        !followings.includes(newUser._id)
-      );
-    });
-    const suggestedUsers = filteredUsers?.map((suggestedUser) => {
-      const { password, updatedAt, email, ...other } = suggestedUser._doc;
-      return {
-        userId: suggestedUser._id,
-        username: suggestedUser.username,
-        crrAvatar: suggestedUser.crrAvatar,
-        //followers: suggestedUser.followers,
-      };
-    });
-    res.status(200).json({
-      suggestedUsers: suggestedUsers.slice(-5),
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// //USER SUGGESTIONS (5 suggestions on timeline)
+// router.get("/timeline/suggestions/:userId", checkJwt, async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.userId);
+//     const followings = user.followings;
+//     const newUsers = await User.find().sort({ createdAt: 1 }).limit(20);
+//     const filteredUsers = newUsers.filter((newUser) => {
+//       return (
+//         newUser._id.toString() !== user._id.toString() &&
+//         !followings.includes(newUser._id)
+//       );
+//     });
+//     const suggestedUsers = filteredUsers?.map((suggestedUser) => {
+//       const { password, updatedAt, email, ...other } = suggestedUser._doc;
+//       return {
+//         userId: suggestedUser._id,
+//         username: suggestedUser.username,
+//         crrAvatar: suggestedUser.crrAvatar,
+//         //followers: suggestedUser.followers,
+//       };
+//     });
+//     res.status(200).json({
+//       suggestedUsers: suggestedUsers.slice(-5),
+//     });
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 module.exports = router;

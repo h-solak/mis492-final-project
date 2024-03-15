@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema(
     },
     desc: {
       type: String,
-      default: "Hey there! I am using MovieMatcher <3",
+      default: "Hey there! I am using MovieMate <3",
       max: 50,
     },
     city: {

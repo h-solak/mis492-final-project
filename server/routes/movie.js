@@ -4,8 +4,8 @@ const User = require("../models/User");
 const checkJwt = require("../utils/authenticate");
 const getUserIdFromToken = require("../utils/getUserIdFromToken");
 
-//Get a user's rates
-router.get("/rate", checkJwt, async (req, res) => {
+//get the user's rates
+router.get("/rates", checkJwt, async (req, res) => {
   try {
     const id = getUserIdFromToken(req.headers.authorization);
     const usersRates = await Rate.find({
@@ -54,6 +54,8 @@ router.post("/rate", checkJwt, async (req, res) => {
     const rate = req.body.rate;
     const movie = req.body.movie;
     const review = req.body.review;
+    const moviePoster = req.body.moviePoster;
+    const movieTitle = req.body.movieTitle;
     const alreadyRated = await Rate.findOne({
       user: id,
       movie: movie,
@@ -66,6 +68,8 @@ router.post("/rate", checkJwt, async (req, res) => {
         movie: movie,
         rate: rate,
         review: review,
+        movieTitle: movieTitle,
+        moviePoster: moviePoster,
       });
       await newRate.save();
       res.status(200).json();
@@ -78,7 +82,7 @@ router.post("/rate", checkJwt, async (req, res) => {
   }
 });
 
-//Get written reviews
+//Get written reviews for a spesific movie
 router.get("/:movieId/reviews", checkJwt, async (req, res) => {
   try {
     const movieId = req.params.movieId;

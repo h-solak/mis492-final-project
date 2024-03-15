@@ -44,13 +44,4 @@ const getUser = async () => {
   }
 };
 
-const getProfile = async () => {
-  try {
-    const res = await misBaseAxios.get(`/auth/user`);
-    return res?.data?.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 export { loginUser, registerUser, getUser };

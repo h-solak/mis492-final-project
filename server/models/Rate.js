@@ -21,6 +21,14 @@ const RateSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    moviePoster: {
+      type: String,
+      required: true,
+    },
+    movieTitle: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
