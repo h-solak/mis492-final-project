@@ -1,4 +1,10 @@
-import { CloseRounded, SearchRounded, SearchSharp } from "@mui/icons-material";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CloseRounded,
+  SearchRounded,
+  SearchSharp,
+} from "@mui/icons-material";
 import { Grid, IconButton, TextField, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -30,20 +36,37 @@ const Movies = () => {
     }
   }, []);
 
-  const handleSearch = async () => {
-    setMoviesLoading(true);
-    const values = getValues();
-    const newMovieResults = await searchMovie(values.searchMovies.trim(), 1);
-    setMovieResults(newMovieResults);
-    setMoviesLoading(false);
-  };
   useEffect(() => {
     if (watch("searchMovies").length > 0) {
-      handleSearch(); //Search everytime a value changes
-      // history.push(`/search?q=${watch("searchMovies")}`);
-      setSearchParams({ search: watch("searchMovies")?.trim() });
+      handleSearch();
     }
   }, [watch("searchMovies")]);
+
+  const handleSearch = async (newPage = 1) => {
+    setMoviesLoading(true);
+    const values = getValues();
+    const newMovieResults = await searchMovie(
+      values.searchMovies.trim(),
+      newPage
+    );
+    setMovieResults(newMovieResults);
+    setMoviesLoading(false);
+    setSearchParams({ search: watch("searchMovies")?.trim(), page: newPage });
+  };
+
+  const handlePageChange = (action) => {
+    let crrPage =
+      parseInt(searchParams?.get("page")) >= 1
+        ? parseInt(searchParams?.get("page"))
+        : 1;
+    if (action == "next" && movieResults?.total_pages >= crrPage) {
+      handleSearch(crrPage + 1);
+    } else if (action == "previous" && crrPage > 1) {
+      handleSearch(crrPage - 1);
+    } else {
+      return null;
+    }
+  };
 
   return (
     <Layout>
@@ -80,6 +103,7 @@ const Movies = () => {
           })}
         />
       </Grid>
+
       {movieResults?.total_results > 0 ? (
         <Grid container marginTop={4} spacing={4}>
           {moviesLoading ? (
@@ -99,6 +123,36 @@ const Movies = () => {
           )}
         </Grid>
       ) : null}
+      {movieResults?.total_pages > 1 && (
+        <Grid container paddingY={4}>
+          <Grid
+            item
+            xs={12}
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            gap={1}
+          >
+            <IconButton onClick={() => handlePageChange("previous")}>
+              <ArrowLeft
+                sx={{
+                  fontSize: 32,
+                }}
+              />
+            </IconButton>
+            <Typography>
+              Page {searchParams.get("page")}/{movieResults?.total_pages}
+            </Typography>
+            <IconButton onClick={() => handlePageChange("next")}>
+              <ArrowRight
+                sx={{
+                  fontSize: 32,
+                }}
+              />
+            </IconButton>
+          </Grid>
+        </Grid>
+      )}
       {!movieResults?.total_results == 0 ? null : watch("searchMovies") ? (
         !moviesLoading && <NothingFound />
       ) : (
