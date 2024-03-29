@@ -123,7 +123,8 @@ const Movies = () => {
           )}
         </Grid>
       ) : null}
-      {movieResults?.total_pages > 1 && (
+      {/* Pagination */}
+      {movieResults?.total_pages > 1 && !moviesLoading && (
         <Grid container paddingY={4}>
           <Grid
             item
@@ -158,8 +159,13 @@ const Movies = () => {
       ) : (
         <CenteredBox flexDirection="column">
           <ColumnBox textAlign="center" gap={1}>
-            <img src={MovieNightSvg} width={350} alt="movie" />
-            <Typography color={"secondary"}>
+            <img
+              src={MovieNightSvg}
+              width={350}
+              alt="movie"
+              className="slide-ltr"
+            />
+            <Typography color={"secondary"} className="slide-rtl">
               Start your movie night with one search!
             </Typography>
           </ColumnBox>

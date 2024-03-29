@@ -23,10 +23,12 @@ const Profile = () => {
     */
 
   useEffect(() => {
+    //Call this function everytime username param changes
     handleGetUserProfile();
-  }, []);
+  }, [username]);
 
   const handleGetUserProfile = async () => {
+    setPageLoading(true);
     const crrUser = await getUserProfile(username);
     setUserProfile(crrUser);
     setPageLoading(false);
@@ -46,6 +48,18 @@ const Profile = () => {
         </Box>
       </Grid>
       <Grid item xs={12} marginTop={4}>
+        <Typography color={"secondary"} py={2}>
+          All of{" "}
+          <Typography
+            variant="span"
+            sx={{
+              textTransform: "capitalize",
+            }}
+          >
+            {userProfile?.username}
+          </Typography>
+          's Reviews/Rates ({userProfile?.rates.length})
+        </Typography>
         {userProfile?.rates?.map((rate) => (
           <RateItem rate={rate} />
         ))}

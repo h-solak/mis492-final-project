@@ -119,7 +119,6 @@ const Movie = () => {
             {movie?.vote_average ? (
               <ColumnBox>
                 <Typography color={"#fff"}>User Rating</Typography>
-
                 <Box display={"flex"} alignItems={"center"} gap={1}>
                   <Star
                     sx={{
@@ -227,6 +226,10 @@ const Movie = () => {
             value={rating}
             onChange={(event, newValue) => setRating(newValue)}
             max={10}
+            sx={{
+              width: "100%",
+              flex: 1,
+            }}
           />
           <TextField
             multiline

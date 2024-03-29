@@ -17,12 +17,9 @@ const BaseModal = ({
   sx,
   ...props
 }) => {
+  const handleClose = () => setIsModalOpen(false);
   return (
-    <Modal
-      open={isModalOpen}
-      onClose={setIsModalOpen}
-      onClick={() => setIsModalOpen(false)}
-    >
+    <Modal open={isModalOpen} onClose={handleClose} onClick={handleClose}>
       <Box
         display={"flex"}
         flexDirection={"column"}

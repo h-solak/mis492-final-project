@@ -137,20 +137,20 @@ const Chat = () => {
   };
 
   return (
-    <ChatContext.Provider
-      value={{
-        chats,
-        setChats,
-        crrChat,
-        setCrrChat,
-        content,
-        setContent,
-        handleGetChat,
-        handleSendMessage,
-        handleDeleteMessage,
-      }}
-    >
-      <Layout pageLoading={pageLoading} disablePaddingX disablePaddingY>
+    <Layout pageLoading={pageLoading} disablePaddingX disablePaddingY>
+      <ChatContext.Provider
+        value={{
+          chats,
+          setChats,
+          crrChat,
+          setCrrChat,
+          content,
+          setContent,
+          handleGetChat,
+          handleSendMessage,
+          handleDeleteMessage,
+        }}
+      >
         {/* User - Chat List  */}
         <Grid
           className="full-height"
@@ -226,8 +226,8 @@ const Chat = () => {
             </CenteredBox>
           )}
         </Grid>
-      </Layout>
-    </ChatContext.Provider>
+      </ChatContext.Provider>
+    </Layout>
   );
 };
 

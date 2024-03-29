@@ -37,12 +37,12 @@ const Navbar = () => {
         <Typography
           variant="h5"
           color={"primary"}
-          fontWeight={600}
+          fontWeight={700}
           sx={{
             cursor: "pointer",
           }}
         >
-          MovieMate
+          Movie Mate
         </Typography>
       </Link>
       {/* Center Links */}

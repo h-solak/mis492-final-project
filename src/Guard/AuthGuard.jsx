@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import useUser from "../Contexts/User/useUser";
 import { useNavigate } from "react-router-dom";
 import { getUser } from "../Services/Auth";
-import CenterLoader from "../Components/CenterLoader";
 import CenteredBox from "../Components/CenteredBox";
 import MovieLoaderSvg from "../assets/icons/pageLoader.svg";
+import { removeAccessToken } from "../api/config";
 const AuthGuard = ({ component }) => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -15,6 +15,9 @@ const AuthGuard = ({ component }) => {
     if (crrUser?._id) {
       setUser(crrUser);
     } else {
+      //token is expired or something went wrong with the user
+      removeAccessToken();
+      setUser({});
       navigate("/login");
     }
     setIsLoading(false);

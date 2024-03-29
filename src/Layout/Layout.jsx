@@ -4,6 +4,8 @@ import Navbar from "../Components/Navigation/Navbar";
 import Sidebar from "../Components/Navigation/Sidebar";
 import useUser from "../Contexts/User/useUser";
 import CenteredBox from "../Components/CenteredBox";
+import Lottie from "lottie-react";
+import PopcornLoader from "../assets/animations/popcorn.json";
 
 const Layout = ({
   children,
@@ -37,7 +39,13 @@ const Layout = ({
           >
             {pageLoading ? (
               <CenteredBox>
-                <span className="loader"></span>
+                <Lottie
+                  animationData={PopcornLoader}
+                  loop={true}
+                  style={{
+                    width: 150,
+                  }}
+                />
               </CenteredBox>
             ) : (
               children

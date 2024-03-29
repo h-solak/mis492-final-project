@@ -24,8 +24,8 @@ const Home = () => {
           <Typography fontSize={18} fontWeight={700}>
             TODO
           </Typography>
-          <li>Movies page PAGINATION</li>
           <li>Mesaj görüldü özelliği???</li>
+          <li>Movie rate bug</li>
           <li>Movie Watchlist feature</li>
           <li>Post paylaşma, likelama, keşfet özelliği</li>
           <li>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
-import { misBaseAxios, setAccessToken } from "../api/config";
+import { misBaseAxios, removeAccessToken, setAccessToken } from "../api/config";
 
 const loginUser = async ({ username, password }) => {
   try {
@@ -40,7 +40,10 @@ const getUser = async () => {
     const res = await misBaseAxios.get(`/auth/user`);
     return res?.data?.data;
   } catch (error) {
-    console.error(error);
+    console.log(error?.response?.data);
+    if (error?.response?.data?.errTitle == "Invalid Token") {
+      return null;
+    }
   }
 };
 
