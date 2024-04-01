@@ -5,42 +5,41 @@ const checkJwt = require("../utils/authenticate");
 const getUserIdFromToken = require("../utils/getUserIdFromToken");
 const sortByDate = require("../utils/sortByDate");
 
-//GET CHAT LIST
+//GET CHAT LIST - PREVIEWS
 router.get("/", checkJwt, async (req, res) => {
   try {
     const id = getUserIdFromToken(req.headers.authorization);
 
-    //create chat
-    // const newChat = new Chat({
-    //   participants: [id, "65e081df6c869075db0b6f16"],
-    //   messages: [],
-    // });
-    // await newChat.save();
-
-    const chats = await Chat.find({
-      participants: id,
-    });
+    //find all chats of the user
+    const chats = await Chat.aggregate([
+      {
+        $match: { "participants.id": id },
+      },
+    ]);
 
     let previewChats = [];
 
     if (chats) {
-      const otherUserIds = chats.map((item) => {
-        if (item.participants[0] == id) {
-          return item.participants[1];
+      //Get other user id's to get their info
+      const otherUserIds = chats.map((chatItem) => {
+        if (chatItem.participants[0].id == id) {
+          return chatItem.participants[1].id;
         } else {
-          return item.participants[0];
+          return chatItem.participants[0].id;
         }
       });
 
+      //create chat previews
       await Promise.all(
         otherUserIds?.map(async (userId, index) => {
           const chatData = chats[index];
+          console.log(chatData);
           const userData = await User.findById(userId);
           const lastMessage = chatData?.messages
             ? chatData?.messages[chatData?.messages?.length - 1]
             : {};
           const newPreview = {
-            chatId: chatData?.id, // or _id???
+            chatId: chatData?._id,
             lastMessage: lastMessage || {},
             username: userData?.username,
             userAvatar: userData?.crrAvatar,
@@ -49,12 +48,6 @@ router.get("/", checkJwt, async (req, res) => {
         })
       );
     }
-
-    /*
-   Should be sorted by lastMessage date!!!!!!!!!!!!!!
-
-   ALSO should add the last message
-   */
 
     //sort latest date first
     const sortedPreviewChats = previewChats.sort(
@@ -75,9 +68,15 @@ router.get("/:chatId", checkJwt, async (req, res) => {
   const chatId = req.params.chatId;
   try {
     let chat = await Chat.findById(chatId);
-    //receiver id, username, crrAvatar
-    //other user
-    const receiverId = chat?.participants?.filter((item) => item != id)[0];
+
+    //change message read status
+
+    /* IMPLEMENT HERE */
+
+    //get the info of the other user
+    const receiverId = chat?.participants?.filter(
+      (participant) => participant.id != id
+    )[0]?.id;
     const receiverData = await User.findById(receiverId);
     let newReceiverData = {
       receiver: {
@@ -129,7 +128,22 @@ router.delete("/:chatId/message/:messageId", checkJwt, async (req, res) => {
   }
 });
 
-/******************* */
+//Update a user's last time on the chat (To check if the user has read the message or not)
+router.put("/:chatId/read", checkJwt, async (req, res) => {
+  try {
+    const chatId = req.params.chatId;
+    const messageId = req.params.messageId;
+    await Chat.findByIdAndUpdate(chatId, {
+      $pull: { messages: { _id: messageId } },
+    });
+    res.status(200).json({ chatId: chatId });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+/********NOT IMPLEMENTED AND PROBABLY WONT BE*********** */
 //CHAT SUGGESTIONS (WILL INCLUDE PEOPLE WE DIDNT CHAT BEFORE AND WE FOLLOW)
 router.get("/suggestions/:userId", checkJwt, async (req, res) => {
   try {

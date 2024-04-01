@@ -33,7 +33,7 @@ const Chat = () => {
     /* Get chats on page load */
     handleGetChats();
 
-    /* If user is on the chat refresh chat messages and previews - but if user is not, then only refresh the preview*/
+    /* If user is on the chat currently, then refresh chat messages and previews -- but if user is not, then only refresh the preview*/
     const updateChatsAfterNewMessage = (data) => {
       const chatId = data?.chatId;
       handleGetChats();
@@ -107,12 +107,20 @@ const Chat = () => {
       });
       socket.current.emit("sendOrDeleteMessage", {
         senderId: user?._id,
-        receiverId: crrChat?.participants?.find((id) => id !== user?._id),
+        receiverId: crrChat?.participants?.find(
+          (participant) => participant.id !== user?._id
+        )?.id,
         content: content,
         chatId: crrChat?._id,
         username: user?.username,
         avatar: user?.crrAvatar,
       });
+      console.log(
+        "receiver!!!",
+        crrChat?.participants?.find(
+          (participant) => participant.id !== user?._id
+        )?.id
+      );
       setContent("");
       await handleGetChat(chatId, false);
     }
@@ -126,7 +134,9 @@ const Chat = () => {
       });
       socket.current.emit("sendOrDeleteMessage", {
         senderId: user?._id,
-        receiverId: crrChat?.participants?.find((id) => id !== user?._id),
+        receiverId: crrChat?.participants?.find(
+          (participant) => participant.id !== user?._id
+        )?.id,
         content: "", //it shows that this is a delete message emit
         chatId: crrChat?._id,
         username: user?.username,

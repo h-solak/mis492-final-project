@@ -4,8 +4,8 @@ const ChatSchema = new mongoose.Schema(
   {
     participants: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        id: mongoose.Schema.Types.ObjectId,
+        read: Date, //last time user has clicked on chat
       },
     ],
     messages: [
@@ -26,6 +26,7 @@ const ChatSchema = new mongoose.Schema(
         },
       },
     ],
+    //users last seen on chat
   },
   { timestamps: true }
 );
