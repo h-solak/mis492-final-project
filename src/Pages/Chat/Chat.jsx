@@ -33,6 +33,7 @@ const Chat = () => {
     /* Get chats on page load */
     handleGetChats();
 
+    /*----- SOCKET OPERATIONS -----*/
     /* If user is on the chat currently, then refresh chat messages and previews -- but if user is not, then only refresh the preview*/
     const updateChatsAfterNewMessage = (data) => {
       const chatId = data?.chatId;

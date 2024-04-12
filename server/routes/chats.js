@@ -70,6 +70,11 @@ router.get("/:chatId", checkJwt, async (req, res) => {
     let chat = await Chat.findById(chatId);
 
     //change message read status
+    await Chat.findByIdAndUpdate(
+      chatId,
+      { $set: { "participants.$[elem].read": new Date() } },
+      { new: true, arrayFilters: [{ "elem.id": id }] }
+    );
 
     /* IMPLEMENT HERE */
 

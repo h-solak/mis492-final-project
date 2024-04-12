@@ -16,8 +16,11 @@ import Message from "./Message";
 import { ChatContext } from "../Chat";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Close } from "@mui/icons-material";
+import { findLatestMessage } from "../../../Utilities/chatFunctions";
+import UserContext from "../../../Contexts/User/UserContext";
 
 const CurrentChat = ({ chatLoading }) => {
+  const { user } = useContext(UserContext);
   const { crrChat, setCrrChat } = useContext(ChatContext);
   const messageContainerRef = useRef();
   const [anchorEl, setAnchorEl] = useState();
@@ -27,15 +30,25 @@ const CurrentChat = ({ chatLoading }) => {
   useEffect(() => {
     //scroll to the bottom when new message arrives
     scrollToBottomChat();
+    handleGetLatestMessageUnread();
   }, [crrChat]);
 
   const scrollToBottomChat = () => {
     if (messageContainerRef.current) {
       messageContainerRef.current.scrollTo({
         top: messageContainerRef.current.scrollHeight,
-        // behavior: "smooth", //this is slow if the previous chat 10+ messages
       });
     }
+  };
+
+  // BUNU BACKENDDE HALLETMEK LAZIM PROPERTY VERİP: isFirstMessageUnread: true diye
+  const handleGetLatestMessageUnread = () => {
+    const latestMessage = findLatestMessage(
+      crrChat?.messages,
+      crrChat?.participants?.find((participant) => participant.id == user?._id)
+        ?.read
+    );
+    console.log(latestMessage);
   };
 
   return chatLoading ? (
@@ -81,9 +94,9 @@ const CurrentChat = ({ chatLoading }) => {
         py={2}
       >
         {crrChat?.messages?.length > 0 ? (
-          crrChat?.messages?.map((message) => (
-            <Message key={message?._id} message={message} />
-          ))
+          crrChat?.messages?.map((message) => {
+            return <Message key={message?._id} message={message} />;
+          })
         ) : (
           <CenteredBox>Start the conversation!</CenteredBox>
         )}
