@@ -9,13 +9,16 @@ https://colorhunt.co/palette/4a55a27895cba0bfe0c5dff8
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#C20114",
+      main: "#FF0000",
       light: "#e74c3c",
     },
     secondary: {
       //grey(ish)
       main: "#a6a6a6",
       light: "#ededed",
+    },
+    dark: {
+      main: "#000",
     },
     highlight: {
       //accent color - call to action (cta)

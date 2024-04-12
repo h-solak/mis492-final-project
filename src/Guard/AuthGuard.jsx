@@ -18,7 +18,7 @@ const AuthGuard = ({ component }) => {
       //token is expired or something went wrong with the user
       removeAccessToken();
       setUser({});
-      navigate("/login");
+      navigate("/");
     }
     setIsLoading(false);
   };

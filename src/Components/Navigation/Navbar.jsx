@@ -13,7 +13,7 @@ const Navbar = () => {
   const logout = async () => {
     removeAccessToken();
     setUser({});
-    navigate("/login");
+    navigate("/");
   };
   return (
     <Grid
