@@ -8,18 +8,17 @@ import { ChatContext } from "../Chat";
 const ChatPreview = ({ chat }) => {
   const { handleGetChat } = useContext(ChatContext);
   const crrDate = new Date();
-  let lastMessageDate;
 
-  if (
-    dayjs(chat?.lastMessage?.createdAt).format("DD/MM/YYYY") !==
-    dayjs(crrDate).format("DD/MM/YYYY")
-  ) {
-    //from now DOESNT WORK
-    // lastMessageDate = dayjs(chat?.lastMessage?.createdAt).fromNow();
-    lastMessageDate = dayjs(chat?.lastMessage?.createdAt).format("DD/MM/YYYY");
-  } else {
-    lastMessageDate = dayjs(chat?.lastMessage?.createdAt).format("HH:mm");
-  }
+  // if (
+  //   dayjs(chat?.lastMessage?.createdAt).format("DD/MM/YYYY") !==
+  //   dayjs(crrDate).format("DD/MM/YYYY")
+  // ) {
+  //   //from now DOESNT WORK
+  //   // lastMessageDate = dayjs(chat?.lastMessage?.createdAt).fromNow();
+  //   lastMessageDate = dayjs(chat?.lastMessage?.createdAt).format("DD/MM/YYYY");
+  // } else {
+  //   lastMessageDate = dayjs(chat?.lastMessage?.createdAt).format("HH:mm");
+  // }
 
   return (
     <Grid
@@ -49,7 +48,7 @@ const ChatPreview = ({ chat }) => {
           <Typography fontWeight={"bold"}>{chat?.username}</Typography>
           {chat?.lastMessage ? (
             <Typography color={"secondary"} fontSize={12}>
-              {lastMessageDate}
+              {"lastMessageDate"}
             </Typography>
           ) : null}
         </Box>
