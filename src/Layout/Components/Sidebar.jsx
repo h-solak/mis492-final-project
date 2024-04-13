@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import useUser from "../../Contexts/User/useUser";
 import Logo from "../../assets/logo.svg";
 /* Icons */
-import AvatarImg from "../AvatarImg";
+import AvatarImg from "../../Components/AvatarImg";
 import {
   Chat,
   Home,
@@ -16,7 +16,7 @@ import {
   Logout,
 } from "@mui/icons-material";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
-import ColumnBox from "../ColumnBox";
+import ColumnBox from "../../Components/ColumnBox";
 import { removeAccessToken } from "../../api/config";
 const LinkItem = ({ title, url, onClick, icon, imgIcon }) => {
   const { pathname } = useLocation();
@@ -98,10 +98,14 @@ const Sidebar = () => {
   const isSmScreen = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
 
-  const logout = async () => {
-    removeAccessToken();
-    setUser({});
-    navigate("/");
+  const handleLogout = () => {
+    try {
+      removeAccessToken();
+      setUser({});
+    } catch (err) {
+    } finally {
+      navigate("/");
+    }
   };
 
   return isSmScreen ? null : (
@@ -172,7 +176,7 @@ const Sidebar = () => {
             icon={item?.icon}
           />
         ))}
-        <LinkItem title={"Logout"} onClick={logout} icon={<Logout />} />
+        <LinkItem title={"Logout"} onClick={handleLogout} icon={<Logout />} />
       </Box>
     </Grid>
   );

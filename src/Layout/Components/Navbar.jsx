@@ -6,11 +6,10 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import ProfilePopover from "./ProfilePopover";
+import { useNavigate } from "react-router-dom";
+import ProfilePopover from "../../Components/Navigation/ProfilePopover";
 import { removeAccessToken } from "../../api/config";
 import useUser from "../../Contexts/User/useUser";
-import { Chat, HomeRounded, Movie, Poll } from "@mui/icons-material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Logo from "../../assets/logo.svg";
 const Navbar = () => {
@@ -19,9 +18,13 @@ const Navbar = () => {
   const { user, setUser } = useUser();
 
   const logout = async () => {
-    removeAccessToken();
-    setUser({});
-    navigate("/");
+    try {
+      removeAccessToken();
+      setUser({});
+    } catch (err) {
+    } finally {
+      navigate("/");
+    }
   };
   return !isSmScreen ? null : (
     <Grid

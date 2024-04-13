@@ -1,7 +1,7 @@
 import { Box, Grid } from "@mui/material";
 import React from "react";
-import Navbar from "../Components/Navigation/Navbar";
-import Sidebar from "../Components/Navigation/Sidebar";
+import Navbar from "./Components/Navbar";
+import Sidebar from "./Components/Sidebar";
 import useUser from "../Contexts/User/useUser";
 import CenteredBox from "../Components/CenteredBox";
 import Lottie from "lottie-react";
