@@ -74,8 +74,10 @@ const Chat = () => {
       });
     };
 
-    //start socket
-    socket.current = io("ws://localhost:8900");
+    //start socket ( https:// )
+    socket.current = io(
+      "ws://movie-mate-492.netlify.app" || "ws://localhost:8900"
+    );
     socket.current.emit("addUser", user?._id);
     socket.current.on("getMessage", (data) => {
       updateChatsAfterNewMessage(data);
