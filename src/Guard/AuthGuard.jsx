@@ -3,7 +3,7 @@ import useUser from "../Contexts/User/useUser";
 import { useNavigate } from "react-router-dom";
 import { getUser } from "../Services/Auth";
 import CenteredBox from "../Components/CenteredBox";
-import MovieLoaderSvg from "../assets/icons/pageLoader.svg";
+import Logo from "../assets/logo.svg";
 import { removeAccessToken } from "../api/config";
 //isisHomeComponent prevents the component from redirecting bug
 const AuthGuard = ({ component, isHomeComponent }) => {
@@ -34,7 +34,7 @@ const AuthGuard = ({ component, isHomeComponent }) => {
     <React.Fragment>
       {isLoading ? (
         <CenteredBox absolute>
-          <img src={MovieLoaderSvg} width={64} height={64} className="blink" />
+          <img src={Logo} width={256} className="blink" />
         </CenteredBox>
       ) : (
         component

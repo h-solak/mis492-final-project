@@ -13,7 +13,6 @@ import TextfieldError from "../../Components/Forms/TextFieldError";
 import ColumnBox from "../../Components/ColumnBox";
 import { useNavigate, Link } from "react-router-dom";
 import Layout from "../../Layout/Layout";
-import TempImg from "./tempimg.jpg";
 import Logo from "../../assets/logo.svg";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -177,7 +176,9 @@ const Login = () => {
       {!isMobileScreen && (
         <Grid item xs={0} md={6} lg={7} px={5}>
           <img
-            src={TempImg}
+            src={
+              "https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            }
             height={500}
             width={"100%"}
             alt="Movie"

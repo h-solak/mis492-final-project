@@ -18,34 +18,7 @@ import {
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 import ColumnBox from "../../Components/ColumnBox";
 import { removeAccessToken } from "../../api/config";
-const LinkItem = ({ title, url, onClick, icon, imgIcon }) => {
-  const { pathname } = useLocation();
-  const isActive = pathname == url;
-  return (
-    <Link to={url ? url : null}>
-      <Button
-        sx={{
-          textTransform: "none",
-          borderRadius: 0,
-          width: "100%",
-          textAlign: "left",
-          justifyContent: "start",
-          color: isActive ? "primary" : "black",
-          height: 64,
-          paddingX: 4,
-          borderBottom: isActive ? 3 : 0,
-          borderColor: "red",
-          fontWeight: "regular",
-        }}
-        startIcon={icon ? icon : <img src={imgIcon} width={24} height={24} />}
-        onClick={onClick ? onClick : () => null}
-        size="large"
-      >
-        {title}
-      </Button>
-    </Link>
-  );
-};
+import LinkItem from "./LinkItem";
 
 const linkItems = [
   {
