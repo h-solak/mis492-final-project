@@ -2,7 +2,8 @@ import axios from "axios";
 
 //Our API config
 const misBaseAxios = axios.create({
-  baseURL: "http://localhost:8800/api",
+  // baseURL: "http://localhost:8800/api",
+  baseURL: "https://mis492-final-project.onrender.com/api",
   headers: {
     "Content-Type": "application/json",
   },
