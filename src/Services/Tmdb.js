@@ -27,4 +27,16 @@ const getMovieDetails = async (movieId) => {
   }
 };
 
-export { searchMovie, getMovieDetails };
+// https://api.themoviedb.org/3/movie/now_playing
+const getReleaseRadar = async (movieId) => {
+  try {
+    const res = await tmdbBaseAxios.get(
+      `/movie/now_playing?api_key=${tmdbAPIKey}`
+    );
+    return res?.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export { searchMovie, getMovieDetails, getReleaseRadar };

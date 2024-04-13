@@ -20,13 +20,13 @@ const Layout = ({
       {/* Navbar is visible only for mobile devices */}
       <Navbar />
       <Grid container>
-        {user?._id ? <Sidebar /> : null}
+        {user?._id && <Sidebar />}
         {/* Page Contents */}
         <Grid item xs={12} sm={user?._id ? 9 : 12}>
           <Grid
             container
-            px={disablePaddingX ? 0 : 4}
-            py={disablePaddingY ? 0 : 4}
+            px={disablePaddingX ? 0 : 8}
+            py={disablePaddingY ? 0 : 8}
             {...props}
           >
             {pageLoading ? (
