@@ -86,7 +86,7 @@ const CurrentChat = ({ chatLoading }) => {
       {/* Messages */}
       <Grid
         ref={messageContainerRef}
-        height="calc(100vh - 176px)" //60 top- 60 bottom -56 top navbar ->
+        height="calc(100vh - 120px)" //60 top- 60 bottom -> for desktop.. mind top navbar for mobile (56)
         width="100%"
         sx={{
           overflowY: "auto",

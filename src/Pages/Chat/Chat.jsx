@@ -206,7 +206,7 @@ const Chat = () => {
                 />
               ))
             ) : (
-              <CenteredBox height={"70vh"}>
+              <CenteredBox>
                 <Typography fontWeight={600}>No chats found</Typography>
               </CenteredBox>
             )}

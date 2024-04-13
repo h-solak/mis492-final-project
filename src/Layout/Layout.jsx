@@ -16,21 +16,13 @@ const Layout = ({
 }) => {
   const { user } = useUser();
   return (
-    <Box minHeight={"100vh"} backgroundColor={"#f0f2f5"}>
+    <Box minHeight={"100vh"}>
+      {/* Navbar is visible only for mobile devices */}
       <Navbar />
-      {/* paddingTop should be 4 to avoid navbar getting in the way */}
       <Grid container>
         {user?._id ? <Sidebar /> : null}
         {/* Page Contents */}
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={user?._id ? 9.6 : 12}
-          sx={{
-            backgroundColor: "#F0F2F5",
-          }}
-        >
+        <Grid item xs={12} sm={user?._id ? 9 : 12}>
           <Grid
             container
             px={disablePaddingX ? 0 : 4}

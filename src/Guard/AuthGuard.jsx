@@ -5,7 +5,8 @@ import { getUser } from "../Services/Auth";
 import CenteredBox from "../Components/CenteredBox";
 import MovieLoaderSvg from "../assets/icons/pageLoader.svg";
 import { removeAccessToken } from "../api/config";
-const AuthGuard = ({ component }) => {
+//isisHomeComponent prevents the component from redirecting bug
+const AuthGuard = ({ component, isHomeComponent }) => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const { user, setUser } = useUser();
@@ -18,7 +19,9 @@ const AuthGuard = ({ component }) => {
       //token is expired or something went wrong with the user
       removeAccessToken();
       setUser({});
-      navigate("/");
+      if (!isHomeComponent) {
+        navigate("/");
+      }
     }
     setIsLoading(false);
   };

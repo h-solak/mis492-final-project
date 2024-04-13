@@ -1,4 +1,10 @@
-import { Box, Grid, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  IconButton,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ProfilePopover from "./ProfilePopover";
@@ -6,8 +12,10 @@ import { removeAccessToken } from "../../api/config";
 import useUser from "../../Contexts/User/useUser";
 import { Chat, HomeRounded, Movie, Poll } from "@mui/icons-material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import Logo from "../../assets/logo.svg";
 const Navbar = () => {
   const navigate = useNavigate();
+  const isSmScreen = useMediaQuery("(max-width:600px)");
   const { user, setUser } = useUser();
 
   const logout = async () => {
@@ -15,7 +23,7 @@ const Navbar = () => {
     setUser({});
     navigate("/");
   };
-  return (
+  return !isSmScreen ? null : (
     <Grid
       container
       display={"flex"}
@@ -33,59 +41,7 @@ const Navbar = () => {
       }}
       paddingX={4}
     >
-      <Link to="/">
-        <Typography
-          variant="h5"
-          color={"primary"}
-          fontWeight={700}
-          sx={{
-            cursor: "pointer",
-          }}
-        >
-          Movie Mate
-        </Typography>
-      </Link>
-      {/* Center Links */}
-      {!user?._id ? null : (
-        <Box display={"flex"} alignItems={"center"} gap={4}>
-          <Link to={"/"}>
-            <IconButton>
-              <HomeRounded
-                sx={{
-                  fontSize: 32,
-                }}
-              />
-            </IconButton>
-          </Link>
-          <Link to={"/chat"}>
-            <IconButton>
-              <Chat
-                sx={{
-                  fontSize: 26,
-                }}
-              />
-            </IconButton>
-          </Link>
-          <Link to={"/movies"}>
-            <IconButton>
-              <Movie
-                sx={{
-                  fontSize: 28,
-                }}
-              />
-            </IconButton>
-          </Link>
-          <Link to={"/character-survey"}>
-            <IconButton>
-              <Poll
-                sx={{
-                  fontSize: 28,
-                }}
-              />
-            </IconButton>
-          </Link>
-        </Box>
-      )}
+      <img src={Logo} height={20} alt="Logo" onClick={() => navigate("/")} />
 
       {!user?._id ? null : (
         <Box display={"flex"} alignItems={"center"} gap={2}>

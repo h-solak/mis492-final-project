@@ -26,8 +26,13 @@ function App() {
         <UserProvider>
           <BrowserRouter>
             <Routes>
-              {/* Dont use Authguard for Home - It has a seperate system */}
-              <Route key="Home" path="/" element={<Home />} />
+              <Route
+                key="Home"
+                path="/"
+                element={
+                  <AuthGuard component={<Home />} isHomeComponent={true} />
+                }
+              />
               <Route key="Login" path="/login" element={<Login />} />
               <Route key="Register" path="/register" element={<Register />} />
               <Route
