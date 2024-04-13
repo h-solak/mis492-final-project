@@ -39,7 +39,7 @@ const ProfilePopover = ({ logout }) => {
         aria-describedby={id}
         variant="text"
         onClick={handleClick}
-        sx={{ color: "primary", textTransform: "none", fontWeight: "600" }}
+        sx={{ color: "primary", textTransform: "none", fontWeight: "bold" }}
       >
         <AvatarImg no={user?.crrAvatar} width={32} style={{ marginRight: 4 }} />
         {/* {user?.username || "User"} */}
@@ -70,7 +70,7 @@ const ProfilePopover = ({ logout }) => {
                 primary={"Change Language"}
                 primaryTypographyProps={{
                   fontSize: 14,
-                  fontWeight: 500,
+                  fontWeight: "medium",
                 }}
               />
             </ListItemButton>
@@ -87,7 +87,7 @@ const ProfilePopover = ({ logout }) => {
                 primary={"My Profile"}
                 primaryTypographyProps={{
                   fontSize: 14,
-                  fontWeight: 500,
+                  fontWeight: "medium",
                 }}
               />
             </ListItemButton>
@@ -104,7 +104,7 @@ const ProfilePopover = ({ logout }) => {
                 primary={"Log out"}
                 primaryTypographyProps={{
                   fontSize: 14,
-                  fontWeight: 500,
+                  fontWeight: "medium",
                 }}
               />
             </ListItemButton>

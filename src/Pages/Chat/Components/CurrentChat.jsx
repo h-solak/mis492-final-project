@@ -69,7 +69,7 @@ const CurrentChat = ({ chatLoading }) => {
       >
         <Box display={"flex"} alignItems={"center"} gap={1} pl={4}>
           <AvatarImg no={crrChat?.receiver?.avatar} width={40} />
-          <Typography fontWeight={600}>
+          <Typography fontWeight={"bold"}>
             {crrChat?.receiver?.username}
           </Typography>
         </Box>
@@ -138,7 +138,7 @@ const CurrentChat = ({ chatLoading }) => {
               mr: 1,
             }}
           />
-          <Typography fontWeight={500}>Close Chat</Typography>
+          <Typography fontWeight={"medium"}>Close Chat</Typography>
         </MenuItem>
       </Menu>
     </Grid>

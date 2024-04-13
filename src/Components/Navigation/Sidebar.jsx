@@ -1,6 +1,6 @@
 import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useUser from "../../Contexts/User/useUser";
 import Logo from "../../assets/logo.svg";
 /* Icons */
@@ -13,9 +13,11 @@ import {
   Search,
   Bookmark,
   Settings,
+  Logout,
 } from "@mui/icons-material";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 import ColumnBox from "../ColumnBox";
+import { removeAccessToken } from "../../api/config";
 const LinkItem = ({ title, url, onClick, icon, imgIcon }) => {
   const { pathname } = useLocation();
   const isActive = pathname == url;
@@ -33,7 +35,7 @@ const LinkItem = ({ title, url, onClick, icon, imgIcon }) => {
           paddingX: 4,
           borderBottom: isActive ? 3 : 0,
           borderColor: "red",
-          fontWeight: 400,
+          fontWeight: "regular",
         }}
         startIcon={icon ? icon : <img src={imgIcon} width={24} height={24} />}
         onClick={onClick ? onClick : () => null}
@@ -91,9 +93,16 @@ const linkItems = [
 ];
 
 const Sidebar = () => {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const { pathname } = useLocation();
   const isSmScreen = useMediaQuery("(max-width:600px)");
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    removeAccessToken();
+    setUser({});
+    navigate("/");
+  };
 
   return isSmScreen ? null : (
     <Grid
@@ -143,7 +152,11 @@ const Sidebar = () => {
             <Typography fontSize={15} color={"#000"}>
               {`@${user?.username}` || "User"}
             </Typography>
-            <Typography fontSize={13} color={"primary.light"} fontWeight={600}>
+            <Typography
+              fontSize={13}
+              color={"primary.light"}
+              fontWeight={"bold"}
+            >
               {"Drama Queen"}
             </Typography>
           </ColumnBox>
@@ -159,6 +172,7 @@ const Sidebar = () => {
             icon={item?.icon}
           />
         ))}
+        <LinkItem title={"Logout"} onClick={logout} icon={<Logout />} />
       </Box>
     </Grid>
   );

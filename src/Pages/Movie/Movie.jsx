@@ -125,7 +125,7 @@ const Movie = () => {
                       color: "highlight.main",
                     }}
                   />
-                  <Typography fontSize={18} color="#fff" fontWeight={500}>
+                  <Typography fontSize={18} color="#fff" fontWeight={"medium"}>
                     {movie?.vote_average?.toString()?.slice(0, 3)}
                   </Typography>
                 </Box>
@@ -141,7 +141,7 @@ const Movie = () => {
                       color: "#fff",
                     }}
                   />
-                  <Typography fontSize={18} color="#fff" fontWeight={500}>
+                  <Typography fontSize={18} color="#fff" fontWeight={"medium"}>
                     {userRates?.find((rate) => rate?.movie === movieId)?.rate}
                   </Typography>
                 </Box>
@@ -150,7 +150,7 @@ const Movie = () => {
           </Grid>
           <Typography
             marginTop={2}
-            fontWeight={600}
+            fontWeight={"bold"}
             fontSize={32}
             color={"#fff"}
           >
@@ -158,7 +158,7 @@ const Movie = () => {
           </Typography>
 
           <Typography color={"#fff"}>{movie?.overview}</Typography>
-          <Typography marginTop={2} color={"secondary"} fontWeight={600}>
+          <Typography marginTop={2} color={"secondary"} fontWeight={"bold"}>
             {movie?.release_date.slice(0, 4)} - <Timer sx={{ fontSize: 16 }} />{" "}
             {movie?.runtime} minutes
           </Typography>
@@ -187,9 +187,9 @@ const Movie = () => {
       {/* Reviews Section */}
       <Grid container p={4} spacing={4}>
         <Grid item xs={12} mt={2}>
-          <Typography fontWeight={500} fontSize={20}>
+          <Typography fontWeight={"medium"} fontSize={20}>
             User Reviews for{" "}
-            <Typography variant={"span"} fontWeight={600}>
+            <Typography variant={"span"} fontWeight={"bold"}>
               {movie?.title}
             </Typography>
           </Typography>
@@ -216,7 +216,7 @@ const Movie = () => {
         <ColumnBox gap={4}>
           <Typography fontWeight={500}>
             How do you think{" "}
-            <Typography component={"span"} fontWeight={700}>
+            <Typography component={"span"} fontWeight={"bolder"}>
               {movie?.title}
             </Typography>{" "}
             was?

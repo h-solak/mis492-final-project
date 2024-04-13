@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField, Link } from "@mui/material";
+import { Box, Button, Grid, TextField, Link, Typography } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { registerUser } from "../../Services/Auth";
@@ -29,57 +29,66 @@ const Register = () => {
 
   return (
     <Layout>
-      <Grid container>
-        <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
-          <Grid
-            item
-            sm={12}
-            md={4}
-            display={"flex"}
-            flexDirection={"column"}
-            gap={3}
+      <Grid container component={"form"} onSubmit={handleSubmit(onSubmit)}>
+        <Grid
+          item
+          sm={12}
+          md={3}
+          display={"flex"}
+          flexDirection={"column"}
+          gap={3}
+        >
+          <Link
+            variant="body2"
+            onClick={() => navigate("/login")}
+            color="primary"
+            sx={{ cursor: "pointer", textDecoration: "none" }}
           >
-            <ColumnBox>
-              <TextField
-                size="small"
-                label="Username"
-                {...register("username", {
-                  required: true,
-                  minLength: 3,
-                  maxLength: 20,
-                })}
-              />
-              <TextfieldError title={"Username"} errors={errors.username} />
-            </ColumnBox>
+            <Typography color={"dark.main"}>
+              Already have an account?{" "}
+              <Typography
+                variant="span"
+                color={"primary.main"}
+                fontWeight={"bold"}
+              >
+                Login
+              </Typography>
+            </Typography>
+          </Link>
+          <ColumnBox>
+            <TextField
+              size="small"
+              label="Username"
+              {...register("username", {
+                required: true,
+                minLength: 3,
+                maxLength: 20,
+              })}
+            />
+            <TextfieldError title={"Username"} errors={errors.username} />
+          </ColumnBox>
 
-            <ColumnBox>
-              <TextField
-                type="password"
-                size="small"
-                label="Password"
-                {...register("password", {
-                  required: true,
-                  minLength: 6,
-                  maxLength: 20,
-                })}
-              />
-              <TextfieldError title={"Password"} errors={errors.password} />
-            </ColumnBox>
+          <ColumnBox>
+            <TextField
+              type="password"
+              size="small"
+              label="Password"
+              {...register("password", {
+                required: true,
+                minLength: 6,
+                maxLength: 20,
+              })}
+            />
+            <TextfieldError title={"Password"} errors={errors.password} />
+          </ColumnBox>
 
-            <Link
-              variant="body2"
-              onClick={() => navigate("/login")}
-              color="primary"
-              sx={{ cursor: "pointer" }}
-            >
-              Do you have an account? Sign in
-            </Link>
-
-            <Button variant="contained" type="submit">
-              Register
-            </Button>
-          </Grid>
-        </form>
+          <Button variant="contained" type="submit">
+            Register
+          </Button>
+        </Grid>
+        <Grid item xs={0} md={9}>
+          Foto
+        </Grid>
       </Grid>
     </Layout>
   );

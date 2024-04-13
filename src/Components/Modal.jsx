@@ -46,7 +46,7 @@ const BaseModal = ({
             alignItems={"center"}
             justifyContent={"space-between"}
           >
-            <Typography variant="h6" fontWeight={500}>
+            <Typography variant="h6" fontWeight={"medium"}>
               {title}
             </Typography>
             <IconButton onClick={() => setIsModalOpen(false)}>

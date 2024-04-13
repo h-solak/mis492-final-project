@@ -29,7 +29,7 @@ const rateItem = ({ rate }) => {
           />
         </Link>
         <ColumnBox>
-          <Typography fontSize={18} fontWeight={600}>
+          <Typography fontSize={18} fontWeight={"bold"}>
             {rate?.movieTitle}
           </Typography>
 

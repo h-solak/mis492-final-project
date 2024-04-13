@@ -17,11 +17,11 @@ const Home = () => {
   return (
     <Layout>
       <Grid item xs={12}>
-        <Typography variant="h6" fontWeight={600} fontSize={32}>
+        <Typography variant="h6" fontWeight={"bold"} fontSize={32}>
           Welcome, {user?.username || "User"}!
         </Typography>
         <ul>
-          <Typography fontSize={18} fontWeight={700}>
+          <Typography fontSize={18} fontWeight={"bolder"}>
             TODO
           </Typography>
           <li>Mesaj görüldü özelliği???</li>

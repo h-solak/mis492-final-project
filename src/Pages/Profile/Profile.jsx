@@ -42,7 +42,7 @@ const Profile = () => {
         <Box display={"flex"} alignItems={"center"} gap={1}>
           <AvatarImg no={userProfile?.crrAvatar} width={90} height={90} />
           <Box>
-            <Typography fontWeight={600}>{userProfile?.username}</Typography>
+            <Typography fontWeight={"bold"}>{userProfile?.username}</Typography>
             <Typography color={"secondary"}>{userProfile?.desc}</Typography>
           </Box>
         </Box>

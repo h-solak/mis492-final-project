@@ -50,7 +50,7 @@ const Chat = () => {
               <Box display={"flex"} alignItems={"center"} gap={2}>
                 <Box display={"flex"} alignItems={"center"} gap={0.5}>
                   <AvatarImg no={data?.avatar} width={24} />
-                  <Typography fontWeight={600}>{data?.username}:</Typography>
+                  <Typography fontWeight={"bold"}>{data?.username}:</Typography>
                   <Typography>
                     {data?.content?.length > 12
                       ? `${data?.content.slice(0, 12)}...`
@@ -186,7 +186,7 @@ const Chat = () => {
           >
             <Box display={"flex"} alignItems={"center"} gap={1}>
               <ChatRounded />
-              <Typography variant="h6" fontWeight={600}>
+              <Typography variant="h6" fontWeight={"bold"}>
                 Chats
               </Typography>
             </Box>
@@ -207,7 +207,7 @@ const Chat = () => {
               ))
             ) : (
               <CenteredBox>
-                <Typography fontWeight={600}>No chats found</Typography>
+                <Typography fontWeight={"bold"}>No chats found</Typography>
               </CenteredBox>
             )}
           </Grid>

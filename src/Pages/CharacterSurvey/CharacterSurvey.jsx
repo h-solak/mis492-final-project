@@ -47,7 +47,7 @@ const CharacterSurvey = () => {
           alignSelf={"center"}
           justifySelf={"center"}
         >
-          <Typography textAlign={"center"} fontWeight={600} fontSize={28}>
+          <Typography textAlign={"center"} fontWeight={"bold"} fontSize={28}>
             CHARACTER SURVEY
           </Typography>
           <ColumnBox>

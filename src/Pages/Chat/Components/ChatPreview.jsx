@@ -46,7 +46,7 @@ const ChatPreview = ({ chat }) => {
           justifyContent={"space-between"}
           width={"100%"}
         >
-          <Typography fontWeight={600}>{chat?.username}</Typography>
+          <Typography fontWeight={"bold"}>{chat?.username}</Typography>
           {chat?.lastMessage ? (
             <Typography color={"secondary"} fontSize={12}>
               {lastMessageDate}

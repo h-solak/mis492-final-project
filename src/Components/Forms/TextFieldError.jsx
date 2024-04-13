@@ -10,7 +10,7 @@ const TextfieldError = ({ errors, title }) => {
         padding={0}
         margin={0}
         fontSize={12}
-        fontWeight={600}
+        fontWeight={"bold"}
       >
         {errors.type === "required" && `${title || "This"} field is required`}
         {errors.type === "maxLength" &&

@@ -11,7 +11,7 @@ const ReviewItem = ({ review }) => {
         <Link to={`/profile/${review.username}`}>
           <Box display={"flex"} alignItems={"center"} gap={0.6}>
             <AvatarImg no={review?.userAvatar} width={40} height={40} />
-            <Typography fontWeight={600}>{review?.username}</Typography>
+            <Typography fontWeight={"bold"}>{review?.username}</Typography>
           </Box>
         </Link>
         <Box display={"flex"} alignItems={"center"} gap={0}>

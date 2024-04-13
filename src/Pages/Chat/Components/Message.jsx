@@ -100,7 +100,7 @@ const Message = ({ message }) => {
               mr: 1,
             }}
           />
-          <Typography fontWeight={500}>Copy</Typography>
+          <Typography fontWeight={"medium"}>Copy</Typography>
         </MenuItem>
         {isUserSender ? (
           <MenuItem
@@ -114,7 +114,7 @@ const Message = ({ message }) => {
                 mr: 1,
               }}
             />
-            <Typography fontWeight={500}>Delete</Typography>
+            <Typography fontWeight={"medium"}>Delete</Typography>
           </MenuItem>
         ) : null}
       </Menu>

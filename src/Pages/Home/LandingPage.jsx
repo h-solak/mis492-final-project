@@ -35,7 +35,7 @@ const LandingPage = () => {
         <Grid item xs={12} sm={12} md={6}>
           <img src={Logo} height={32} alt="Camera Roll" />
           <Typography
-            fontWeight={800}
+            fontWeight={"bolder"}
             fontSize={isXsScreen ? 24 : 42}
             lineHeight={1.1}
             marginTop={2}
@@ -62,7 +62,7 @@ const LandingPage = () => {
 
             <Button
               color="dark"
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/register")}
               variant="outlined"
               sx={{
                 borderRadius: 99,
