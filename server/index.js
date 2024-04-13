@@ -9,6 +9,7 @@ const cors = require("cors");
 /* Routes */
 const userRoute = require("./routes/user");
 const usersRoute = require("./routes/users");
+const friendsRoute = require("./routes/friends");
 const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
 const chatRoute = require("./routes/chats");
@@ -23,6 +24,7 @@ app.use(cors());
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/users", usersRoute);
+app.use("/api/friends", friendsRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/chats", chatRoute);
 app.use("/api/movie", movieRoute);

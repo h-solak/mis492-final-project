@@ -29,6 +29,18 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    /*
+    friend requests and matches
+      {
+        sender: id,
+        reciever: id,
+        pending: true
+      }
+    */
+    pendingFriendRequests: {
+      type: Array,
+      default: [],
+    },
     desc: {
       type: String,
       default: "Hey there! I am using MovieMate <3",
