@@ -92,6 +92,8 @@ const Sidebar = () => {
         top: 0,
         borderRight: 3,
         borderColor: "secondary.light",
+        overflowY: "clip",
+        overflowX: "hidden",
       }}
     >
       <Link to={"/"}>
