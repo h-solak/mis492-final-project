@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../Layout/Layout";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Link } from "@mui/material";
+
 import useUser from "../../Contexts/User/useUser";
 import CenteredBox from "../../Components/CenteredBox";
 import { useParams } from "react-router-dom";
 import { getUserProfile } from "../../Services/User";
 import AvatarImg from "../../Components/AvatarImg";
 import RateItem from "./Components/RateItem";
+import { Home } from "@mui/icons-material";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 
 const Profile = () => {
   const { user } = useUser();
@@ -38,6 +41,14 @@ const Profile = () => {
 
   return (
     <Layout pageLoading={pageLoading}>
+      <Breadcrumbs
+        links={[
+          {
+            title: `@${username}`,
+            url: `/profile/${username}`,
+          },
+        ]}
+      />
       <Grid item xs={12}>
         <Box display={"flex"} alignItems={"center"} gap={1}>
           <AvatarImg no={userProfile?.crrAvatar} width={90} height={90} />
@@ -61,7 +72,7 @@ const Profile = () => {
           's Reviews/Rates ({userProfile?.rates.length})
         </Typography>
         {userProfile?.rates?.map((rate) => (
-          <RateItem rate={rate} />
+          <RateItem key={rate?.movieTitle} rate={rate} />
         ))}
       </Grid>
     </Layout>

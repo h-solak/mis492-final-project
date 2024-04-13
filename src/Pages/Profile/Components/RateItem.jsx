@@ -8,7 +8,6 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import ColumnBox from "../../../Components/ColumnBox";
 
 const rateItem = ({ rate }) => {
-  console.log(rate);
   return (
     <Grid item xs={12} marginBottom={4}>
       <Box display={"flex"} alignItems={"start"} gap={2}>
