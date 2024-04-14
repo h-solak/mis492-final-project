@@ -14,9 +14,6 @@ import ColumnBox from "../../Components/ColumnBox";
 import { useNavigate, Link } from "react-router-dom";
 import Layout from "../../Layout/Layout";
 import Logo from "../../assets/logo.svg";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import GoogleButton from "../../Components/Buttons/GoogleButton";
 import useUser from "../../Contexts/User/useUser";
 
@@ -147,16 +144,6 @@ const Login = () => {
           />
           <TextfieldError title={"Password"} errors={errors.password} />
         </ColumnBox>
-        {/* <ColumnBox>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label="Birthday"
-              slotProps={{ textField: { size: "small" } }}
-            />
-          </LocalizationProvider>
-          <TextfieldError title={"Password"} errors={errors.password} />
-        </ColumnBox> */}
-
         <Button
           variant="contained"
           type="submit"

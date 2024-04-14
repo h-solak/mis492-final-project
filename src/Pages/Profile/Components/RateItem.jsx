@@ -3,9 +3,9 @@ import React from "react";
 import { Star } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import AvatarImg from "../../../Components/AvatarImg";
-import dayjs from "dayjs";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import ColumnBox from "../../../Components/ColumnBox";
+import { format } from "date-fns";
 
 const rateItem = ({ rate }) => {
   return (
@@ -46,7 +46,7 @@ const rateItem = ({ rate }) => {
               </Typography>
             </Typography>
             <Typography color={"secondary"} fontSize={12}>
-              ・Watched {dayjs(rate?.createdAt).format("MMMM D, YYYY")}
+              ・Watched {format(rate?.createdAt, "dd/MM/yyyy")}
             </Typography>
             {/* <Rating size="small" value={parseInt(rate?.rate)} max={10} /> */}
           </Box>

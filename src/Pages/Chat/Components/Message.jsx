@@ -8,9 +8,9 @@ import {
 } from "@mui/material";
 import React, { useContext, useState } from "react";
 import useUser from "../../../Contexts/User/useUser";
-import dayjs from "dayjs";
 import { ChatContext } from "../Chat";
 import { ContentCopy, DeleteOutline } from "@mui/icons-material";
+import { format } from "date-fns";
 
 function isDateToday(date) {
   const today = new Date();
@@ -62,10 +62,10 @@ const Message = ({ message }) => {
             color={isUserSender ? "#d9d9d9" : "#999"}
             textAlign={"end"}
           >
-            {dayjs(message?.createdAt).format("DD/MM/YYYY") !==
-            dayjs(new Date()).format("DD/MM/YYYY")
-              ? dayjs(message?.createdAt).format("MMMM D, YYYY - HH:mm")
-              : dayjs(message?.createdAt).format("HH:mm")}
+            {format(message?.createdAt, "dd/MM/yyyy") !==
+            format(new Date(), "dd/MM/yyyy")
+              ? format(message?.createdAt, "MMMM D, YYYY - HH:mm")
+              : format(message?.createdAt, "HH:mm")}
           </Typography>
         </Paper>
       </Grid>

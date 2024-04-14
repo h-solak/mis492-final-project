@@ -2,8 +2,8 @@ import { Box, Grid, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import AvatarImg from "../../../Components/AvatarImg";
 import ColumnBox from "../../../Components/ColumnBox";
-import * as dayjs from "dayjs";
 import { ChatContext } from "../Chat";
+import { format } from "date-fns";
 
 const ChatPreview = ({ chat }) => {
   const { handleGetChat } = useContext(ChatContext);
@@ -12,14 +12,14 @@ const ChatPreview = ({ chat }) => {
   let lastMessageDate;
 
   if (
-    dayjs(chat?.lastMessage?.createdAt).format("DD/MM/YYYY") !==
-    dayjs(crrDate).format("DD/MM/YYYY")
+    format(chat?.lastMessage?.createdAt, "dd MM yyyy") !==
+    format(crrDate, "dd MM yyyy")
   ) {
     //from now DOESNT WORK
     // lastMessageDate = dayjs(chat?.lastMessage?.createdAt).fromNow();
-    lastMessageDate = dayjs(chat?.lastMessage?.createdAt).format("DD/MM/YYYY");
+    lastMessageDate = format(chat?.lastMessage?.createdAt, "dd MM yyyy");
   } else {
-    lastMessageDate = dayjs(chat?.lastMessage?.createdAt).format("HH:mm");
+    lastMessageDate = format(chat?.lastMessage?.createdAt, "HH:mm");
   }
 
   return (
