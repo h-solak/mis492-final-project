@@ -9,16 +9,18 @@ const ChatPreview = ({ chat }) => {
   const { handleGetChat } = useContext(ChatContext);
   const crrDate = new Date();
 
-  // if (
-  //   dayjs(chat?.lastMessage?.createdAt).format("DD/MM/YYYY") !==
-  //   dayjs(crrDate).format("DD/MM/YYYY")
-  // ) {
-  //   //from now DOESNT WORK
-  //   // lastMessageDate = dayjs(chat?.lastMessage?.createdAt).fromNow();
-  //   lastMessageDate = dayjs(chat?.lastMessage?.createdAt).format("DD/MM/YYYY");
-  // } else {
-  //   lastMessageDate = dayjs(chat?.lastMessage?.createdAt).format("HH:mm");
-  // }
+  let lastMessageDate;
+
+  if (
+    dayjs(chat?.lastMessage?.createdAt).format("DD/MM/YYYY") !==
+    dayjs(crrDate).format("DD/MM/YYYY")
+  ) {
+    //from now DOESNT WORK
+    // lastMessageDate = dayjs(chat?.lastMessage?.createdAt).fromNow();
+    lastMessageDate = dayjs(chat?.lastMessage?.createdAt).format("DD/MM/YYYY");
+  } else {
+    lastMessageDate = dayjs(chat?.lastMessage?.createdAt).format("HH:mm");
+  }
 
   return (
     <Grid
@@ -28,7 +30,7 @@ const ChatPreview = ({ chat }) => {
       display={"flex"}
       alignItems={"center"}
       gap={1}
-      px={4}
+      px={2}
       py={1}
       borderBottom={2}
       borderColor={"secondary.light"}
@@ -45,18 +47,49 @@ const ChatPreview = ({ chat }) => {
           justifyContent={"space-between"}
           width={"100%"}
         >
-          <Typography fontWeight={"bold"}>{chat?.username}</Typography>
-          {chat?.lastMessage ? (
-            <Typography color={"secondary"} fontSize={12}>
-              {"lastMessageDate"}
+          <ColumnBox>
+            <Typography fontWeight={"bolder"}>{chat?.username}</Typography>
+            <Typography fontSize={14}>
+              {chat?.lastMessage?.content?.length > 15
+                ? `${chat?.lastMessage?.content?.slice(0, 12)}...`
+                : chat?.lastMessage?.content}
             </Typography>
+          </ColumnBox>
+          {chat?.lastMessage ? (
+            <ColumnBox justifyContent="space-between">
+              <Typography
+                color={
+                  chat?.unreadMessagesCount > 0 ? "primary.light" : "secondary"
+                }
+                fontWeight={chat?.unreadMessagesCount > 0 ? "bold" : "regular"}
+                fontSize={12}
+              >
+                {lastMessageDate}
+              </Typography>
+              {chat?.unreadMessagesCount > 0 ? (
+                <Box
+                  sx={{
+                    backgroundColor: "primary.light",
+                    p: 0.5,
+                    borderRadius: 99,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "#fff",
+                    fontSize: 11,
+                    height: 24,
+                    width: 24,
+                    alignSelf: "end",
+                  }}
+                >
+                  {chat?.unreadMessagesCount > 10
+                    ? "10+"
+                    : chat?.unreadMessagesCount}
+                </Box>
+              ) : null}
+            </ColumnBox>
           ) : null}
         </Box>
-        <Typography color={"secondary"}>
-          {chat?.lastMessage?.content?.length > 15
-            ? `${chat?.lastMessage?.content?.slice(0, 15)}...`
-            : chat?.lastMessage?.content}
-        </Typography>
       </ColumnBox>
     </Grid>
   );

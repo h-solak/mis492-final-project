@@ -4,7 +4,7 @@ const ChatSchema = new mongoose.Schema(
   {
     participants: [
       {
-        id: mongoose.Schema.Types.ObjectId,
+        id: String,
         read: Date, //last time user has clicked on chat
       },
     ],

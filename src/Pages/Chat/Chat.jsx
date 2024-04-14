@@ -75,8 +75,9 @@ const Chat = () => {
     };
 
     //start socket ( https:// )
-    // "ws://movie-mate-492.netlify.app" || "ws://localhost:8900"
-    socket.current = io("/");
+    socket.current = io(
+      "ws://localhost:8900" || "ws://movie-mate-492.netlify.app"
+    );
     socket.current.emit("addUser", user?._id);
     socket.current.on("getMessage", (data) => {
       updateChatsAfterNewMessage(data);
@@ -99,6 +100,7 @@ const Chat = () => {
     setCrrChat(newCrrChat);
     setChatLoading(false);
     setUserIsOnChat(true);
+    await handleGetChats(); //call this at the end to update chat previews
   };
 
   const handleSendMessage = async (content) => {

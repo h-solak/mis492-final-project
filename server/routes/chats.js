@@ -4,6 +4,7 @@ const router = require("express").Router();
 const checkJwt = require("../utils/authenticate");
 const getUserIdFromToken = require("../utils/getUserIdFromToken");
 const sortByDate = require("../utils/sortByDate");
+const isMessageRead = require("../utils/isMessageRead");
 
 //GET CHAT LIST - PREVIEWS
 router.get("/", checkJwt, async (req, res) => {
@@ -38,11 +39,32 @@ router.get("/", checkJwt, async (req, res) => {
           const lastMessage = chatData?.messages
             ? chatData?.messages[chatData?.messages?.length - 1]
             : {};
+
+          const lastReadDate =
+            chatData.participants[0].id == id
+              ? chatData.participants[0]?.read
+              : chatData.participants[1]?.read;
+
+          let unreadMessagesCount = 0;
+          chatData?.messages.slice(-11).forEach((messageItem) => {
+            isMessageRead(messageItem?.createdAt, lastReadDate)
+              ? null
+              : unreadMessagesCount++;
+          });
+
+          console.log("sayı", unreadMessagesCount, userData.username);
+
+          console.log(
+            "CEVAP??",
+            isMessageRead(lastMessage?.createdAt, lastReadDate)
+          );
+
           const newPreview = {
             chatId: chatData?._id,
             lastMessage: lastMessage || {},
             username: userData?.username,
             userAvatar: userData?.crrAvatar,
+            unreadMessagesCount: unreadMessagesCount,
           };
           previewChats.push(newPreview);
         })
