@@ -64,7 +64,7 @@ const Message = ({ message }) => {
           >
             {format(message?.createdAt, "dd/MM/yyyy") !==
             format(new Date(), "dd/MM/yyyy")
-              ? format(message?.createdAt, "MMMM D, YYYY - HH:mm")
+              ? format(message?.createdAt, "MMMM d, yyyy - HH:mm")
               : format(message?.createdAt, "HH:mm")}
           </Typography>
         </Paper>

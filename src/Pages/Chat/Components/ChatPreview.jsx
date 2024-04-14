@@ -12,11 +12,10 @@ const ChatPreview = ({ chat }) => {
   let lastMessageDate;
 
   if (
+    //if the last message is not today, format it differently
     format(chat?.lastMessage?.createdAt, "dd MM yyyy") !==
     format(crrDate, "dd MM yyyy")
   ) {
-    //from now DOESNT WORK
-    // lastMessageDate = dayjs(chat?.lastMessage?.createdAt).fromNow();
     lastMessageDate = format(chat?.lastMessage?.createdAt, "dd MM yyyy");
   } else {
     lastMessageDate = format(chat?.lastMessage?.createdAt, "HH:mm");
