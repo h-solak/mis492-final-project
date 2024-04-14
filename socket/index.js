@@ -1,9 +1,10 @@
-const io = require("socket.io")("https://moviemate492.netlify.app" || 8900, {
-  cors: {
-    origin: "https://moviemate492.netlify.app" || "http://localhost:5173",
-  },
-});
+const io = require("socket.io");
 
+// {
+//   cors: {
+//     origin: "https://moviemate492.netlify.app" || "http://localhost:5173",
+//   },
+// }
 let users = [];
 
 const addUser = (userId, socketId) => {
