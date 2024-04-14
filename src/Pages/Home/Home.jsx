@@ -20,6 +20,7 @@ const Home = () => {
         <Typography fontSize={18} fontWeight={"bolder"}>
           TODO
         </Typography>
+        <li>8 karakter, büyük harf, özel karakter</li>
         <li>Search for users</li>
         <li>
           Friends (request) feature: TWO TYPES: MATCHED (yanında alev işareti) /

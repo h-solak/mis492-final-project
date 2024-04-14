@@ -35,7 +35,7 @@ const UserSearch = () => {
     setSearchParams({ users: watch("searchMovies")?.trim() });
   };
   return (
-    <Grid item xs={12} mt={4}>
+    <Grid item xs={12} lg={6} mt={4}>
       <TextField
         placeholder="Search for users..."
         InputProps={{
