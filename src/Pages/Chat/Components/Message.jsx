@@ -1,4 +1,5 @@
 import {
+  Box,
   Grid,
   Menu,
   MenuItem,
@@ -6,11 +7,12 @@ import {
   Typography,
   makeStyles,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useUser from "../../../Contexts/User/useUser";
 import { ChatContext } from "../Chat";
-import { ContentCopy, DeleteOutline } from "@mui/icons-material";
+import { ContentCopy, DeleteOutline, DoneAll } from "@mui/icons-material";
 import { format } from "date-fns";
+import isMessageRead from "../../../Utilities/isMessageRead";
 
 function isDateToday(date) {
   const today = new Date();
@@ -22,13 +24,27 @@ function isDateToday(date) {
 }
 
 const Message = ({ message }) => {
-  const { handleDeleteMessage } = useContext(ChatContext);
+  const { user } = useUser();
+  const { crrChat, handleDeleteMessage } = useContext(ChatContext);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [messageReadStatus, setMessageReadStatus] = useState(false);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  const { user } = useUser();
   const isUserSender = message?.sender == user?._id;
+
+  useEffect(() => {
+    //get the last read date of the other user
+    const lastReadDate =
+      crrChat.participants[0].id == user?._id
+        ? crrChat.participants[1]?.read
+        : crrChat.participants[0]?.read;
+    const newMessageReadStatus = isMessageRead(
+      message?.createdAt,
+      lastReadDate
+    );
+    setMessageReadStatus(newMessageReadStatus);
+  }, [crrChat]);
   return (
     <>
       <Grid
@@ -48,7 +64,7 @@ const Message = ({ message }) => {
             marginBottom: "8px",
             borderRadius: "10px",
             wordWrap: "break-word",
-            backgroundColor: isUserSender ? "primary.main" : "#f0f0f0",
+            backgroundColor: isUserSender ? "dark.main" : "#f0f0f0",
             color: isUserSender ? "#fff" : "#000",
           }}
           onContextMenu={(e) => {
@@ -57,16 +73,26 @@ const Message = ({ message }) => {
           }}
         >
           <Typography>{message?.content}</Typography>
-          <Typography
-            fontSize={10}
-            color={isUserSender ? "#d9d9d9" : "#999"}
-            textAlign={"end"}
-          >
-            {format(message?.createdAt, "dd/MM/yyyy") !==
-            format(new Date(), "dd/MM/yyyy")
-              ? format(message?.createdAt, "MMMM d, yyyy - HH:mm")
-              : format(message?.createdAt, "HH:mm")}
-          </Typography>
+          <Box display={"flex"} alignItems={"center"} gap={1}>
+            <Typography
+              fontSize={10}
+              color={isUserSender ? "#d9d9d9" : "#999"}
+              textAlign={"end"}
+            >
+              {format(message?.createdAt, "dd/MM/yyyy") !==
+              format(new Date(), "dd/MM/yyyy")
+                ? format(message?.createdAt, "MMMM d, yyyy - HH:mm")
+                : format(message?.createdAt, "HH:mm")}
+            </Typography>
+            {isUserSender ? (
+              <DoneAll
+                sx={{
+                  color: messageReadStatus ? "#1e90ff" : "secondary.main",
+                  fontSize: 16,
+                }}
+              />
+            ) : null}
+          </Box>
         </Paper>
       </Grid>
       <Menu

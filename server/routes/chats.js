@@ -52,13 +52,6 @@ router.get("/", checkJwt, async (req, res) => {
               : unreadMessagesCount++;
           });
 
-          console.log("sayı", unreadMessagesCount, userData.username);
-
-          console.log(
-            "CEVAP??",
-            isMessageRead(lastMessage?.createdAt, lastReadDate)
-          );
-
           const newPreview = {
             chatId: chatData?._id,
             lastMessage: lastMessage || {},

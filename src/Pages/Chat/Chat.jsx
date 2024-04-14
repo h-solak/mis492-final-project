@@ -33,47 +33,6 @@ const Chat = () => {
     /* Get chats on page load */
     handleGetChats();
 
-    /*----- SOCKET OPERATIONS -----*/
-    /* If user is on the chat currently, then refresh chat messages and previews -- but if user is not, then only refresh the preview*/
-    const updateChatsAfterNewMessage = (data) => {
-      const chatId = data?.chatId;
-      handleGetChats();
-      /* !!! If we don't use the setter function below, socket won't be able to see the state (it will see the initial state which is empty obj)*/
-      setCrrChat((prevCrrChat) => {
-        if (chatId == prevCrrChat?._id) {
-          //if user is currently on the chat that has a new message, get it
-          handleGetChat(chatId, false);
-        } else {
-          //if new message has arrived and user is not on that chat
-          if (data?.content) {
-            toast(() => (
-              <Box display={"flex"} alignItems={"center"} gap={2}>
-                <Box display={"flex"} alignItems={"center"} gap={0.5}>
-                  <AvatarImg no={data?.avatar} width={24} />
-                  <Typography fontWeight={"bold"}>{data?.username}:</Typography>
-                  <Typography>
-                    {data?.content?.length > 12
-                      ? `${data?.content.slice(0, 12)}...`
-                      : data?.content}
-                  </Typography>
-                </Box>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                  onClick={() => handleGetChat(chatId, false)}
-                >
-                  Reply
-                </Button>
-              </Box>
-            ));
-          }
-        }
-        const copyPrevCrrChat = prevCrrChat;
-        return copyPrevCrrChat;
-      });
-    };
-
     //start socket ( https:// )
     socket.current = io(
       "ws://localhost:8900" || "ws://movie-mate-492.netlify.app"
@@ -109,16 +68,9 @@ const Chat = () => {
         chatId: crrChat?._id,
         content: content,
       });
-      socket.current.emit("sendOrDeleteMessage", {
-        senderId: user?._id,
-        receiverId: crrChat?.participants?.find(
-          (participant) => participant.id !== user?._id
-        )?.id,
-        content: content,
-        chatId: crrChat?._id,
-        username: user?.username,
-        avatar: user?.crrAvatar,
-      });
+
+      socketSendOrDeleteMessage();
+
       console.log(
         "receiver!!!",
         crrChat?.participants?.find(
@@ -136,18 +88,64 @@ const Chat = () => {
         chatId: crrChat?._id,
         messageId: messageId,
       });
-      socket.current.emit("sendOrDeleteMessage", {
-        senderId: user?._id,
-        receiverId: crrChat?.participants?.find(
-          (participant) => participant.id !== user?._id
-        )?.id,
-        content: "", //it shows that this is a delete message emit
-        chatId: crrChat?._id,
-        username: user?.username,
-        avatar: user?.crrAvatar,
-      });
+      socketSendOrDeleteMessage();
       await handleGetChat(chatId, false);
     }
+  };
+
+  const socketSendOrDeleteMessage = (isEmptyMessage = false) => {
+    socket.current.emit("sendOrDeleteMessage", {
+      senderId: user?._id,
+      receiverId: crrChat?.participants?.find(
+        (participant) => participant.id !== user?._id
+      )?.id,
+      content: isEmptyMessage ? "" : content,
+      chatId: crrChat?._id,
+      username: user?.username,
+      avatar: user?.crrAvatar,
+    });
+  };
+
+  /*----- SOCKET OPERATIONS -----*/
+  /* If user is on the chat currently, refresh chat messages and previews -- but if user is not, then only refresh the preview*/
+  const updateChatsAfterNewMessage = (data) => {
+    const chatId = data?.chatId;
+    handleGetChats();
+    /* !!! If we don't use the setter function below, socket won't be able to see the state (it will see the initial state which is empty obj)*/
+    setCrrChat((prevCrrChat) => {
+      if (chatId == prevCrrChat?._id) {
+        //if user is currently on the chat that has a new message, get it
+        handleGetChat(chatId, false);
+        socketSendOrDeleteMessage(true); //to update read status for the other user when new message arrives and is read
+      } else {
+        //if new message has arrived and user is not on that chat
+        if (data?.content) {
+          toast(() => (
+            <Box display={"flex"} alignItems={"center"} gap={2}>
+              <Box display={"flex"} alignItems={"center"} gap={0.5}>
+                <AvatarImg no={data?.avatar} width={24} />
+                <Typography fontWeight={"bold"}>{data?.username}:</Typography>
+                <Typography>
+                  {data?.content?.length > 12
+                    ? `${data?.content.slice(0, 12)}...`
+                    : data?.content}
+                </Typography>
+              </Box>
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={() => handleGetChat(chatId, false)}
+              >
+                Reply
+              </Button>
+            </Box>
+          ));
+        }
+      }
+      const copyPrevCrrChat = prevCrrChat;
+      return copyPrevCrrChat;
+    });
   };
 
   return (
