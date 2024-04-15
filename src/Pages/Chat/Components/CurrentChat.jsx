@@ -18,6 +18,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Close } from "@mui/icons-material";
 import { findLatestMessage } from "../../../Utilities/chatFunctions";
 import UserContext from "../../../Contexts/User/UserContext";
+import { Link } from "react-router-dom";
 
 const CurrentChat = ({ chatLoading }) => {
   const { user } = useContext(UserContext);
@@ -67,12 +68,14 @@ const CurrentChat = ({ chatLoading }) => {
         display={"flex"}
         justifyContent={"space-between"}
       >
-        <Box display={"flex"} alignItems={"center"} gap={1} pl={4}>
-          <AvatarImg no={crrChat?.receiver?.avatar} width={40} />
-          <Typography fontWeight={"bold"}>
-            {crrChat?.receiver?.username}
-          </Typography>
-        </Box>
+        <Link to={`/profile/${crrChat?.receiver?.username}`}>
+          <Box display={"flex"} alignItems={"center"} gap={1} pl={4}>
+            <AvatarImg no={crrChat?.receiver?.avatar} width={40} />
+            <Typography fontWeight={"bold"}>
+              {crrChat?.receiver?.username}
+            </Typography>
+          </Box>
+        </Link>
         <IconButton
           sx={{ mr: 2 }}
           onClick={(e) => {

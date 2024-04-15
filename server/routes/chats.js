@@ -34,7 +34,6 @@ router.get("/", checkJwt, async (req, res) => {
       await Promise.all(
         otherUserIds?.map(async (userId, index) => {
           const chatData = chats[index];
-          console.log(chatData);
           const userData = await User.findById(userId);
           const lastMessage = chatData?.messages
             ? chatData?.messages[chatData?.messages?.length - 1]

@@ -16,7 +16,7 @@ const ChatPreview = ({ chat }) => {
     format(chat?.lastMessage?.createdAt, "dd MM yyyy") !==
     format(crrDate, "dd MM yyyy")
   ) {
-    lastMessageDate = format(chat?.lastMessage?.createdAt, "dd MM yyyy");
+    lastMessageDate = format(chat?.lastMessage?.createdAt, "dd/MM/yyyy");
   } else {
     lastMessageDate = format(chat?.lastMessage?.createdAt, "HH:mm");
   }
