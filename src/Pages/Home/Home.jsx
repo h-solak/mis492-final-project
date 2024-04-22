@@ -26,6 +26,10 @@ const Home = () => {
           Friends (request) feature: TWO TYPES: MATCHED (yanında alev işareti) /
           NORMAL FRIENDS
         </li>
+        <li>
+          Match özelliği kullanıldığında yeni match direkt olarak arkadaşlara
+          eklenecek, kullanıcı isterse veya eşleşmeyi reddederse kaldırılacak..
+        </li>
         <li>Message read status feature</li>
         <li>Movie rate bug</li>
         <li>Movie Watchlist feature</li>

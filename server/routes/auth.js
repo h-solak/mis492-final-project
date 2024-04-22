@@ -44,7 +44,7 @@ router.post("/login", async (req, res) => {
       res.status(400).json({ desc: "Wrong password, try again *-*" });
 
     let jwtToken = jwt.sign({ id: user._id }, process.env.SECRET_SECURITY_KEY, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
 
     // const { password, ...other } = user._doc;

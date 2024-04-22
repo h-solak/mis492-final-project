@@ -57,6 +57,9 @@ const Profile = () => {
             <Typography color={"secondary"}>{userProfile?.desc}</Typography>
           </Box>
         </Box>
+        {user?.friends && (
+          <Typography>Friends ({user?.friends?.length})</Typography>
+        )}
       </Grid>
       <Grid item xs={12} marginTop={4}>
         <Typography color={"secondary"} py={2}>

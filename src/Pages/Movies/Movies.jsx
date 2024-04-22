@@ -15,7 +15,7 @@ import { useSearchParams } from "react-router-dom";
 import CenteredBox from "../../Components/CenteredBox";
 import MovieNightSvg from "../../assets/illustrations/movienight.svg";
 import ColumnBox from "../../Components/ColumnBox";
-import NothingFound from "../../Components/NothingFound";
+import NoResults from "../../Components/NoResults";
 const Movies = () => {
   const [moviesLoading, setMoviesLoading] = useState(false);
   const [movieResults, setMovieResults] = useState({});
@@ -155,7 +155,7 @@ const Movies = () => {
         </Grid>
       )}
       {!movieResults?.total_results == 0 ? null : watch("searchMovies") ? (
-        !moviesLoading && <NothingFound />
+        !moviesLoading && <NoResults />
       ) : (
         <CenteredBox flexDirection="column">
           <ColumnBox textAlign="center" gap={1}>

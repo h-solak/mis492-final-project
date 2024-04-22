@@ -12,7 +12,7 @@ const CenteredBox = ({ absolute = false, children, ...props }) => {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      height="100dvh" //navbar is 56px, this is just hard coded bad stuff
+      height="100dvh" //NEEDS A FIX !!!
       width="100%"
       {...props}
     >

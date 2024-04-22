@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Grid, IconButton, TextField } from "@mui/material";
+import { Grid, IconButton, TextField, Typography } from "@mui/material";
 import { CloseRounded, SearchRounded } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { getUsers } from "../../../../Services/Users";
 import UserItem from "./UserItem";
+import SearchLoader from "../../../../Components/Loaders/SearchLoader";
+import NoResults from "../../../../Components/NoResults";
+import CenteredBox from "../../../../Components/CenteredBox";
 const UserSearch = () => {
   let [searchParams, setSearchParams] = useSearchParams();
-  const [userList, setUserList] = useState([]);
+  const [userList, setUserList] = useState({
+    data: [],
+    isLoading: false,
+  });
   const {
     register,
     handleSubmit,
@@ -18,20 +24,19 @@ const UserSearch = () => {
   } = useForm();
 
   useEffect(() => {
-    if (searchParams.get("users")) {
-      setValue("searchMovies", searchParams.get("users"));
-    }
+    setValue("searchMovies", searchParams.get("users")?.trim());
   }, []);
 
   useEffect(() => {
-    if (watch("searchMovies")?.length > 0) {
+    if (watch("searchMovies")?.trim().length > 0) {
       handleSearch();
     }
   }, [watch("searchMovies")]);
 
   const handleSearch = async () => {
-    const newUserList = await getUsers(watch("searchMovies"));
-    setUserList(newUserList);
+    setUserList((prevUserList) => ({ ...prevUserList, isLoading: true }));
+    const newUserList = await getUsers(watch("searchMovies")?.trim());
+    setUserList({ data: newUserList, isLoading: false });
     setSearchParams({ users: watch("searchMovies")?.trim() });
   };
   return (
@@ -74,12 +79,25 @@ const UserSearch = () => {
         }}
       />
 
-      <Grid container spacing={3} mt={2}>
-        {userList
-          ? userList?.map((user) => (
+      <Grid container spacing={3} pt={4} pb={4} height={"100%"}>
+        {userList.isLoading ? (
+          <SearchLoader height={"70dvh"} />
+        ) : userList?.data && userList?.data.length > 0 ? (
+          <>
+            <Grid item>
+              <Typography color={"secondary"} fontSize={14}>
+                {userList?.data?.length} results
+              </Typography>
+            </Grid>
+            {userList?.data?.map((user) => (
               <UserItem key={user?._id} userData={user} />
-            ))
-          : null}
+            ))}
+          </>
+        ) : searchParams.get("users") ? (
+          <NoResults height={"55dvh"} />
+        ) : (
+          <CenteredBox>Start exploring!</CenteredBox>
+        )}
       </Grid>
     </Grid>
   );
