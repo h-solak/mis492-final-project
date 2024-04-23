@@ -93,42 +93,54 @@ router.put("/request", checkJwt, async (req, res) => {
       sender.friends.find((friend) => friend.id == receiverId) ||
       receiver.friends.find((friend) => friend.id == senderId);
 
-    if (!usersAreAlreadyFriend) {
-      /* Accept */
-      if (action == "accept") {
-        sender.friends.push({
-          id: receiverId,
-          type: "default", //default or match
-        });
-        receiver.friends.push({
-          id: senderId,
-          type: "default",
-        });
-      }
-      /* Reject - Do nothing spesific */
+    //Since socket is not used for friend requests, this can cause sync issues in the future so we need to make sure..
+    const isFriendRequestStillActive =
+      sender.pendingFriendRequests.find(
+        (request) =>
+          request.receiver == receiverId || request.sender == receiverId
+      ) &&
+      receiver.pendingFriendRequests.find(
+        (request) => request.receiver == senderId || request.sender == senderId
+      );
 
-      //Handle new requests after action
-      const newReceiverRequests = receiver.pendingFriendRequests.filter(
-        (requestItem) =>
-          !(
-            requestItem.sender == senderId && requestItem.receiver == receiverId
-          )
-      );
-      receiver.pendingFriendRequests = newReceiverRequests;
-      await receiver.save();
-      const newSenderRequests = sender.pendingFriendRequests.filter(
-        (requestItem) =>
-          !(
-            requestItem.sender == senderId && requestItem.receiver == receiverId
-          )
-      );
-      sender.pendingFriendRequests = newSenderRequests;
-      await sender.save();
-    } else {
-      res.status(500).json({
+    if (!isFriendRequestStillActive) {
+      return res.status(500).json({
+        error: "The friend request no longer exists!",
+      });
+    }
+
+    if (usersAreAlreadyFriend) {
+      return res.status(500).json({
         error: "The request exists or you are already friends!",
       });
     }
+
+    //Accept action
+    if (action == "accept") {
+      sender.friends.push({
+        id: receiverId,
+        type: "default", //default or match
+      });
+      receiver.friends.push({
+        id: senderId,
+        type: "default",
+      });
+    }
+    /* Reject - Do nothing spesific */
+
+    //Handle new requests after action
+    const newReceiverRequests = receiver.pendingFriendRequests.filter(
+      (requestItem) =>
+        !(requestItem.sender == senderId && requestItem.receiver == receiverId)
+    );
+    receiver.pendingFriendRequests = newReceiverRequests;
+    await receiver.save();
+    const newSenderRequests = sender.pendingFriendRequests.filter(
+      (requestItem) =>
+        !(requestItem.sender == senderId && requestItem.receiver == receiverId)
+    );
+    sender.pendingFriendRequests = newSenderRequests;
+    await sender.save();
 
     const newPendingRequests = userIsSender
       ? sender.pendingFriendRequests
