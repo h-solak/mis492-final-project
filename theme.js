@@ -14,8 +14,8 @@ const theme = createTheme({
     },
     secondary: {
       //grey(ish)
-      main: "#a6a6a6",
-      light: "#ededed",
+      main: "#989898",
+      light: "#F9F9F9",
     },
     dark: {
       main: "#000",
@@ -32,7 +32,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: ["Inter", "sans-serif"].join(","),
+    fontFamily: ["Montserrat", "Inter", "sans-serif"].join(","),
     fontSize: 14,
     fontWeightLight: 300,
     fontWeightRegular: 400,

@@ -7,7 +7,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import ColumnBox from "../../../Components/ColumnBox";
 import { format } from "date-fns";
 
-const RateItem = ({ rate }) => {
+const RecentActivityItem = ({ rate }) => {
   return (
     <Grid item xs={12} marginBottom={4}>
       <Box display={"flex"} alignItems={"start"} gap={2}>
@@ -63,4 +63,4 @@ const RateItem = ({ rate }) => {
   );
 };
 
-export default RateItem;
+export default RecentActivityItem;

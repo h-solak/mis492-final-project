@@ -8,7 +8,7 @@ const Breadcrumbs = ({ links }) => {
     <MuiBreadcrumbs mb={4}>
       <Link
         underline="hover"
-        color="inherit"
+        color="dark.main"
         href="/"
         display={"flex"}
         alignItems={"center"}

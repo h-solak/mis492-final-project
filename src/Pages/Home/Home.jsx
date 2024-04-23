@@ -20,18 +20,15 @@ const Home = () => {
         <Typography fontSize={18} fontWeight={"bolder"}>
           TODO
         </Typography>
-        <li>8 karakter, büyük harf, özel karakter</li>
-        <li>Search for users</li>
-        <li>
-          Friends (request) feature: TWO TYPES: MATCHED (yanında alev işareti) /
-          NORMAL FRIENDS
-        </li>
+        <li>Profile - UI implementation</li>
+        <li>Notifications</li>
+        <li>Password: 8 karakter, büyük harf, özel karakter</li>
         <li>
           Match özelliği kullanıldığında yeni match direkt olarak arkadaşlara
           eklenecek, kullanıcı isterse veya eşleşmeyi reddederse kaldırılacak..
         </li>
-        <li>Message read status feature</li>
-        <li>Movie rate bug</li>
+        <li>!-- Message read status feature</li>
+        <li>??? Movie rate bug</li>
         <li>Movie Watchlist feature</li>
         <li>Like & Comment on reviews feature</li>
         <li>Ortak arkadaşlar</li>
