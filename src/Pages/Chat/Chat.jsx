@@ -196,7 +196,7 @@ const Chat = () => {
             container
             sx={{
               overflowY: "auto",
-              maxHeight: "calc(100% - 56px)",
+              maxHeight: "calc(100% - 66px)",
             }}
           >
             {chats?.length > 0 ? (
@@ -208,7 +208,7 @@ const Chat = () => {
               ))
             ) : (
               <CenteredBox>
-                <Typography fontWeight={"bold"}>No chats found</Typography>
+                <Typography>There are no chats yet!</Typography>
               </CenteredBox>
             )}
           </Grid>

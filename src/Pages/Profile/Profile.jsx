@@ -9,7 +9,7 @@ import RateItem from "./Components/RateItem";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import ColumnBox from "../../Components/ColumnBox";
 import { PersonAdd } from "@mui/icons-material";
-import AddFriendsButton from "../../Components/Buttons/AddFriendsButton";
+import AddFriendsButton from "./Components/AddFriendsButton";
 
 const Profile = () => {
   const { user } = useUser();

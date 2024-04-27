@@ -3,7 +3,7 @@ import { Grid, IconButton, TextField, Typography } from "@mui/material";
 import { CloseRounded, SearchRounded } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
-import { getUsers } from "../../../../Services/Users";
+import { getUsersWithUsernameSearch } from "../../../../Services/Users";
 import UserItem from "./UserItem";
 import SearchLoader from "../../../../Components/Loaders/SearchLoader";
 import NoResults from "../../../../Components/NoResults";
@@ -35,7 +35,9 @@ const UserSearch = () => {
 
   const handleSearch = async () => {
     setUserList((prevUserList) => ({ ...prevUserList, isLoading: true }));
-    const newUserList = await getUsers(watch("searchMovies")?.trim());
+    const newUserList = await getUsersWithUsernameSearch(
+      watch("searchMovies")?.trim()
+    );
     setUserList({ data: newUserList, isLoading: false });
     setSearchParams({ users: watch("searchMovies")?.trim() });
   };

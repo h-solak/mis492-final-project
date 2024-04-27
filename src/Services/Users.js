@@ -1,13 +1,24 @@
 import { misBaseAxios } from "../api/config";
 
-const getUsers = async (username) => {
+const getUsersWithUsernameSearch = async (username) => {
   try {
     const res = await misBaseAxios.get(`/users/${username}`);
-    console.log(res);
     return res?.data?.users;
   } catch (error) {
     console.log(error);
   }
 };
 
-export { getUsers };
+//get users using array of ids
+const getUsers = async (arrayOfIds) => {
+  try {
+    const res = await misBaseAxios.get(
+      `/users?user_ids=${arrayOfIds.join(",")}`
+    );
+    return res?.data?.users;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getUsersWithUsernameSearch, getUsers };

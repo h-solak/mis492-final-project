@@ -14,6 +14,7 @@ import {
   Bookmark,
   Settings,
   Logout,
+  Notifications,
 } from "@mui/icons-material";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 import ColumnBox from "../../Components/ColumnBox";
@@ -25,6 +26,11 @@ const linkItems = [
     title: "Home",
     url: "/",
     icon: <Home />,
+  },
+  {
+    title: "Notifications",
+    url: "/notifications",
+    icon: <Notifications />,
   },
   {
     title: "Search",
@@ -80,6 +86,8 @@ const Sidebar = () => {
       navigate("/");
     }
   };
+
+  const notificationsCount = parseInt(user?.pendingFriendRequests?.length);
 
   return isSmScreen ? null : (
     <Grid
@@ -149,6 +157,9 @@ const Sidebar = () => {
             url={item?.url}
             onClick={item?.onClick}
             icon={item?.icon}
+            notification={
+              item?.title == "Notifications" ? notificationsCount : 0
+            }
           />
         ))}
         <LinkItem title={"Logout"} onClick={handleLogout} icon={<Logout />} />

@@ -1,5 +1,5 @@
-import { Button, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { Button, IconButton, Tooltip, Typography } from "@mui/material";
 import {
   Close,
   Done,
@@ -13,10 +13,10 @@ import {
   removeFriend,
   respondToFriendRequest,
   sendFriendRequest,
-} from "../../Services/Friends";
-import useUser from "../../Contexts/User/useUser";
-import FlexBox from "../FlexBox";
-import ColumnBox from "../ColumnBox";
+} from "../../../Services/Friends";
+import useUser from "../../../Contexts/User/useUser";
+import FlexBox from "../../../Components/FlexBox";
+import ColumnBox from "../../../Components/ColumnBox";
 
 const AddFriendsButton = ({ user2id }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -101,35 +101,39 @@ const AddFriendsButton = ({ user2id }) => {
           <Typography fontSize={12} textAlign={"center"} mb={1}>
             You have a friend request from this user
           </Typography>
-          <FlexBox gap={2}>
-            <Button
-              size="small"
-              variant="outlined"
-              color="success"
-              startIcon={<Done />}
-              onClick={() => handleRespondToFriendRequest("accept")}
-              sx={{
-                py: 1,
-                borderRadius: 99,
-              }}
-              fullWidth
-            >
-              Accept
-            </Button>
-            <Button
-              size="small"
-              variant="outlined"
-              color="warning"
-              startIcon={<Close />}
-              onClick={() => handleRespondToFriendRequest("reject")}
-              sx={{
-                py: 1,
-                borderRadius: 99,
-              }}
-              fullWidth
-            >
-              Reject
-            </Button>
+          <FlexBox justifyContent="center" gap={2}>
+            <Tooltip title="Accept">
+              <IconButton
+                color="success"
+                onClick={() => handleRespondToFriendRequest("accept")}
+                sx={{
+                  border: 2,
+                }}
+              >
+                <Done
+                  sx={{
+                    color: "primary",
+                    fontSize: 16,
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Reject">
+              <IconButton
+                color="warning"
+                onClick={() => handleRespondToFriendRequest("reject")}
+                sx={{
+                  border: 2,
+                }}
+              >
+                <Close
+                  sx={{
+                    color: "primary",
+                    fontSize: 16,
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
           </FlexBox>
         </ColumnBox>
       ) : (

@@ -41,13 +41,11 @@ const UserItem = ({ userData }) => {
       sender: pendingRequest.sender,
       action: action,
     });
-    if (data?.pendingFriendRequests && data?.friends) {
-      setUser((oldUser) => ({
-        ...oldUser,
-        pendingFriendRequests: data?.pendingFriendRequests,
-        friends: data?.friends,
-      }));
-    }
+    setUser((oldUser) => ({
+      ...oldUser,
+      pendingFriendRequests: data?.pendingFriendRequests,
+      friends: data?.friends,
+    }));
   };
 
   const handleCancelFriendRequest = async () => {

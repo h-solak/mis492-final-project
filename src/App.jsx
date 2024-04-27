@@ -17,6 +17,7 @@ import Profile from "./Pages/Profile/Profile";
 import CharacterSurvey from "./Pages/CharacterSurvey/CharacterSurvey";
 import NotFound from "./Pages/NotFound/NotFound";
 import Search from "./Pages/Search/Search";
+import Notifications from "./Pages/Notifications/Notifications";
 
 function App() {
   return (
@@ -60,6 +61,11 @@ function App() {
                 key="Movie"
                 path="/movies/:movieId"
                 element={<AuthGuard component={<Movie />} />}
+              />
+              <Route
+                key="Notifications"
+                path="/notifications"
+                element={<AuthGuard component={<Notifications />} />}
               />
               <Route
                 key="Search"
