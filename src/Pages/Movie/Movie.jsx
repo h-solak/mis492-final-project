@@ -17,7 +17,7 @@ import {
   getUserMovieRates,
   rateMovie,
 } from "../../Services/Movie";
-import BaseModal from "../../Components/Modal";
+import Modal from "../../Components/Modal";
 import toast from "react-hot-toast";
 import ReviewItem from "./Components/ReviewItem";
 
@@ -208,8 +208,8 @@ const Movie = () => {
         )}
       </Grid>
       {/* Rate Modal */}
-      <BaseModal
-        title={"Rate this movie"}
+      <Modal
+        title={"Review"}
         isModalOpen={rateModal}
         setIsModalOpen={setRateModal}
       >
@@ -242,7 +242,7 @@ const Movie = () => {
             Save
           </Button>
         </ColumnBox>
-      </BaseModal>
+      </Modal>
     </Layout>
   );
 };

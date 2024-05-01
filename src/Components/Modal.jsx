@@ -4,11 +4,11 @@ import {
   Button,
   Grid,
   IconButton,
-  Modal,
+  Modal as MuiModal,
   Typography,
 } from "@mui/material";
 import React from "react";
-const BaseModal = ({
+const Modal = ({
   isModalOpen,
   setIsModalOpen,
   title,
@@ -19,7 +19,7 @@ const BaseModal = ({
 }) => {
   const handleClose = () => setIsModalOpen(false);
   return (
-    <Modal open={isModalOpen} onClose={handleClose} onClick={handleClose}>
+    <MuiModal open={isModalOpen} onClose={handleClose} onClick={handleClose}>
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -62,8 +62,8 @@ const BaseModal = ({
           {children}
         </Grid>
       </Box>
-    </Modal>
+    </MuiModal>
   );
 };
 
-export default BaseModal;
+export default Modal;
