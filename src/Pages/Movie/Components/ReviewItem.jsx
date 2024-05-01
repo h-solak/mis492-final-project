@@ -1,5 +1,5 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
-import React from "react";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
 import {
   Reply,
   ReplyOutlined,
@@ -12,8 +12,12 @@ import { Link } from "react-router-dom";
 import Avatar from "../../../Components/Avatar";
 import ReplyItem from "./ReplyItem";
 import ColumnBox from "../../../Components/ColumnBox";
+import useUser from "../../../Contexts/User/useUser";
 
 const ReviewItem = ({ review }) => {
+  const [isReplyInputOpen, setIsReplyInputOpen] = useState(false);
+  const [replyInput, setReplyInput] = useState("");
+  const { user } = useUser();
   return (
     <Grid item xs={12}>
       <Box display={"flex"} alignItems={"start"} gap={1}>
@@ -22,7 +26,7 @@ const ReviewItem = ({ review }) => {
             <Avatar name={review?.username} size={40} />
           </Box>
         </Link>
-        <ColumnBox>
+        <ColumnBox width="100%">
           <Box display={"flex"} alignItems={"center"}>
             <Link to={`/profile/${review.username}`}>
               <Typography fontWeight={"bold"}>{review?.username}</Typography>
@@ -68,11 +72,37 @@ const ReviewItem = ({ review }) => {
                 textTransform: "capitalize",
                 alignSelf: "start",
               }}
+              onClick={() => setIsReplyInputOpen(!isReplyInputOpen)}
             >
               Reply
             </Button>
           </Box>
-          {/* Replies  */}
+          {/* Reply Input */}
+          {!!isReplyInputOpen && (
+            <Box display={"flex"} alignItems={"center"} gap={2} width={"100%"}>
+              <Avatar name={user?.username} size={32} />
+              <TextField
+                variant="standard"
+                size="small"
+                placeholder="Add a reply"
+                sx={{
+                  flex: 1,
+                }}
+              />
+              <Button
+                color="secondary"
+                onClick={() => {
+                  setIsReplyInputOpen(false);
+                  setReplyInput("");
+                }}
+              >
+                Cancel
+              </Button>
+              <Button variant="contained">Send</Button>
+            </Box>
+          )}
+
+          {/* All Replies  */}
           {[1, 2].map((reply) => (
             <ReplyItem reply={reply} />
           ))}
