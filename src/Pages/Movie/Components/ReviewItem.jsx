@@ -13,11 +13,24 @@ import Avatar from "../../../Components/Avatar";
 import ReplyItem from "./ReplyItem";
 import ColumnBox from "../../../Components/ColumnBox";
 import useUser from "../../../Contexts/User/useUser";
+import { replyReview } from "../../../Services/Movie";
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ review, handleGetMovieReviews }) => {
   const [isReplyInputOpen, setIsReplyInputOpen] = useState(false);
   const [replyInput, setReplyInput] = useState("");
   const { user } = useUser();
+
+  const handleReplyReview = async () => {
+    if (replyInput?.length > 0) {
+      const newReply = await replyReview({
+        reviewId: review?._id,
+        content: replyInput,
+      });
+      setIsReplyInputOpen(false);
+      setReplyInput("");
+      await handleGetMovieReviews();
+    }
+  };
   return (
     <Grid item xs={12}>
       <Box display={"flex"} alignItems={"start"} gap={1}>
@@ -85,6 +98,8 @@ const ReviewItem = ({ review }) => {
                 variant="standard"
                 size="small"
                 placeholder="Add a reply"
+                value={replyInput}
+                onChange={(e) => setReplyInput(e.target.value)}
                 sx={{
                   flex: 1,
                 }}
@@ -98,12 +113,14 @@ const ReviewItem = ({ review }) => {
               >
                 Cancel
               </Button>
-              <Button variant="contained">Send</Button>
+              <Button variant="contained" onClick={handleReplyReview}>
+                Send
+              </Button>
             </Box>
           )}
 
           {/* All Replies  */}
-          {[1, 2].map((reply) => (
+          {review?.replies?.map((reply) => (
             <ReplyItem reply={reply} />
           ))}
         </ColumnBox>

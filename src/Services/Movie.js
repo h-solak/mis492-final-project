@@ -51,4 +51,15 @@ const getMovieReviews = async (movieId) => {
   }
 };
 
-export { rateMovie, getUserMovieRates, getMovieReviews };
+const replyReview = async ({ reviewId, content }) => {
+  try {
+    const res = await misBaseAxios.post(`/movie/review/reply/${reviewId}`, {
+      content: content,
+    });
+    return res?.data?.reply;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { rateMovie, getUserMovieRates, getMovieReviews, replyReview };

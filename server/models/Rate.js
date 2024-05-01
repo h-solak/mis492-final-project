@@ -1,4 +1,25 @@
 const mongoose = require("mongoose");
+const ReviewReply = require("./ReviewReply");
+
+const ReviewReplySchema = new mongoose.Schema(
+  {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
+    userId: {
+      type: String,
+    },
+    content: {
+      type: String,
+    },
+    likes: {
+      //array of user ids
+      type: Array,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
 const RateSchema = new mongoose.Schema(
   {
@@ -29,6 +50,11 @@ const RateSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    likes: {
+      //array of user ids
+      type: Array,
+    },
+    replies: [ReviewReplySchema],
   },
   { timestamps: true }
 );

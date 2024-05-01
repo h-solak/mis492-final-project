@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Rate = require("../models/Rate");
+const ReviewReply = require("../models/ReviewReply");
 const User = require("../models/User");
 const checkJwt = require("../utils/authenticate");
 const getUserIdFromToken = require("../utils/getUserIdFromToken");
@@ -82,7 +83,7 @@ router.post("/rate", checkJwt, async (req, res) => {
   }
 });
 
-//Get written reviews for a spesific movie
+//Get all written reviews for a spesific movie
 router.get("/:movieId/reviews", checkJwt, async (req, res) => {
   try {
     const movieId = req.params.movieId;
@@ -98,11 +99,32 @@ router.get("/:movieId/reviews", checkJwt, async (req, res) => {
     if (reviewsData) {
       await Promise.all(
         reviewsData?.map(async (reviewItem, index) => {
-          const userData = await User.findById(reviewItem?.user);
+          const reviewUserData = await User.findById(reviewItem?.user);
+          let repliesWithAdditionalData = [];
+          //Adding username info to each reply of the replies array
+          if (reviewItem?.replies?.length > 0) {
+            repliesWithAdditionalData = await Promise.all(
+              reviewItem?.replies?.map(async (replyItem) => {
+                const replyUserData = await User.findById(replyItem?.userId);
+                const newReply = {
+                  username: replyUserData?.username,
+                  ...replyItem?._doc,
+                };
+                return newReply;
+              })
+            );
+          }
+
+          console.log("yeyt, ", repliesWithAdditionalData);
+          const { replies, ...otherReviewsData } = reviewsData[index]._doc;
           const newReview = {
-            username: userData?.username,
-            userAvatar: userData?.crrAvatar,
-            ...reviewsData[index]._doc,
+            username: reviewUserData?.username,
+            userAvatar: reviewUserData?.crrAvatar,
+            replies:
+              repliesWithAdditionalData?.length > 0
+                ? repliesWithAdditionalData
+                : replies,
+            ...otherReviewsData,
           };
           reviews.push(newReview);
         })
@@ -115,5 +137,31 @@ router.get("/:movieId/reviews", checkJwt, async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+//Send a reply
+router.post("/review/reply/:reviewId", checkJwt, async (req, res) => {
+  try {
+    const id = getUserIdFromToken(req.headers.authorization);
+    const reviewId = req.params.reviewId;
+    const content = req.body.content;
+    const review = await Rate.findById(reviewId);
+
+    const reply = new ReviewReply({
+      content,
+      reviewId,
+      userId: id, // Assuming you have a userId associated with the reply
+    });
+    review.replies.push(reply);
+    await review.save();
+
+    res.status(200).json({ reply: reply });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+//like a review, or a reply of a review
+router.post("/review/like/:reviewId", checkJwt, async (req, res) => {});
 
 module.exports = router;

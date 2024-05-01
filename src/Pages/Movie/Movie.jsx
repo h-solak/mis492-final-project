@@ -20,6 +20,7 @@ import {
 import Modal from "../../Components/Modal";
 import toast from "react-hot-toast";
 import ReviewItem from "./Components/ReviewItem";
+import ReviewModal from "./Components/ReviewModal";
 
 const Movie = () => {
   let { movieId } = useParams();
@@ -83,7 +84,7 @@ const Movie = () => {
         console.log(err);
       }
     } else {
-      toast.error("You have to rate the movie!");
+      // toast.error("You should rate the movie");
     }
   };
 
@@ -203,46 +204,25 @@ const Movie = () => {
           </Grid>
         ) : (
           userReviews?.map((review) => (
-            <ReviewItem key={review?._id} review={review} />
+            <ReviewItem
+              key={review?._id}
+              review={review}
+              handleGetMovieReviews={handleGetMovieReviews}
+            />
           ))
         )}
       </Grid>
       {/* Rate Modal */}
-      <Modal
-        title={"Review"}
+      <ReviewModal
+        movie={movie}
         isModalOpen={rateModal}
+        rating={rating}
+        setRating={setRating}
+        review={review}
+        setReview={setReview}
         setIsModalOpen={setRateModal}
-      >
-        <ColumnBox gap={4}>
-          <Typography fontWeight={500}>
-            How do you think{" "}
-            <Typography component={"span"} fontWeight={"bolder"}>
-              {movie?.title}
-            </Typography>{" "}
-            was?
-          </Typography>
-          <Rating
-            size="large"
-            value={rating}
-            onChange={(event, newValue) => setRating(newValue)}
-            max={10}
-            sx={{
-              width: "100%",
-              flex: 1,
-            }}
-          />
-          <TextField
-            multiline
-            maxRows={8}
-            value={review}
-            onChange={(e) => setReview(e.target.value)}
-            placeholder="How did it make you feel?"
-          />
-          <Button variant="contained" onClick={() => handleSubmitRate()}>
-            Save
-          </Button>
-        </ColumnBox>
-      </Modal>
+        handleSubmitRate={handleSubmitRate}
+      />
     </Layout>
   );
 };
