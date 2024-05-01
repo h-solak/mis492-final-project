@@ -16,12 +16,13 @@ import { io } from "socket.io-client";
 import useUser from "../../Contexts/User/useUser";
 import toast from "react-hot-toast";
 import Avatar from "../../Components/Avatar";
+import ChatPreviewLoader from "./Components/ChatPreviewLoader";
 
 export const ChatContext = createContext();
 
 const Chat = () => {
   const { user } = useUser();
-  const [pageLoading, setPageLoading] = useState(true);
+  const [chatPreviewsAreLoading, setChatPreviewsAreLoading] = useState(true);
   const [chatLoading, setChatLoading] = useState(false);
   const [chats, setChats] = useState([]); //all chat previews on the left
   const [crrChat, setCrrChat] = useState({}); //the chat user is on
@@ -47,7 +48,7 @@ const Chat = () => {
   const handleGetChats = async () => {
     const allChats = await getChatList();
     setChats(allChats);
-    setPageLoading(false);
+    setChatPreviewsAreLoading(false);
   };
 
   const handleGetChat = async (chatId, showLoadingEffect = false) => {
@@ -149,7 +150,7 @@ const Chat = () => {
   };
 
   return (
-    <Layout pageLoading={pageLoading} disablePaddingX disablePaddingY>
+    <Layout disablePaddingX disablePaddingY>
       <ChatContext.Provider
         value={{
           chats,
@@ -161,6 +162,7 @@ const Chat = () => {
           handleGetChat,
           handleSendMessage,
           handleDeleteMessage,
+          chatPreviewsAreLoading,
         }}
       >
         {/* User - Chat List  */}
@@ -199,6 +201,7 @@ const Chat = () => {
               maxHeight: "calc(100% - 66px)",
             }}
           >
+            {!!chatPreviewsAreLoading && <ChatPreviewLoader />}
             {chats?.length > 0 ? (
               chats?.map((chatPreviewItem) => (
                 <ChatPreview
@@ -206,11 +209,11 @@ const Chat = () => {
                   chat={chatPreviewItem}
                 />
               ))
-            ) : (
+            ) : !chatPreviewsAreLoading ? (
               <CenteredBox>
                 <Typography>There are no chats yet!</Typography>
               </CenteredBox>
-            )}
+            ) : null}
           </Grid>
           <Typography
             textAlign={"center"}

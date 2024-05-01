@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import React from "react";
 import useUser from "../../Contexts/User/useUser";
 import LandingPage from "./LandingPage";

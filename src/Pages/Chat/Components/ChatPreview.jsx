@@ -4,8 +4,10 @@ import ColumnBox from "../../../Components/ColumnBox";
 import { ChatContext } from "../Chat";
 import { format } from "date-fns";
 import Avatar from "../../../Components/Avatar";
+import useUser from "../../../Contexts/User/useUser";
 
 const ChatPreview = ({ chat }) => {
+  const { user } = useUser();
   const { handleGetChat } = useContext(ChatContext);
   const crrDate = new Date();
 
@@ -19,6 +21,13 @@ const ChatPreview = ({ chat }) => {
     lastMessageDate = format(chat?.lastMessage?.createdAt, "dd/MM/yyyy");
   } else {
     lastMessageDate = format(chat?.lastMessage?.createdAt, "HH:mm");
+  }
+
+  let lastMessageContent = "";
+  if (chat?.lastMessage?.sender == user?._id) {
+    lastMessageContent = "You: " + chat?.lastMessage?.content;
+  } else {
+    lastMessageContent = chat?.lastMessage?.content;
   }
 
   return (
@@ -47,11 +56,20 @@ const ChatPreview = ({ chat }) => {
           width={"100%"}
         >
           <ColumnBox>
-            <Typography fontWeight={"bolder"}>{chat?.username}</Typography>
-            <Typography fontSize={14}>
-              {chat?.lastMessage?.content?.length > 15
-                ? `${chat?.lastMessage?.content?.slice(0, 12)}...`
-                : chat?.lastMessage?.content}
+            <Typography fontWeight={"bold"}>{chat?.username}</Typography>
+            <Typography
+              fontSize={14}
+              color={"secondary.main"}
+              fontWeight={chat?.unreadMessagesCount > 0 ? "medium" : "regular"}
+              maxWidth={100}
+              maxHeight={60}
+              sx={{
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+              }}
+            >
+              {lastMessageContent}
             </Typography>
           </ColumnBox>
           {chat?.lastMessage ? (
