@@ -7,11 +7,9 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import AvatarImg from "../../../Components/AvatarImg";
 import CenterLoader from "../../../Components/CenterLoader";
 import CenteredBox from "../../../Components/CenteredBox";
 import MessageInput from "./MessageInput";
-import { sendMessage } from "../../../Services/Chat";
 import Message from "./Message";
 import { ChatContext } from "../Chat";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -19,6 +17,7 @@ import { Close } from "@mui/icons-material";
 import { findLatestMessage } from "../../../Utilities/chatFunctions";
 import UserContext from "../../../Contexts/User/UserContext";
 import { Link } from "react-router-dom";
+import Avatar from "../../../Components/Avatar";
 
 const CurrentChat = ({ chatLoading }) => {
   const { user } = useContext(UserContext);
@@ -70,7 +69,7 @@ const CurrentChat = ({ chatLoading }) => {
       >
         <Link to={`/profile/${crrChat?.receiver?.username}`}>
           <Box display={"flex"} alignItems={"center"} gap={1} pl={4}>
-            <AvatarImg no={crrChat?.receiver?.avatar} width={40} />
+            <Avatar name={crrChat?.receiver?.username} size={40} />
             <Typography fontWeight={"bold"}>
               {crrChat?.receiver?.username}
             </Typography>

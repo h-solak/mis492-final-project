@@ -18,6 +18,7 @@ import {
 } from "../../../../Services/Friends";
 import FlexBox from "../../../../Components/FlexBox";
 import { Link } from "react-router-dom";
+import Avatar from "../../../../Components/Avatar";
 
 const UserItem = ({ userData }) => {
   const { user, setUser } = useUser();
@@ -130,7 +131,7 @@ const UserItem = ({ userData }) => {
         )}
         <Link to={`/profile/${username}`}>
           <Box display={"flex"} alignItems={"center"} gap={1}>
-            <AvatarImg no={crrAvatar} width={48} />
+            <Avatar name={username} size={48} />
             <ColumnBox>
               <Typography>@{username}</Typography>
               <Typography color={"secondary"} fontSize={14}>

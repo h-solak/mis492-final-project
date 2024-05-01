@@ -1,9 +1,9 @@
 import { Box, Grid, Typography } from "@mui/material";
 import React, { useContext } from "react";
-import AvatarImg from "../../../Components/AvatarImg";
 import ColumnBox from "../../../Components/ColumnBox";
 import { ChatContext } from "../Chat";
 import { format } from "date-fns";
+import Avatar from "../../../Components/Avatar";
 
 const ChatPreview = ({ chat }) => {
   const { handleGetChat } = useContext(ChatContext);
@@ -38,7 +38,7 @@ const ChatPreview = ({ chat }) => {
       }}
       onClick={() => handleGetChat(chat?.chatId, true)}
     >
-      <AvatarImg no={chat?.userAvatar} width={64} />
+      <Avatar name={chat?.username} size={48} />
       <ColumnBox width={"100%"}>
         <Box
           display={"flex"}

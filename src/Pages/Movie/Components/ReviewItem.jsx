@@ -1,8 +1,8 @@
 import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
-import AvatarImg from "../../../Components/AvatarImg";
 import { Star } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import Avatar from "../../../Components/Avatar";
 
 const ReviewItem = ({ review }) => {
   return (
@@ -10,7 +10,7 @@ const ReviewItem = ({ review }) => {
       <Box display={"flex"} alignItems={"center"} gap={2}>
         <Link to={`/profile/${review.username}`}>
           <Box display={"flex"} alignItems={"center"} gap={0.6}>
-            <AvatarImg no={review?.userAvatar} width={40} height={40} />
+            <Avatar name={review?.username} size={40} />
             <Typography fontWeight={"bold"}>{review?.username}</Typography>
           </Box>
         </Link>

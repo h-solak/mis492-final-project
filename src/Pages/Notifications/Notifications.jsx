@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../Layout/Layout";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import {
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, IconButton, Tooltip, Typography } from "@mui/material";
 import useUser from "../../Contexts/User/useUser";
 import { getUsers } from "../../Services/Users";
-import AvatarImg from "../../Components/AvatarImg";
 import FlexBox from "../../Components/FlexBox";
 import { Close, Done } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import ColumnBox from "../../Components/ColumnBox";
 import { respondToFriendRequest } from "../../Services/Friends";
+import Avatar from "../../Components/Avatar";
 
 const Notifications = () => {
   const [pageLoading, setPageLoading] = useState(true);
@@ -113,7 +106,7 @@ const Notifications = () => {
                 </Tooltip>
                 <Link to={`/profile/${userItem?.username}`}>
                   <Box display={"flex"} alignItems={"center"} gap={1}>
-                    <AvatarImg no={userItem?.crrAvatar} width={56} />
+                    <Avatar name={userItem?.username} size={56} />
                     <ColumnBox>
                       <Typography>{userItem?.username}</Typography>
                       <Typography fontSize={12} color={"secondary"}>

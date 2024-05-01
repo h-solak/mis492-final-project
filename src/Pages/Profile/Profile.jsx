@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../Layout/Layout";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import useUser from "../../Contexts/User/useUser";
 import { useParams } from "react-router-dom";
 import { getUserProfile } from "../../Services/User";
-import AvatarImg from "../../Components/AvatarImg";
 import RateItem from "./Components/RateItem";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import ColumnBox from "../../Components/ColumnBox";
-import { PersonAdd } from "@mui/icons-material";
 import AddFriendsButton from "./Components/AddFriendsButton";
+import Avatar from "../../Components/Avatar";
 
 const Profile = () => {
   const { user } = useUser();
@@ -87,7 +86,7 @@ const Profile = () => {
             }}
           >
             <ColumnBox alignItems="center" alignSelf="center">
-              <AvatarImg no={userProfile?.crrAvatar} width={80} height={80} />
+              <Avatar name={userProfile?.username} size={80} />
               <Typography fontWeight={"bold"}>
                 {userProfile?.username}
               </Typography>

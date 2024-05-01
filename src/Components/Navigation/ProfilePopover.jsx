@@ -1,21 +1,14 @@
 import React, { useState } from "react";
 /* Material UI */
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
+import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import Popover from "@mui/material/Popover";
 import Button from "@mui/material/Button";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import useUser from "../../Contexts/User/useUser";
 
 /* Avatar */
-import Avatar0 from "../../assets/Avatars/spiritedaway.svg";
-import AvatarImg from "../AvatarImg";
 import { useNavigate } from "react-router-dom";
+import Avatar from "../Avatar";
 
 const ProfilePopover = ({ logout }) => {
   const navigate = useNavigate();
@@ -41,7 +34,7 @@ const ProfilePopover = ({ logout }) => {
         onClick={handleClick}
         sx={{ color: "primary", textTransform: "none", fontWeight: "bold" }}
       >
-        <AvatarImg no={user?.crrAvatar} width={32} style={{ marginRight: 4 }} />
+        <Avatar name={user?.username} size={32} style={{ marginRight: 4 }} />
         {/* {user?.username || "User"} */}
         <KeyboardArrowDownIcon />
       </Button>

@@ -15,7 +15,7 @@ import ChatSvg from "../../assets/illustrations/phonechat.svg";
 import { io } from "socket.io-client";
 import useUser from "../../Contexts/User/useUser";
 import toast from "react-hot-toast";
-import AvatarImg from "../../Components/AvatarImg";
+import Avatar from "../../Components/Avatar";
 
 export const ChatContext = createContext();
 
@@ -123,7 +123,7 @@ const Chat = () => {
           toast(() => (
             <Box display={"flex"} alignItems={"center"} gap={2}>
               <Box display={"flex"} alignItems={"center"} gap={0.5}>
-                <AvatarImg no={data?.avatar} width={24} />
+                <Avatar name={data?.username} size={24} />
                 <Typography fontWeight={"bold"}>{data?.username}:</Typography>
                 <Typography>
                   {data?.content?.length > 12

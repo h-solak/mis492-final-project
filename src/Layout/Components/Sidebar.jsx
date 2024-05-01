@@ -4,7 +4,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import useUser from "../../Contexts/User/useUser";
 import Logo from "../../assets/logo.svg";
 /* Icons */
-import AvatarImg from "../../Components/AvatarImg";
 import {
   Chat,
   Home,
@@ -20,7 +19,7 @@ import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact
 import ColumnBox from "../../Components/ColumnBox";
 import { removeAccessToken } from "../../api/config";
 import LinkItem from "./LinkItem";
-
+import Avatar from "../../Components/Avatar";
 const linkItems = [
   {
     title: "Home",
@@ -130,11 +129,7 @@ const Sidebar = () => {
             backgroundColor: "#f8f8f8",
           }}
         >
-          <AvatarImg
-            no={user?.crrAvatar}
-            width={48}
-            style={{ marginRight: 4 }}
-          />
+          <Avatar name={user?.username} size={48} />
           <ColumnBox px={1}>
             <Typography fontSize={15} color={"#000"}>
               {`@${user?.username}` || "User"}
