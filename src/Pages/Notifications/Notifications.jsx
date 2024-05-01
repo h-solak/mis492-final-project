@@ -32,7 +32,6 @@ const Notifications = () => {
     const arrayOfIds = user?.pendingFriendRequests
       ?.filter((request) => request?.receiver == user?._id)
       .map((request) => request?.sender);
-    console.log(arrayOfIds);
     if (arrayOfIds?.length > 0) {
       const users = await getUsers(arrayOfIds);
       setFriendRequests(users);

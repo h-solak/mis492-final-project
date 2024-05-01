@@ -17,9 +17,13 @@ import {
 import useUser from "../../../Contexts/User/useUser";
 import FlexBox from "../../../Components/FlexBox";
 import ColumnBox from "../../../Components/ColumnBox";
+import ConfirmationModal from "../../../Components/Modals/ConfirmationModal";
 
 const AddFriendsButton = ({ user2id }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [removeFriendModal, setRemoveFriendModal] = useState(false);
+  const [cancelPendingRequestModal, setCancelPendingRequestModal] =
+    useState(false);
   const { user, setUser } = useUser();
   const isFriend = user?.friends?.find((friend) => friend.id == user2id);
   const pendingRequest = user?.pendingFriendRequests?.find(
@@ -77,23 +81,31 @@ const AddFriendsButton = ({ user2id }) => {
     setIsLoading(false);
   };
   return isFriend ? (
-    <Tooltip title="Remove from friends">
-      <Button
-        variant="contained"
-        color="primary"
-        startIcon={
-          !isLoading ? <Person /> : <span className="loader-sm-dark" />
-        }
-        onClick={handleRemoveFriend}
-        sx={{
-          py: 1,
-          borderRadius: 99,
-        }}
-        fullWidth
-      >
-        FRIENDS
-      </Button>
-    </Tooltip>
+    <>
+      <Tooltip title="Remove from friends">
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={
+            !isLoading ? <Person /> : <span className="loader-sm-dark" />
+          }
+          onClick={() => setRemoveFriendModal(true)}
+          sx={{
+            py: 1,
+            borderRadius: 99,
+          }}
+          fullWidth
+        >
+          FRIENDS
+        </Button>
+      </Tooltip>
+      <ConfirmationModal
+        isModalOpen={removeFriendModal}
+        setIsModalOpen={setRemoveFriendModal}
+        action={handleRemoveFriend}
+        warningText={`This user will be removed from your friends.`}
+      />
+    </>
   ) : pendingRequest ? (
     <>
       {pendingRequest?.receiver == user?._id ? (
@@ -102,62 +114,66 @@ const AddFriendsButton = ({ user2id }) => {
             You have a friend request from this user
           </Typography>
           <FlexBox justifyContent="center" gap={2}>
-            <Tooltip title="Accept">
-              <IconButton
-                color="success"
-                onClick={() => handleRespondToFriendRequest("accept")}
-                sx={{
-                  border: 2,
-                }}
-              >
+            <Button
+              size="small"
+              color="success"
+              onClick={() => handleRespondToFriendRequest("accept")}
+              startIcon={
                 <Done
                   sx={{
-                    color: "primary",
                     fontSize: 16,
                   }}
                 />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Reject">
-              <IconButton
-                color="warning"
-                onClick={() => handleRespondToFriendRequest("reject")}
-                sx={{
-                  border: 2,
-                }}
-              >
+              }
+            >
+              Accept
+            </Button>
+            <Button
+              size="small"
+              color="warning"
+              onClick={() => handleRespondToFriendRequest("reject")}
+              startIcon={
                 <Close
                   sx={{
-                    color: "primary",
                     fontSize: 16,
                   }}
                 />
-              </IconButton>
-            </Tooltip>
+              }
+            >
+              Reject
+            </Button>
           </FlexBox>
         </ColumnBox>
       ) : (
-        <Tooltip title={"Cancel request"}>
-          <Button
-            variant="outlined"
-            color="dark"
-            startIcon={
-              !isLoading ? (
-                <HourglassFull />
-              ) : (
-                <span className="loader-sm-dark" />
-              )
-            }
-            onClick={handleCancelFriendRequest}
-            sx={{
-              py: 1,
-              borderRadius: 99,
-            }}
-            fullWidth
-          >
-            Pending Request
-          </Button>
-        </Tooltip>
+        <>
+          <Tooltip title={"Cancel request"}>
+            <Button
+              variant="outlined"
+              color="dark"
+              startIcon={
+                !isLoading ? (
+                  <HourglassFull />
+                ) : (
+                  <span className="loader-sm-dark" />
+                )
+              }
+              onClick={() => setCancelPendingRequestModal(true)}
+              sx={{
+                py: 1,
+                borderRadius: 99,
+              }}
+              fullWidth
+            >
+              Pending Request
+            </Button>
+          </Tooltip>
+          <ConfirmationModal
+            isModalOpen={cancelPendingRequestModal}
+            setIsModalOpen={setCancelPendingRequestModal}
+            action={handleCancelFriendRequest}
+            warningText={`The request you've sent will be cancelled.`}
+          />
+        </>
       )}
     </>
   ) : (
