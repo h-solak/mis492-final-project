@@ -10,7 +10,7 @@ const getChatList = async () => {
   }
 };
 
-/* Spesific Chat */
+/* Get a spesific chat by using chat id*/
 const getChat = async ({ chatId }) => {
   try {
     const res = await misBaseAxios.get(`/chats/${chatId}`);
@@ -44,4 +44,14 @@ const deleteMessage = async ({ chatId, messageId }) => {
   }
 };
 
-export { getChatList, getChat, sendMessage, deleteMessage };
+/* Create or get a chat id by providing the second user's id */
+const getChatIdByUserId = async (userId) => {
+  try {
+    const res = await misBaseAxios.get(`/chats/user/${userId}`);
+    return res?.data?.chatId; //if chat is created or it already exists, backend will return chatId
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getChatList, getChat, getChatIdByUserId, sendMessage, deleteMessage };

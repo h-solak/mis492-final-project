@@ -4,6 +4,7 @@ const ChatSchema = new mongoose.Schema(
   {
     participants: [
       {
+        _id: false, //no need for id, we will provide it while creating
         id: String,
         read: Date, //last time user has clicked on chat
       },

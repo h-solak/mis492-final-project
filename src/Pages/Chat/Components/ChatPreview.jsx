@@ -13,14 +13,16 @@ const ChatPreview = ({ chat }) => {
 
   let lastMessageDate;
 
-  if (
-    //if the last message is not today, format it differently
-    format(chat?.lastMessage?.createdAt, "dd MM yyyy") !==
-    format(crrDate, "dd MM yyyy")
-  ) {
-    lastMessageDate = format(chat?.lastMessage?.createdAt, "dd/MM/yyyy");
-  } else {
-    lastMessageDate = format(chat?.lastMessage?.createdAt, "HH:mm");
+  if (chat?.lastMessage?.createdAt) {
+    if (
+      //if the last message is not today, format it differently
+      format(chat?.lastMessage?.createdAt, "dd MM yyyy") !==
+      format(crrDate, "dd MM yyyy")
+    ) {
+      lastMessageDate = format(chat?.lastMessage?.createdAt, "dd/MM/yyyy");
+    } else {
+      lastMessageDate = format(chat?.lastMessage?.createdAt, "HH:mm");
+    }
   }
 
   let lastMessageContent = "";

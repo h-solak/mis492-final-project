@@ -17,11 +17,13 @@ import useUser from "../../Contexts/User/useUser";
 import toast from "react-hot-toast";
 import Avatar from "../../Components/Avatar";
 import ChatPreviewLoader from "./Components/ChatPreviewLoader";
+import { useSearchParams } from "react-router-dom";
 
 export const ChatContext = createContext();
 
 const Chat = () => {
   const { user } = useUser();
+  let [searchParams, setSearchParams] = useSearchParams();
   const [chatPreviewsAreLoading, setChatPreviewsAreLoading] = useState(true);
   const [chatLoading, setChatLoading] = useState(false);
   const [chats, setChats] = useState([]); //all chat previews on the left
@@ -33,6 +35,12 @@ const Chat = () => {
   useEffect(() => {
     /* Get chats on page load */
     handleGetChats();
+
+    console.log(searchParams.get("chatId"));
+    if (searchParams.get("chatId")) {
+      console.log("yep");
+      handleGetChat(searchParams.get("chatId"));
+    }
 
     //start socket ( https:// )
     socket.current = io(
@@ -52,6 +60,7 @@ const Chat = () => {
   };
 
   const handleGetChat = async (chatId, showLoadingEffect = false) => {
+    setSearchParams({ chatId: chatId });
     if (showLoadingEffect) {
       //if this function is called because a new message sent, don't use loading effect
       setChatLoading(true);
@@ -163,6 +172,8 @@ const Chat = () => {
           handleSendMessage,
           handleDeleteMessage,
           chatPreviewsAreLoading,
+          searchParams,
+          setSearchParams,
         }}
       >
         {/* User - Chat List  */}

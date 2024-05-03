@@ -76,7 +76,7 @@ router.get("/", checkJwt, async (req, res) => {
   }
 });
 
-//GET A SPESIFIC CHAT
+//GET A SPESIFIC CHAT BY CHAT ID
 router.get("/:chatId", checkJwt, async (req, res) => {
   const id = getUserIdFromToken(req.headers.authorization);
   const chatId = req.params.chatId;
@@ -106,6 +106,41 @@ router.get("/:chatId", checkJwt, async (req, res) => {
     };
     const currentChat = { ...chat._doc, ...newReceiverData };
     res.status(200).json({ chat: currentChat });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+//GET (OR CREATE IF DOESN'T EXIST) CHAT ID OF TWO USERS
+router.get("/user/:user2Id", checkJwt, async (req, res) => {
+  try {
+    const id = getUserIdFromToken(req.headers.authorization);
+    const user2Id = req.params.user2Id;
+    const chat = await Chat.findOne({
+      "participants.id": { $all: [id, user2Id] },
+    });
+
+    console.log(chat);
+
+    if (chat?._id) {
+      return res.status(200).json({ chatId: chat?._id });
+    } else {
+      const crrDate = new Date();
+      const user1Obj = {
+        id: id,
+        read: crrDate,
+      };
+      const user2Obj = {
+        id: user2Id,
+        read: crrDate,
+      };
+      const newChat = new Chat({
+        participants: [user1Obj, user2Obj],
+      });
+      await newChat.save();
+      return res.status(200).json({ chatId: newChat?._id });
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

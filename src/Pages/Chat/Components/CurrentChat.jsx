@@ -21,7 +21,7 @@ import Avatar from "../../../Components/Avatar";
 
 const CurrentChat = ({ chatLoading }) => {
   const { user } = useContext(UserContext);
-  const { crrChat, setCrrChat } = useContext(ChatContext);
+  const { crrChat, setCrrChat, setSearchParams } = useContext(ChatContext);
   const messageContainerRef = useRef();
   const [anchorEl, setAnchorEl] = useState();
   const open = Boolean(anchorEl);
@@ -132,6 +132,7 @@ const CurrentChat = ({ chatLoading }) => {
         <MenuItem
           onClick={() => {
             setCrrChat({});
+            setSearchParams({});
             setAnchorEl(null);
           }}
         >
