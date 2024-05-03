@@ -41,6 +41,13 @@ const ConfirmationModal = ({
           width={"100%"}
         >
           <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => setIsModalOpen(false)}
+          >
+            {cancelButtonText}
+          </Button>
+          <Button
             variant="contained"
             color="primary"
             onClick={() => {
@@ -49,13 +56,6 @@ const ConfirmationModal = ({
             }}
           >
             {confirmationButtonText}
-          </Button>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={() => setIsModalOpen(false)}
-          >
-            {cancelButtonText}
           </Button>
         </Box>
       </Box>
