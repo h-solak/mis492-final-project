@@ -12,6 +12,7 @@ import Avatar from "../../Components/Avatar";
 import { Chat } from "@mui/icons-material";
 import { getChatIdByUserId } from "../../Services/Chat";
 import toast from "react-hot-toast";
+import Friends from "./Components/Friends";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -191,7 +192,8 @@ const Profile = () => {
             </Box>
           )}
 
-          <Box marginTop={4}>Friends ({user?.friends?.length || "0"})</Box>
+          {/* Friends List */}
+          <Friends userProfile={userProfile} />
         </Grid>
       </Grid>
     </Layout>
