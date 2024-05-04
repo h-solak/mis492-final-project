@@ -116,10 +116,6 @@ router.post("/request", checkJwt, async (req, res) => {
           !(userItem?.sender == senderId || userItem?.receiver == senderId)
       );
       await receiver.save();
-
-      return res.status(500).json({
-        error: "The request exists or you are already friends!",
-      });
     }
     return res
       .status(200)
