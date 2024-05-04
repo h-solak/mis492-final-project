@@ -8,7 +8,7 @@ import useUser from "../../Contexts/User/useUser";
 
 /* Avatar */
 import { useNavigate } from "react-router-dom";
-import Avatar from "../Avatar";
+import Avatar from "../../Components/Avatar";
 
 const ProfilePopover = ({ logout }) => {
   const navigate = useNavigate();

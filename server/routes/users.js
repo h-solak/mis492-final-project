@@ -22,7 +22,7 @@ router.get("/", checkJwt, async (req, res) => {
 
     console.log(userList);
 
-    res.status(200).json({ users: userList || [] });
+    return res.status(200).json({ users: userList || [] });
   } catch (err) {
     return res.status(500).json(err);
   }
@@ -38,7 +38,7 @@ router.get("/:usernameQuery", checkJwt, async (req, res) => {
       const { password, privateChats, ...otherUserData } = userItem._doc;
       return otherUserData;
     });
-    res.status(200).json({ users: filteredUserList });
+    return res.status(200).json({ users: filteredUserList });
   } catch (err) {
     return res.status(500).json(err);
   }

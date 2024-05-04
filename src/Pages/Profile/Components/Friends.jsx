@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import { getUsers } from "../../../Services/Users";
 import useUser from "../../../Contexts/User/useUser";
 import Avatar from "../../../Components/Avatar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../../Components/Modals/Modal";
 import AddFriendsButton from "./AddFriendsButton";
 
 const Friends = ({ userProfile }) => {
+  const navigate = useNavigate();
   const [friends, setFriends] = useState([]);
   const [friendsModal, setFriendsModal] = useState(false);
   const { user } = useUser();

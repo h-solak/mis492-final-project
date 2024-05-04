@@ -1,18 +1,18 @@
 import React from "react";
-import { Box, Button, Modal as MuiModal, Typography } from "@mui/material";
+import { Box, Modal as MuiModal } from "@mui/material";
 
 const Modal = ({ isModalOpen, setIsModalOpen, children }) => {
   return (
     <MuiModal
       open={isModalOpen}
-      onClose={setIsModalOpen}
+      onClose={() => setIsModalOpen(false)}
       onClick={() => setIsModalOpen(false)}
     >
       <Box
         display={"flex"}
         flexDirection={"column"}
         alignItems={"center"}
-        sx={{ backgroundColor: "light.main" }}
+        sx={{ backgroundColor: "#fff" }}
         className="absolute-center"
         borderRadius={8}
         padding={5}

@@ -20,6 +20,8 @@ const Home = () => {
         <Typography fontSize={18} fontWeight={"bolder"}>
           TODO
         </Typography>
+        <li>1. Movie Watchlist feature</li>
+        <li>Like & Comment on reviews feature</li>
         <li>Profile - UI implementation</li>
         <li>Notifications</li>
         <li>Password: 8 karakter, büyük harf, özel karakter</li>
@@ -27,10 +29,7 @@ const Home = () => {
           Match özelliği kullanıldığında yeni match direkt olarak arkadaşlara
           eklenecek, kullanıcı isterse veya eşleşmeyi reddederse kaldırılacak..
         </li>
-        <li>!-- Message read status feature</li>
         <li>??? Movie rate bug</li>
-        <li>Movie Watchlist feature</li>
-        <li>Like & Comment on reviews feature</li>
         <li>Ortak arkadaşlar</li>
         <li>https://api.themoviedb.org/3/movie/now_playing</li>
       </ul>

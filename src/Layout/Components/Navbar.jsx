@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import ProfilePopover from "../../Components/Navigation/ProfilePopover";
+import ProfilePopover from "./ProfilePopover";
 import { removeAccessToken } from "../../api/config";
 import useUser from "../../Contexts/User/useUser";
 import NotificationsIcon from "@mui/icons-material/Notifications";
