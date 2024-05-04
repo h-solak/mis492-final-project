@@ -135,6 +135,19 @@ router.get("/user/:user2Id", checkJwt, async (req, res) => {
         id: user2Id,
         read: crrDate,
       };
+
+      /*
+      FIRST MESSAGE SHOULD BE LIKE THIS BY DEFAULT..
+         messages: [
+        {
+          "sender": "MOVIEMATE_SYSTEM",
+          "content": "Welcome to chat!",
+          "createdAt": new Date(),
+          "id": 1
+        }
+      ]
+      */
+
       const newChat = new Chat({
         participants: [user1Obj, user2Obj],
       });

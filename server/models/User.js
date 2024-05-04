@@ -50,10 +50,6 @@ const UserSchema = new mongoose.Schema(
       type: String,
       max: 50,
     },
-    privateChats: {
-      type: [mongoose.Schema.Types.ObjectId], //array of ids
-      default: [],
-    },
   },
   { timestamps: true }
 ); //whenever a new user is created, timestamps will be updated
