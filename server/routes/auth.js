@@ -20,13 +20,13 @@ router.post("/register", async (req, res) => {
 
     const user = await newUser.save();
 
-    res.status(200).json({
+    return res.status(200).json({
       data: user?.username,
       desc: "You may login now :)",
     });
   } catch (err) {
     console.log(err?.keyValue?.username);
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -48,14 +48,14 @@ router.post("/login", async (req, res) => {
     });
 
     // const { password, ...other } = user._doc;
-    res.status(200).json({
+    return res.status(200).json({
       // data: other,
       loggedIn: true,
       jwtToken: jwtToken,
     });
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -74,15 +74,15 @@ router.get("/user", checkJwt, async (req, res) => {
       !user && res.status(404).send({ data: {} }); //if the token is not valid
 
       const { password, ...other } = user._doc; //get the user except password
-      res.status(200).json({
+      return res.status(200).json({
         data: other,
       });
     } else {
-      res.status(500).json();
+      return res.status(500).json();
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 

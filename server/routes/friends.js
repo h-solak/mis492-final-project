@@ -3,6 +3,29 @@ const router = require("express").Router();
 const checkJwt = require("../utils/authenticate");
 const getUserIdFromToken = require("../utils/getUserIdFromToken");
 
+//get friends list of a user
+router.get("/:userId", checkJwt, async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+
+    const friendPromises =
+      user?.friends.map((friendId) => {
+        const friend = User.findById(friendId);
+        const { password, ...relevantData } = friend?._doc;
+        return relevantData;
+      }) || [];
+
+    // Wait for all promises to resolve
+    const friends = await Promise.all(friendPromises);
+
+    console.log(friends);
+    return res.status(200).json({ friends: friends });
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
 //remove a friend
 router.delete("/", checkJwt, async (req, res) => {
   try {
@@ -16,7 +39,7 @@ router.delete("/", checkJwt, async (req, res) => {
     user2.friends = user.friends.filter((friend) => friend.id != id);
     user2.save();
 
-    res.status(200).json({ friends: user.friends });
+    return res.status(200).json({ friends: user.friends });
   } catch (err) {
     return res.status(500).json(err);
   }
@@ -66,11 +89,39 @@ router.post("/request", checkJwt, async (req, res) => {
       sender.pendingFriendRequests = newSenderRequests;
       await sender.save();
     } else {
-      res.status(500).json({
+      /*
+        Instead of just throwing an error: "The request exists or you are already friends!""
+        I will remove the request instead, a bad solution but at least a solution
+      */
+
+      console.log(
+        "bu 1",
+        sender.pendingFriendRequests.find(
+          (item) => item.receiver == receiverId || item.sender == receiverId
+        )
+      );
+      console.log(
+        "bu 2",
+        receiver.pendingFriendRequests.find(
+          (item) => item.receiver == senderId || item.sender == senderId
+        )
+      );
+      sender.pendingFriendRequests = sender?.pendingFriendRequests?.filter(
+        (userItem) =>
+          !(userItem?.sender == receiverId || userItem?.receiver == receiverId)
+      );
+      await sender.save();
+      receiver.pendingFriendRequests = receiver?.pendingFriendRequests?.filter(
+        (userItem) =>
+          !(userItem?.sender == senderId || userItem?.receiver == senderId)
+      );
+      await receiver.save();
+
+      return res.status(500).json({
         error: "The request exists or you are already friends!",
       });
     }
-    res
+    return res
       .status(200)
       .json({ pendingFriendRequests: sender.pendingFriendRequests });
   } catch (err) {
@@ -148,7 +199,7 @@ router.put("/request", checkJwt, async (req, res) => {
 
     const newFriends = userIsSender ? sender.friends : receiver.friends;
 
-    res
+    return res
       .status(200)
       .json({ pendingFriendRequests: newPendingRequests, friends: newFriends });
   } catch (err) {
@@ -187,7 +238,7 @@ router.delete("/request", checkJwt, async (req, res) => {
     const newPendingRequests = userIsSender
       ? sender?.pendingFriendRequests
       : receiver?.pendingFriendRequests;
-    res.status(200).json({ pendingFriendRequests: newPendingRequests });
+    return res.status(200).json({ pendingFriendRequests: newPendingRequests });
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);

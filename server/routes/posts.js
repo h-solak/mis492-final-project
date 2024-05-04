@@ -17,9 +17,9 @@ router.post("/", checkJwt, async (req, res) => {
       content: content,
     });
     await newPost.save();
-    res.status(200).json({ desc: "Your post is successfully shared" });
+    return res.status(200).json({ desc: "Your post is successfully shared" });
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -30,12 +30,12 @@ router.put("/:id", checkJwt, async (req, res) => {
     const post = await Post.findById(req.params.id);
     if (post.userId === req.body.userId) {
       await post.updateOne({ $set: req.body });
-      res.status(200).json("The post has been updated successfully!");
+      return res.status(200).json("The post has been updated successfully!");
     } else {
-      res.status(403).json("You can update only your own posts!");
+      return res.status(403).json("You can update only your own posts!");
     }
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -46,12 +46,16 @@ router.delete("/:id", checkJwt, async (req, res) => {
     const post = await Post.findById(req.params.id);
     if (post.userId === req.body.userId) {
       await Post.findByIdAndDelete(req.params.id);
-      res.status(200).json({ desc: "The post has been deleted successfully!" });
+      return res
+        .status(200)
+        .json({ desc: "The post has been deleted successfully!" });
     } else {
-      res.status(403).json({ desc: "You can delete only your own posts!" });
+      return res
+        .status(403)
+        .json({ desc: "You can delete only your own posts!" });
     }
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -63,7 +67,7 @@ router.put("/:id/like", checkJwt, async (req, res) => {
     //if didn't like it already
     if (!post.likes.includes(req.body.username)) {
       await post.updateOne({ $push: { likes: req.body.username } });
-      res.status(200).json({
+      return res.status(200).json({
         postId: post?._id,
         newLikes: post.likes,
         username: req.body.username,
@@ -71,7 +75,7 @@ router.put("/:id/like", checkJwt, async (req, res) => {
       });
     } else {
       await post.updateOne({ $pull: { likes: req.body.username } });
-      res.status(200).json({
+      return res.status(200).json({
         postId: post?._id,
         newLikes: post.likes,
         username: req.body.username,
@@ -79,7 +83,7 @@ router.put("/:id/like", checkJwt, async (req, res) => {
       });
     }
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -88,9 +92,9 @@ router.put("/:id/like", checkJwt, async (req, res) => {
 router.get("/:id", checkJwt, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    res.status(200).json(post);
+    return res.status(200).json(post);
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -130,12 +134,12 @@ router.get("/timeline/:userId", checkJwt, async (req, res) => {
       (a, b) =>
         new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
     );
-    res.status(200).json({
+    return res.status(200).json({
       desc: "Successful",
       posts: sortedAllTimelinePost,
     });
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 

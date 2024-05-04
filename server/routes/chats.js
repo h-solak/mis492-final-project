@@ -69,10 +69,10 @@ router.get("/", checkJwt, async (req, res) => {
         new Date(b.lastMessage.createdAt) - new Date(a.lastMessage.createdAt)
     );
 
-    res.status(200).json({ chats: sortedPreviewChats });
+    return res.status(200).json({ chats: sortedPreviewChats });
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -105,10 +105,10 @@ router.get("/:chatId", checkJwt, async (req, res) => {
       },
     };
     const currentChat = { ...chat._doc, ...newReceiverData };
-    res.status(200).json({ chat: currentChat });
+    return res.status(200).json({ chat: currentChat });
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -156,7 +156,7 @@ router.get("/user/:user2Id", checkJwt, async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -173,10 +173,10 @@ router.post("/:chatId/message", checkJwt, async (req, res) => {
     };
     await Chat.findByIdAndUpdate(chatId, { $push: { messages: newMessage } });
 
-    res.status(200).json({ chatId: chatId });
+    return res.status(200).json({ chatId: chatId });
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -188,10 +188,10 @@ router.delete("/:chatId/message/:messageId", checkJwt, async (req, res) => {
     await Chat.findByIdAndUpdate(chatId, {
       $pull: { messages: { _id: messageId } },
     });
-    res.status(200).json({ chatId: chatId });
+    return res.status(200).json({ chatId: chatId });
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -203,10 +203,10 @@ router.put("/:chatId/read", checkJwt, async (req, res) => {
     await Chat.findByIdAndUpdate(chatId, {
       $pull: { messages: { _id: messageId } },
     });
-    res.status(200).json({ chatId: chatId });
+    return res.status(200).json({ chatId: chatId });
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -226,11 +226,11 @@ router.get("/suggestions/:userId", checkJwt, async (req, res) => {
         };
       })
     );
-    res.status(200).json({
+    return res.status(200).json({
       data: followings,
     });
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 

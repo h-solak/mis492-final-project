@@ -21,7 +21,7 @@ router.get("/:username", checkJwt, async (req, res) => {
       rates: sortedUserMovieRates,
     };
 
-    res.status(200).json({ user: allUserData });
+    return res.status(200).json({ user: allUserData });
   } catch (err) {
     return res.status(500).json(err);
   }
@@ -43,12 +43,12 @@ router.put("/:id", checkJwt, async (req, res) => {
       const user = await User.findByIdAndUpdate(req.params.id, {
         $set: req.body,
       });
-      res.status(200).json("Account is successfully updated!");
+      return res.status(200).json("Account is successfully updated!");
     } catch (err) {
       return res.status(500).json(err);
     }
   } else {
-    res.status(403).json("You can update only your own account!");
+    return res.status(403).json("You can update only your own account!");
   }
 });
 
@@ -57,12 +57,12 @@ router.delete("/:id", checkJwt, async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
     try {
       const user = await User.findByIdAndDelete(req.params.id);
-      res.status(200).json("Account is successfully deleted!");
+      return res.status(200).json("Account is successfully deleted!");
     } catch (err) {
       return res.status(500).json(err);
     }
   } else {
-    res.status(403).json("You can delete only your own account!");
+    return res.status(403).json("You can delete only your own account!");
   }
 });
 
@@ -84,9 +84,9 @@ router.delete("/:id", checkJwt, async (req, res) => {
 //       );
 //       const { password, updatedAt, email, ...other } = user._doc;
 //       const userArr = Object.assign(other, { posts: mergedUserPosts });
-//       res.status(200).json({ data: userArr });
+//     return res.status(200).json({ data: userArr });
 //     } else {
-//       res.status(404).json({ desc: "User Not Found" });
+//     return res.status(404).json({ desc: "User Not Found" });
 //     }
 //   } catch (err) {
 //     return res.status(500).json(err);
@@ -102,20 +102,20 @@ router.put("/follow/:id", checkJwt, async (req, res) => {
       if (!user.followers.includes(req.body.userId)) {
         await user.updateOne({ $push: { followers: req.body.userId } });
         await crrUser.updateOne({ $push: { followings: req.params.id } });
-        res.status(200).json({
+        return res.status(200).json({
           followedUser: user?._id,
           desc: `Following ${user?.username}`,
         });
       } else {
-        res.status(403).json({
+        return res.status(403).json({
           desc: `You are already following ${user?.username}`,
         });
       }
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err);
     }
   } else {
-    res.status(403).json({
+    return res.status(403).json({
       desc: "You cannot follow yourself!",
     });
   }
@@ -130,21 +130,21 @@ router.put("/unfollow/:id", checkJwt, async (req, res) => {
       if (user.followers.includes(req.body.userId)) {
         await user.updateOne({ $pull: { followers: req.body.userId } });
         await crrUser.updateOne({ $pull: { followings: req.params.id } });
-        res.status(200).json({
+        return res.status(200).json({
           unfollowedUser: user?._id,
           desc: `${user?.username} has been unfollowed`,
         });
       } else {
-        res.status(403).json({
+        return res.status(403).json({
           unfollowedUser: user.username,
           desc: `You are not following ${user?.username}`,
         });
       }
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err);
     }
   } else {
-    res.status(403).json({
+    return res.status(403).json({
       desc: "You cannot unfollow yourself!",
     });
   }
@@ -155,11 +155,11 @@ router.put("/avatar/:userId", checkJwt, async (req, res) => {
   try {
     const user = await User.findById(req.params.userId); //user that will be unfollowed
     await user.updateOne({ $set: { crrAvatar: req.body.avatarId } });
-    res.status(200).json({
+    return res.status(200).json({
       desc: "User avatar has been changed.",
     });
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -184,11 +184,11 @@ router.put("/avatar/:userId", checkJwt, async (req, res) => {
 //         //followers: suggestedUser.followers,
 //       };
 //     });
-//     res.status(200).json({
+//   return res.status(200).json({
 //       suggestedUsers: suggestedUsers.slice(-5),
 //     });
 //   } catch (err) {
-//     res.status(500).json(err);
+//   return res.status(500).json(err);
 //   }
 // });
 

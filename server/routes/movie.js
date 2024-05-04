@@ -13,10 +13,10 @@ router.get("/rates", checkJwt, async (req, res) => {
       user: id,
     });
 
-    res.status(200).json({ rates: usersRates });
+    return res.status(200).json({ rates: usersRates });
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -41,10 +41,10 @@ router.put("/rate", checkJwt, async (req, res) => {
       }
     );
 
-    res.status(200).json();
+    return res.status(200).json();
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -73,13 +73,13 @@ router.post("/rate", checkJwt, async (req, res) => {
         moviePoster: moviePoster,
       });
       await newRate.save();
-      res.status(200).json();
+      return res.status(200).json();
     } else {
-      res.status(400).json();
+      return res.status(400).json();
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -131,10 +131,10 @@ router.get("/:movieId/reviews", checkJwt, async (req, res) => {
       );
     }
 
-    res.status(200).json({ reviews: reviews });
+    return res.status(200).json({ reviews: reviews });
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -154,10 +154,10 @@ router.post("/review/reply/:reviewId", checkJwt, async (req, res) => {
     review.replies.push(reply);
     await review.save();
 
-    res.status(200).json({ reply: reply });
+    return res.status(200).json({ reply: reply });
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
