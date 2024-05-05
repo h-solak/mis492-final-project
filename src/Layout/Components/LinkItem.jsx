@@ -21,18 +21,23 @@ const LinkItem = ({ title, url, onClick, icon, imgIcon, notification }) => {
         }}
         startIcon={icon ? icon : <img src={imgIcon} width={24} height={24} />}
         endIcon={
-          !!notification && (
+          !!(notification > 0) && (
             <Box
               display={"flex"}
               alignItems={"center"}
+              justifyContent={"center"}
               ml={8}
               sx={{
-                height: 9,
-                width: 9,
+                height: 18,
+                width: 18,
                 borderRadius: 99,
                 backgroundColor: "primary.light",
               }}
-            />
+            >
+              <Typography fontSize={10} color={"#fff"} fontWeight={"bold"}>
+                {notification}
+              </Typography>
+            </Box>
           )
         }
         onClick={onClick ? onClick : () => null}

@@ -86,7 +86,11 @@ const Sidebar = () => {
     }
   };
 
-  const notificationsCount = parseInt(user?.pendingFriendRequests?.length);
+  const notificationsCount = parseInt(
+    user?.pendingFriendRequests?.filter(
+      (requestItem) => requestItem?.receiver == user?._id
+    )?.length
+  );
 
   return isSmScreen ? null : (
     <Grid
