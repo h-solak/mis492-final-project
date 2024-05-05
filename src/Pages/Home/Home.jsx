@@ -31,7 +31,6 @@ const Home = () => {
         </li>
         <li>??? Movie rate bug</li>
         <li>Ortak arkadaşlar</li>
-        <li>https://api.themoviedb.org/3/movie/now_playing</li>
       </ul>
     </Layout>
   );

@@ -26,7 +26,7 @@ const Layout = ({
           <Grid
             container
             px={disablePaddingX ? 0 : 8}
-            py={disablePaddingY ? 0 : 8}
+            py={disablePaddingY ? 0 : 6}
             {...props}
           >
             {pageLoading ? (

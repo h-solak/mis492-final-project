@@ -53,6 +53,16 @@ a {
   background: linear-gradient(to right, white 0%, red 100%);
 }
 
+/* Movie Item */
+
+.movie-item-bottombar {
+  display: none;
+  transition: 0.2s ease-in-out;
+}
+.movie-item:hover .movie-item-bottombar {
+  display: flex;
+}
+
 /* Animations */
 
 .shimmer {
@@ -146,6 +156,19 @@ a {
   100% {
     transform: translateX(0);
   }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.25s ease-in-out;
 }
 
 .opening-animation {

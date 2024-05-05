@@ -30,12 +30,12 @@ router.post("/", checkJwt, async (req, res) => {
     console.log([row1Formatted, row2Formatted, row3Formatted]);
     //   [
     //    1,1/6,1/3,
-    //   6,1,1/3,
-    // 3,3,1,
+    //    6,1,1/3,
+    //    3,3,1,
     //   ]
 
-    // [1,1/2,3]
-    // [2,1,4]
+    // [1,   1/2, 3]
+    // [2,   1,   4]
     // [1/3, 1/4, 1]
 
     const subCriteriaMatrixFormed = new Matrix([

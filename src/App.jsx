@@ -18,6 +18,7 @@ import CharacterSurvey from "./Pages/CharacterSurvey/CharacterSurvey";
 import NotFound from "./Pages/NotFound/NotFound";
 import Search from "./Pages/Search/Search";
 import Notifications from "./Pages/Notifications/Notifications";
+import Watchlist from "./Pages/Profile/Watchlist/Watchlist";
 
 function App() {
   return (
@@ -41,6 +42,11 @@ function App() {
                 key="Profile"
                 path="/profile/:username"
                 element={<AuthGuard component={<Profile />} />}
+              />
+              <Route
+                key="Profile"
+                path="/profile/:username/watchlist"
+                element={<AuthGuard component={<Watchlist />} />}
               />
               <Route
                 key="CharacterSurvey"
