@@ -50,6 +50,15 @@ const UserSchema = new mongoose.Schema(
       type: String,
       max: 50,
     },
+    favoriteMovies: {
+      type: Array,
+      default: [],
+    },
+    defaultWatchlist: {
+      type: Array, 
+      default: []
+    }
+    //new watchlists will be stored in watchlist database
   },
   { timestamps: true }
 ); //whenever a new user is created, timestamps will be updated

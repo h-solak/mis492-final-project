@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { getChatIdByUserId } from "../../../Services/Chat";
 import useUser from "../../../Contexts/User/useUser";
 import { Box, Button, Grid, Typography } from "@mui/material";
@@ -8,17 +8,20 @@ import { Chat } from "@mui/icons-material";
 import AddFriendsButton from "./AddFriendsButton";
 import Friends from "./Friends";
 import { useNavigate } from "react-router-dom";
+import { ProfileUserContext } from "../Profile";
 
-const UserSidebar = ({ userProfile }) => {
+const UserSidebar = () => {
+  const { profileUser, setProfileUser } = useContext(ProfileUserContext);
+  
   const navigate = useNavigate();
   const { user } = useUser();
   const isFriend = user?.friends?.find(
-    (friend) => friend.id == userProfile?._id
+    (friend) => friend.id == profileUser?._id
   );
-  const isOwnProfile = user?.username == userProfile?.username;
+  const isOwnProfile = user?.username == profileUser?.username;
 
   const handleSendMessage = async () => {
-    const chatId = await getChatIdByUserId(userProfile?._id);
+    const chatId = await getChatIdByUserId(profileUser?._id);
     if (chatId) {
       navigate(`/chat?chatId=${chatId}`);
     } else {
@@ -45,8 +48,8 @@ const UserSidebar = ({ userProfile }) => {
         }}
       >
         <ColumnBox alignItems="center" alignSelf="center">
-          <Avatar name={userProfile?.username} size={80} />
-          <Typography fontWeight={"bold"}>{userProfile?.username}</Typography>
+          <Avatar name={profileUser?.username} size={80} />
+          <Typography fontWeight={"bold"}>{profileUser?.username}</Typography>
           <Typography color={"primary.light"} fontWeight={"bold"} fontSize={12}>
             Drama Queen
           </Typography>
@@ -62,7 +65,7 @@ const UserSidebar = ({ userProfile }) => {
             borderRadius: 4,
           }}
         >
-          <Typography fontSize={14}>"{userProfile?.desc}"</Typography>
+          <Typography fontSize={14}>"{profileUser?.desc}"</Typography>
         </Box>
 
         <Box
@@ -75,7 +78,7 @@ const UserSidebar = ({ userProfile }) => {
         >
           <Typography textAlign={"center"}>
             <Typography fontSize={20}>
-              {userProfile?.rates?.length || 0}
+              {profileUser?.rates?.length || 0}
             </Typography>
             <Typography fontSize={12}>Movies</Typography>
           </Typography>
@@ -89,7 +92,7 @@ const UserSidebar = ({ userProfile }) => {
           />
           <Typography textAlign={"center"}>
             <Typography fontSize={20}>
-              {userProfile?.rates?.filter((item) => item?.review).length || 0}
+              {profileUser?.rates?.filter((item) => item?.review).length || 0}
             </Typography>
             <Typography fontSize={12}>Reviews</Typography>
           </Typography>
@@ -123,12 +126,12 @@ const UserSidebar = ({ userProfile }) => {
       )}
       {!isOwnProfile && (
         <Box mt={2}>
-          <AddFriendsButton user2id={userProfile?._id} />
+          <AddFriendsButton user2id={profileUser?._id} />
         </Box>
       )}
 
       {/* Friends List */}
-      <Friends userProfile={userProfile} />
+      <Friends profileUser={profileUser} />
     </Grid>
   );
 };

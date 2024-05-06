@@ -41,7 +41,7 @@ app.get("/", (req, res) => {
 mongoose
   .connect(process.env.MONGO_URL, () => {
     console.log("connected to MongoDB");
-    app.listen(8800, () => console.log("backend connected 8800"));
+    app.listen(5900, () => console.log("backend connected 5900"));
   })
   .catch((err) => {
     console.log(err);

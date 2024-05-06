@@ -1,6 +1,6 @@
 import { misBaseAxios } from "../api/config";
 
-const getUserProfile = async (username) => {
+const getProfileUser = async (username) => {
   try {
     const res = await misBaseAxios.get(`/user/${username}`);
     console.log(res);
@@ -10,4 +10,4 @@ const getUserProfile = async (username) => {
   }
 };
 
-export { getUserProfile };
+export { getProfileUser };
