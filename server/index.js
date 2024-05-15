@@ -17,6 +17,7 @@ const chatRoute = require("./routes/chats");
 const movieRoute = require("./routes/movie");
 const watchlistRoute = require("./routes/watchlist");
 const favoritesRoute = require("./routes/favorites");
+const nowWatchingRoute = require("./routes/nowWatching");
 
 dotenv.config();
 //middleware
@@ -34,6 +35,7 @@ app.use("/api/chats", chatRoute);
 app.use("/api/movie", movieRoute);
 app.use("/api/watchlist", watchlistRoute);
 app.use("/api/favorites", favoritesRoute);
+app.use("/api/nowWatching", nowWatchingRoute);
 
 // Create GET request
 app.get("/", (req, res) => {

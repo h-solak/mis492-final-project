@@ -19,10 +19,11 @@ import {
   removeFromDefaultWatchlist,
 } from "../../Services/Watchlist";
 import { addToFavorites, removeFromFavorites } from "../../Services/Favorites";
+import { removeNowWatching, setNowWatching } from "../../Services/NowWatching";
 
-const Bottombar = ({ height, movieId }) => {
+const Bottombar = ({ height, movie }) => {
+  const movieId = movie?.id;
   const { user, setUser } = useUser();
-  console.log(user);
 
   const handleWatchlist = async () => {
     if (!user?.defaultWatchlist?.includes(movieId)) {
@@ -68,6 +69,19 @@ const Bottombar = ({ height, movieId }) => {
     }
   };
 
+  const handleNowWatching = async () => {
+    if (!(user?.nowWatching?.id == movieId)) {
+      const newNowWatching = await setNowWatching({ movie });
+      if (newNowWatching) {
+        setUser((userItem) => ({ ...userItem, nowWatching: newNowWatching }));
+      }
+    } else {
+      //remove now watching
+      const newNowWatching = await removeNowWatching();
+      setUser((userItem) => ({ ...userItem, nowWatching: newNowWatching }));
+    }
+  };
+
   return (
     <Box
       className="movie-item-bottombar"
@@ -107,9 +121,13 @@ const Bottombar = ({ height, movieId }) => {
           <img src={ReviewSvg} width={21} alt="Review" />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Now watching">
+      <Tooltip title="Now watching" onClick={handleNowWatching}>
         <IconButton className="fade-in">
-          <img src={NowWatchingSvg} width={21} alt="Now Watching" />
+          {user?.nowWatching?.id == movieId ? (
+            <img src={NowWatchingActiveSvg} width={21} alt="Now Watching" />
+          ) : (
+            <img src={NowWatchingSvg} width={21} alt="Now Watching" />
+          )}
         </IconButton>
       </Tooltip>
     </Box>
@@ -164,7 +182,7 @@ const MovieItem = ({ xs = 12, sm = 6, md = 3, height = 240, movie }) => {
             {movie?.release_date.slice(0, 4)}
           </Typography>
         </ColumnBox>
-        <Bottombar height={40} movieId={movie?.id} />
+        <Bottombar height={40} movie={movie} />
       </ColumnBox>
     </Grid>
   );

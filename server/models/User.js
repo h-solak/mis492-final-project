@@ -60,14 +60,7 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    nowWatching: {
-      movie: {
-        id: "",
-        title: "",
-        overview: "",
-        poster_path: "",
-      },
-    },
+    nowWatching: {},
     //new watchlists will be stored in watchlist database
   },
   { timestamps: true }
