@@ -9,4 +9,22 @@ const createWatchlist = async ({ title }) => {
   }
 };
 
-export { getMovieReviews };
+const addToDefaultWatchlist = async ({ movieId }) => {
+  try {
+    const res = await misBaseAxios.post(`/watchlist`, { movieId });
+    return res?.data?.watchlist;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const removeFromDefaultWatchlist = async ({ movieId }) => {
+  try {
+    const res = await misBaseAxios.delete(`/watchlist/${movieId}`);
+    return res?.data?.watchlist;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { createWatchlist, addToDefaultWatchlist, removeFromDefaultWatchlist };

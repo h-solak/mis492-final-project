@@ -13,8 +13,61 @@ import BookmarkSvg from "../../assets/icons/movieItem/bookmark.svg";
 import BookmarkActiveSvg from "../../assets/icons/movieItem/bookmarkActive.svg";
 import FavoriteSvg from "../../assets/icons/movieItem/favorite.svg";
 import FavoriteActiveSvg from "../../assets/icons/movieItem/favoriteActive.svg";
+import useUser from "../../Contexts/User/useUser";
+import {
+  addToDefaultWatchlist,
+  removeFromDefaultWatchlist,
+} from "../../Services/Watchlist";
+import { addToFavorites, removeFromFavorites } from "../../Services/Favorites";
 
-const Bottombar = ({ height }) => {
+const Bottombar = ({ height, movieId }) => {
+  const { user, setUser } = useUser();
+  console.log(user);
+
+  const handleWatchlist = async () => {
+    if (!user?.defaultWatchlist?.includes(movieId)) {
+      //add to default watchlist
+      const newWatchlist = await addToDefaultWatchlist({ movieId });
+      if (newWatchlist) {
+        setUser((userItem) => ({
+          ...userItem,
+          defaultWatchlist: newWatchlist,
+        }));
+      }
+    } else {
+      //remove movie from watchlist
+      const newWatchlist = await removeFromDefaultWatchlist({ movieId });
+      if (newWatchlist) {
+        setUser((userItem) => ({
+          ...userItem,
+          defaultWatchlist: newWatchlist,
+        }));
+      }
+    }
+  };
+
+  const handleFavorites = async () => {
+    if (!user?.favoriteMovies?.includes(movieId)) {
+      //add to favorites
+      const newFavorites = await addToFavorites({ movieId });
+      if (newFavorites) {
+        setUser((userItem) => ({
+          ...userItem,
+          favoriteMovies: newFavorites,
+        }));
+      }
+    } else {
+      //remove movie from favorites
+      const newFavorites = await removeFromFavorites({ movieId });
+      if (newFavorites) {
+        setUser((userItem) => ({
+          ...userItem,
+          favoriteMovies: newFavorites,
+        }));
+      }
+    }
+  };
+
   return (
     <Box
       className="movie-item-bottombar"
@@ -29,32 +82,42 @@ const Bottombar = ({ height }) => {
       alignItems={"center"}
       justifyContent={"space-between"}
       px={1}
+      onClick={(e) => e.stopPropagation()}
     >
       <Tooltip title="Favorite">
-        <IconButton className="fade-in">
-          <img src={FavoriteActiveSvg} width={21} alt="Live" />
+        <IconButton className="fade-in" onClick={handleFavorites}>
+          {user?.favoriteMovies?.includes(movieId) ? (
+            <img src={FavoriteActiveSvg} width={21} alt="Favorite Active" />
+          ) : (
+            <img src={FavoriteSvg} width={21} alt="Favorite" />
+          )}
         </IconButton>
       </Tooltip>
-      <Tooltip title="Add to watchlist">
+      <Tooltip title="Add to watchlist" onClick={handleWatchlist}>
         <IconButton className="fade-in">
-          <img src={BookmarkSvg} width={15} alt="Live" />
+          {user?.defaultWatchlist?.includes(movieId) ? (
+            <img src={BookmarkActiveSvg} width={15} alt="Bookmark" />
+          ) : (
+            <img src={BookmarkSvg} width={15} alt="Bookmark" />
+          )}
         </IconButton>
       </Tooltip>
       <Tooltip title="Write a review">
         <IconButton className="fade-in">
-          <img src={ReviewSvg} width={21} alt="Live" />
+          <img src={ReviewSvg} width={21} alt="Review" />
         </IconButton>
       </Tooltip>
       <Tooltip title="Now watching">
         <IconButton className="fade-in">
-          <img src={NowWatchingSvg} width={21} alt="Live" />
+          <img src={NowWatchingSvg} width={21} alt="Now Watching" />
         </IconButton>
       </Tooltip>
     </Box>
   );
 };
-const MovieItem = ({ xs = 6, sm = 3, md = 3, height = 240, movie }) => {
+const MovieItem = ({ xs = 12, sm = 6, md = 3, height = 240, movie }) => {
   const navigate = useNavigate();
+  const { user } = useUser();
   return (
     <Grid item xs={xs} sm={sm} md={md} className="opening-animation">
       {/* Grid in this component is a container, ColumnBox is the actual movie item user see on the screen */}
@@ -101,7 +164,7 @@ const MovieItem = ({ xs = 6, sm = 3, md = 3, height = 240, movie }) => {
             {movie?.release_date.slice(0, 4)}
           </Typography>
         </ColumnBox>
-        <Bottombar height={40} />
+        <Bottombar height={40} movieId={movie?.id} />
       </ColumnBox>
     </Grid>
   );

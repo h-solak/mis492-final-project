@@ -50,14 +50,24 @@ const UserSchema = new mongoose.Schema(
       type: String,
       max: 50,
     },
-    favoriteMovies: {
+    defaultWatchlist: {
+      //array of movie ids
       type: Array,
       default: [],
     },
-    defaultWatchlist: {
-      type: Array, 
-      default: []
-    }
+    favoriteMovies: {
+      //array of movie ids
+      type: Array,
+      default: [],
+    },
+    nowWatching: {
+      movie: {
+        id: "",
+        title: "",
+        overview: "",
+        poster_path: "",
+      },
+    },
     //new watchlists will be stored in watchlist database
   },
   { timestamps: true }
