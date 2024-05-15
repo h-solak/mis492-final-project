@@ -6,9 +6,9 @@ import { getProfileUser } from "../../Services/User";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import RecentActivity from "./Components/RecentActivity";
 import UserSidebar from "./Components/UserSidebar";
+import ProfileNowWatching from "./Components/ProfileNowWatching";
 
 export const ProfileUserContext = createContext();
-
 
 const Profile = () => {
   const [pageLoading, setPageLoading] = useState(true);
@@ -49,6 +49,11 @@ const Profile = () => {
         />
         <Grid container>
           {/* Recent Activities, Watchlists... */}
+          {!!profileUser?.nowWatching?.id && (
+            <Grid item xs={12} md={9} marginBottom={4}>
+              <ProfileNowWatching />
+            </Grid>
+          )}
           <Grid item xs={12} md={9} marginBottom={4} px={4}>
             <RecentActivity />
           </Grid>
