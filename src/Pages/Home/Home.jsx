@@ -20,6 +20,8 @@ const Home = () => {
         <Typography fontSize={18} fontWeight={"bolder"}>
           TODO
         </Typography>
+        <li>Now watching *anasayfa* arkadaşlar ne izlio</li>
+        <li>Profile edit your description</li>
         <li>1. Movie Watchlist feature</li>
         <li>Like & Comment on reviews feature</li>
         <li>Profile - UI implementation</li>

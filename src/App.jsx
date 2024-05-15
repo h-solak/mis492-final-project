@@ -19,6 +19,7 @@ import NotFound from "./Pages/NotFound/NotFound";
 import Search from "./Pages/Search/Search";
 import Notifications from "./Pages/Notifications/Notifications";
 import Watchlist from "./Pages/Profile/Watchlist/Watchlist";
+import WatchlistNavigator from "./Pages/WatchlistNavigator/WatchlistNavigator";
 
 function App() {
   return (
@@ -47,6 +48,11 @@ function App() {
                 key="Profile"
                 path="/profile/:username/watchlist"
                 element={<AuthGuard component={<Watchlist />} />}
+              />
+              <Route
+                key="WatchlistNavigator"
+                path="/watchlist"
+                element={<AuthGuard component={<WatchlistNavigator />} />}
               />
               <Route
                 key="CharacterSurvey"
