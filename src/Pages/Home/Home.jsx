@@ -20,6 +20,12 @@ const Home = () => {
         <Typography fontSize={18} fontWeight={"bolder"}>
           TODO
         </Typography>
+        <li>
+          <b>
+            FOCUS ON MAIN FEATURES: CHARACTER PAGES & SURVEY STRUCTURE - DON'T
+            LET USERS IN IF THEY DON'T TAKE THE SURVEY & HOME PAGE UI
+          </b>
+        </li>
         <li>Now watching *anasayfa* arkadaşlar ne izlio</li>
         <li>Profile edit your description</li>
         <li>1. Movie Watchlist feature</li>

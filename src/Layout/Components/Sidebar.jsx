@@ -95,7 +95,7 @@ const Sidebar = () => {
   return isSmScreen ? null : (
     <Grid
       item
-      sm={3}
+      sm={2.5}
       className="sidebar full-height"
       py={2}
       sx={{

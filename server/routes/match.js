@@ -26,8 +26,20 @@ router.post("/", checkJwt, async (req, res) => {
     row3Formatted = subCriteriaMatrix?.row3?.map((number) =>
       parseFloat(number)
     );
+    row4Formatted = subCriteriaMatrix?.row4?.map((number) =>
+      parseFloat(number)
+    );
+    row5Formatted = subCriteriaMatrix?.row5?.map((number) =>
+      parseFloat(number)
+    );
 
-    console.log([row1Formatted, row2Formatted, row3Formatted]);
+    console.log([
+      row1Formatted,
+      row2Formatted,
+      row3Formatted,
+      row4Formatted,
+      row5Formatted,
+    ]);
     //   [
     //    1,1/6,1/3,
     //    6,1,1/3,
@@ -42,6 +54,8 @@ router.post("/", checkJwt, async (req, res) => {
       row1Formatted,
       row2Formatted,
       row3Formatted,
+      row4Formatted,
+      row5Formatted,
     ]);
 
     const ahpResult = ahp.getWeights(subCriteriaMatrixFormed);

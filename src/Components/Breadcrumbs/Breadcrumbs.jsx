@@ -1,6 +1,11 @@
 import { Home } from "@mui/icons-material";
-import { Breadcrumbs as MuiBreadcrumbs, Link } from "@mui/material";
+import {
+  Breadcrumbs as MuiBreadcrumbs,
+  Link as MuiLink,
+  Typography,
+} from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Breadcrumbs = ({ links }) => {
   /* Links array [{title, url}] */
@@ -9,13 +14,16 @@ const Breadcrumbs = ({ links }) => {
       <Link
         underline="hover"
         color="dark.main"
-        href="/"
-        display={"flex"}
-        alignItems={"center"}
+        to="/"
+        style={{
+          display: "flex",
+          alignItems: "center",
+        }}
       >
         <Home
           sx={{
             fontSize: 20,
+            color: "black",
           }}
         />
       </Link>
@@ -24,10 +32,11 @@ const Breadcrumbs = ({ links }) => {
           key={linkItem.url}
           underline="none"
           color="dark.main"
-          href={linkItem.url}
-          fontSize={14}
+          to={linkItem.url}
         >
-          {linkItem.title}
+          <Typography color={"black"} fontSize={14}>
+            {linkItem.title}
+          </Typography>
         </Link>
       ))}
     </MuiBreadcrumbs>

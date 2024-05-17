@@ -61,7 +61,20 @@ const UserSchema = new mongoose.Schema(
       default: [],
     },
     nowWatching: {},
-    //new watchlists will be stored in watchlist database
+    age: {
+      type: Number,
+      required: true,
+      default: 24,
+    },
+    gender: {
+      type: String,
+      required: true,
+      default: "female", // male/female (lowercased)
+    },
+    personality: {
+      type: Object,
+      //cant access match feature unless has a personality object
+    },
   },
   { timestamps: true }
 ); //whenever a new user is created, timestamps will be updated

@@ -20,6 +20,8 @@ import Search from "./Pages/Search/Search";
 import Notifications from "./Pages/Notifications/Notifications";
 import Watchlist from "./Pages/Profile/Watchlist/Watchlist";
 import WatchlistNavigator from "./Pages/WatchlistNavigator/WatchlistNavigator";
+import Match from "./Pages/Match/Match";
+import PersonalityTest from "./Pages/Match/Pages/PersonalityTest/PersonalityTest";
 
 function App() {
   return (
@@ -83,6 +85,16 @@ function App() {
                 key="Search"
                 path="/search"
                 element={<AuthGuard component={<Search />} />}
+              />
+              <Route
+                key="Match"
+                path="/match"
+                element={<AuthGuard component={<Match />} />}
+              />
+              <Route
+                key="PersonalityTest"
+                path="/match/personality-test"
+                element={<AuthGuard component={<PersonalityTest />} />}
               />
               <Route key="NotFound" path="*" element={<NotFound />} />
             </Routes>
