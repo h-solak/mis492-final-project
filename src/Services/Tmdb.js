@@ -39,4 +39,16 @@ const getReleaseRadar = async (movieId) => {
   }
 };
 
-export { searchMovie, getMovieDetails, getReleaseRadar };
+//multi search
+const searchMulti = async (queryText, page = 1) => {
+  try {
+    const res = await tmdbBaseAxios.get(
+      `/search/multi?query=${queryText}&include_adult=false&language=en-US&page=${page}`
+    );
+    return res?.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export { searchMovie, getMovieDetails, getReleaseRadar, searchMulti };

@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Grid, IconButton, TextField, Typography } from "@mui/material";
 import { CloseRounded, SearchRounded } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
 import { getUsersWithUsernameSearch } from "../../../../Services/Users";
 import UserItem from "./UserItem";
 import SearchLoader from "../../../../Components/Loaders/SearchLoader";
 import NoResults from "../../../../Components/NoResults";
 import CenteredBox from "../../../../Components/CenteredBox";
-const UserSearch = () => {
-  let [searchParams, setSearchParams] = useSearchParams();
+const UserSearch = ({ searchParams, setSearchParams }) => {
   const [userList, setUserList] = useState({
     data: [],
     isLoading: false,
@@ -24,22 +22,29 @@ const UserSearch = () => {
   } = useForm();
 
   useEffect(() => {
-    setValue("searchMovies", searchParams.get("users")?.trim());
+    setSearchParams((prevParams) => ({
+      ...prevParams,
+      type: "users",
+    }));
+    setValue("users", searchParams.get("users")?.trim());
   }, []);
 
   useEffect(() => {
-    if (watch("searchMovies")?.trim().length > 0) {
+    if (watch("users")?.trim().length > 0) {
       handleSearch();
     }
-  }, [watch("searchMovies")]);
+  }, [watch("users")]);
 
   const handleSearch = async () => {
     setUserList((prevUserList) => ({ ...prevUserList, isLoading: true }));
     const newUserList = await getUsersWithUsernameSearch(
-      watch("searchMovies")?.trim()
+      watch("users")?.trim()
     );
     setUserList({ data: newUserList, isLoading: false });
-    setSearchParams({ users: watch("searchMovies")?.trim() });
+    setSearchParams((prevSearchParams) => ({
+      ...prevSearchParams,
+      users: watch("users")?.trim(),
+    }));
   };
   return (
     <Grid item xs={12} lg={6} mt={4}>
@@ -47,10 +52,10 @@ const UserSearch = () => {
         placeholder="Search for users..."
         InputProps={{
           startAdornment: <SearchRounded color="disabled" sx={{ mr: 1 }} />,
-          endAdornment: watch("searchMovies") ? (
+          endAdornment: watch("users") ? (
             <IconButton
               onClick={() => {
-                setValue("searchMovies", "");
+                setValue("users", "");
                 setSearchParams({});
               }}
               sx={{
@@ -71,7 +76,7 @@ const UserSearch = () => {
           },
         }}
         fullWidth
-        {...register("searchMovies", {
+        {...register("users", {
           required: true,
           minLength: 3,
           maxLength: 20,
