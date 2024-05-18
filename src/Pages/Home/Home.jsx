@@ -39,6 +39,7 @@ const Home = () => {
         </li>
         <li>??? Movie rate bug</li>
         <li>Ortak arkadaşlar</li>
+        <li>Oyuncular film sayfasında</li>
       </ul>
     </Layout>
   );

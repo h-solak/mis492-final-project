@@ -14,7 +14,6 @@ import Chat from "./Pages/Chat/Chat";
 import Movies from "./Pages/Movies/Movies";
 import Movie from "./Pages/Movie/Movie";
 import Profile from "./Pages/Profile/Profile";
-import CharacterSurvey from "./Pages/CharacterSurvey/CharacterSurvey";
 import NotFound from "./Pages/NotFound/NotFound";
 import Search from "./Pages/Search/Search";
 import Notifications from "./Pages/Notifications/Notifications";
@@ -55,11 +54,6 @@ function App() {
                 key="WatchlistNavigator"
                 path="/watchlist"
                 element={<AuthGuard component={<WatchlistNavigator />} />}
-              />
-              <Route
-                key="CharacterSurvey"
-                path="/character-survey"
-                element={<AuthGuard component={<CharacterSurvey />} />}
               />
               <Route
                 key="Chat"

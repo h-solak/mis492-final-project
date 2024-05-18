@@ -1,9 +1,21 @@
 import { misBaseAxios } from "../api/config";
 
-const sendMatrix = async (subcriteriaMatrix) => {
+const matchUser = async (matrices) => {
   try {
     const res = await misBaseAxios.post(`/match`, {
+      matrices,
+    });
+    return res?.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const checkConsistency = async (subcriteriaMatrix, dimension) => {
+  try {
+    const res = await misBaseAxios.post(`/match/check-consistency`, {
       subcriteriaMatrix,
+      dimension,
     });
     return res?.data?.consistencyRate;
   } catch (error) {
@@ -11,4 +23,4 @@ const sendMatrix = async (subcriteriaMatrix) => {
   }
 };
 
-export { sendMatrix };
+export { matchUser, checkConsistency };

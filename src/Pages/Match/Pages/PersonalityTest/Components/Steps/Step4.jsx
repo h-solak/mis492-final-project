@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Button, Grid, Slider, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { checkConsistency } from "../../../../../../Services/Match";
@@ -19,7 +19,7 @@ const ahpMarks = [
   { value: 1, label: "9" }, //actual value 1/9
 ];
 
-const Step2 = ({ setCurrentStep, setMatrices }) => {
+const Step4 = ({ setCurrentStep, setMatrices }) => {
   const {
     register,
     handleSubmit,
@@ -95,15 +95,17 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
     //   row3: [emotionalFluidity, emotionalVisual, 1],
     // };
 
+    // const crValue = await sendMatrix(subcriteriaMatrix);
+
     setMatrices((prevMatrices) => ({
       ...prevMatrices,
-      visual5x5matrix: subcriteriaMatrix,
+      emotional5x5matrix: subcriteriaMatrix,
     }));
 
     const crValue = await checkConsistency(subcriteriaMatrix, 5);
 
     if (crValue < 5) {
-      setCurrentStep(3);
+      setCurrentStep(5);
     } else {
       setConsistencyRate(crValue);
       window.scrollTo({
@@ -131,7 +133,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
         justifySelf={"center"}
       >
         <Box my={4} display={"flex"} justifyContent={"center"}>
-          <CurrentStepNo no={2} />
+          <CurrentStepNo no={4} />
         </Box>
         <Button onClick={() => setCurrentStep((bla) => bla - 1)}>prev</Button>{" "}
         <Button onClick={() => setCurrentStep((bla) => bla + 1)}>next</Button>
@@ -149,35 +151,8 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             important, 7: clearly more important, 9: definitely more important)
           </Typography>
         </ColumnBox>
-        {!!consistencyRate && (
-          <Box
-            className="fade-in opening-animation"
-            px={2}
-            py={1}
-            display={"flex"}
-            alignItems={"center"}
-            gap={2}
-            width={"100%"}
-            sx={{
-              backgroundColor: "#ff000030",
-            }}
-          >
-            <Typography fontSize={64} fontWeight={900}>
-              !
-            </Typography>
-            <ColumnBox>
-              <Typography className="fade-in" fontSize={18} fontWeight={"bold"}>
-                {`Your consistency rate is: ${consistencyRate}`}
-              </Typography>
-              <Typography pr={4}>
-                It should be lower for a better matching experience! Avoid using
-                high points such as 7 and 9!
-              </Typography>
-            </ColumnBox>
-          </Box>
-        )}
         <Typography mt={4} fontWeight={"bold"}>
-          Visual and Technical Elements
+          Emotional Impact
         </Typography>
         <Box display={"flex"} alignItems={"center"} gap={4}>
           <Typography fontSize={14} width={100}>
@@ -373,9 +348,14 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
           {" "}
           Continue
         </Button>
+        {!!consistencyRate && (
+          <Typography fontSize={30} color={"#FF8096"}>
+            {consistencyRate}
+          </Typography>
+        )}
       </Grid>
     </Grid>
   );
 };
 
-export default Step2;
+export default Step4;

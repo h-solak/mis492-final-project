@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Box, Button, Grid, Slider, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { sendMatrix } from "../../../../../../Services/Match";
+import { checkConsistency } from "../../../../../../Services/Match";
 import { useNavigate } from "react-router-dom";
 import ColumnBox from "../../../../../../Components/ColumnBox";
 import CurrentStepNo from "./CurrentStepNo";
-import toast from "react-hot-toast";
 
 const ahpMarks = [
   { value: 1, label: "9" },
@@ -19,7 +18,7 @@ const ahpMarks = [
   { value: 9, label: "9" },
 ];
 
-const Step1 = ({ setCurrentStep }) => {
+const Step1 = ({ setCurrentStep, setMatrices }) => {
   const {
     register,
     handleSubmit,
@@ -38,13 +37,22 @@ const Step1 = ({ setCurrentStep }) => {
       row3: [emotionalFluidity, emotionalVisual, 1],
     };
 
-    const crValue = await sendMatrix(subcriteriaMatrix);
+    const crValue = await checkConsistency(subcriteriaMatrix, 3);
 
-    setConsistencyRate(crValue);
+    setMatrices((prevMatrices) => ({
+      ...prevMatrices,
+      vfe3x3matrix: subcriteriaMatrix,
+    }));
 
-    if (crValue < 0.3) {
+    if (crValue < 0.9) {
       setCurrentStep(2);
-    } //else show info
+    } else {
+      setConsistencyRate(crValue);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
@@ -67,7 +75,8 @@ const Step1 = ({ setCurrentStep }) => {
         <Box my={4} display={"flex"} justifyContent={"center"}>
           <CurrentStepNo no={1} />
         </Box>
-
+        <Button onClick={() => setCurrentStep((bla) => bla - 1)}>prev</Button>{" "}
+        <Button onClick={() => setCurrentStep((bla) => bla + 1)}>next</Button>
         <ColumnBox>
           <Typography fontSize={20} fontWeight={"bold"}>
             MovieMate Personality Test
@@ -92,7 +101,7 @@ const Step1 = ({ setCurrentStep }) => {
             gap={2}
             width={"100%"}
             sx={{
-              backgroundColor: "secondary.light",
+              backgroundColor: "#ff000030",
             }}
           >
             <Typography fontSize={64} fontWeight={900}>
@@ -127,7 +136,6 @@ const Step1 = ({ setCurrentStep }) => {
             Fluidity
           </Typography>
         </Box>
-
         <Box display={"flex"} alignItems={"center"} gap={4}>
           <Typography fontSize={14} width={100}>
             Emotional Impact
@@ -146,7 +154,6 @@ const Step1 = ({ setCurrentStep }) => {
             Fluidity
           </Typography>
         </Box>
-
         <Box display={"flex"} alignItems={"center"} gap={4}>
           <Typography fontSize={14} width={100}>
             Emotional Impact
@@ -165,7 +172,6 @@ const Step1 = ({ setCurrentStep }) => {
             Visual and Technical Elements
           </Typography>
         </Box>
-
         <Button
           size="large"
           variant="contained"

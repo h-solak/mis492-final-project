@@ -19,7 +19,7 @@ const ahpMarks = [
   { value: 1, label: "9" }, //actual value 1/9
 ];
 
-const Step2 = ({ setCurrentStep, setMatrices }) => {
+const Step3 = ({ setCurrentStep, setMatrices }) => {
   const {
     register,
     handleSubmit,
@@ -27,12 +27,12 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
     formState: { errors },
   } = useForm();
 
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: "smooth",
+  //   });
+  // }, []);
 
   const [consistencyRate, setConsistencyRate] = useState(0);
 
@@ -95,15 +95,17 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
     //   row3: [emotionalFluidity, emotionalVisual, 1],
     // };
 
+    // const crValue = await sendMatrix(subcriteriaMatrix);
+
     setMatrices((prevMatrices) => ({
       ...prevMatrices,
-      visual5x5matrix: subcriteriaMatrix,
+      fluidity5x5matrix: subcriteriaMatrix,
     }));
 
     const crValue = await checkConsistency(subcriteriaMatrix, 5);
 
     if (crValue < 5) {
-      setCurrentStep(3);
+      setCurrentStep(4);
     } else {
       setConsistencyRate(crValue);
       window.scrollTo({
@@ -131,24 +133,10 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
         justifySelf={"center"}
       >
         <Box my={4} display={"flex"} justifyContent={"center"}>
-          <CurrentStepNo no={2} />
+          <CurrentStepNo no={3} />
         </Box>
         <Button onClick={() => setCurrentStep((bla) => bla - 1)}>prev</Button>{" "}
         <Button onClick={() => setCurrentStep((bla) => bla + 1)}>next</Button>
-        <ColumnBox>
-          <Typography fontSize={20} fontWeight={"bold"}>
-            MovieMate Personality Test
-          </Typography>
-          <Typography mt={1}>
-            Considering Visual and Technical Elements, drag the switch in that
-            direction, whichever you think is more important (e.g. in terms of
-            Visual and Technical Elements, drama is more important than action.)
-          </Typography>
-          <Typography variant="p" fontWeight={"medium"}>
-            (1: equally important, 3: slightly more important, 5: more
-            important, 7: clearly more important, 9: definitely more important)
-          </Typography>
-        </ColumnBox>
         {!!consistencyRate && (
           <Box
             className="fade-in opening-animation"
@@ -176,8 +164,22 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             </ColumnBox>
           </Box>
         )}
+        <ColumnBox>
+          <Typography fontSize={20} fontWeight={"bold"}>
+            MovieMate Personality Test
+          </Typography>
+          <Typography mt={1}>
+            Considering Visual and Technical Elements, drag the switch in that
+            direction, whichever you think is more important (e.g. in terms of
+            Visual and Technical Elements, drama is more important than action.)
+          </Typography>
+          <Typography variant="p" fontWeight={"medium"}>
+            (1: equally important, 3: slightly more important, 5: more
+            important, 7: clearly more important, 9: definitely more important)
+          </Typography>
+        </ColumnBox>
         <Typography mt={4} fontWeight={"bold"}>
-          Visual and Technical Elements
+          Fluidity
         </Typography>
         <Box display={"flex"} alignItems={"center"} gap={4}>
           <Typography fontSize={14} width={100}>
@@ -373,9 +375,14 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
           {" "}
           Continue
         </Button>
+        {!!consistencyRate && (
+          <Typography fontSize={30} color={"#FF8096"}>
+            {consistencyRate}
+          </Typography>
+        )}
       </Grid>
     </Grid>
   );
 };
 
-export default Step2;
+export default Step3;
