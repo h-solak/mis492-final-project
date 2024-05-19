@@ -30,6 +30,12 @@ const AuthGuard = ({ component, isHomeComponent }) => {
     getUserData();
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    });
+  }, [component]);
+
   return (
     <React.Fragment>
       {isLoading ? (

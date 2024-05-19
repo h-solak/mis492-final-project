@@ -129,6 +129,7 @@ const Movies = () => {
                 borderRadius: 4,
               },
             }}
+            autoFocus
           />
         </Box>
       </Grid>

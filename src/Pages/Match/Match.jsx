@@ -351,7 +351,7 @@ const Match = () => {
                   style={{ borderRadius: 40 }}
                   alt="character"
                 />
-              ) : user?.personality?.type == "Mystic Queen" ? (
+              ) : user?.personality?.type == "Mystic Wizard" ? (
                 <img
                   src={MysticWizard}
                   width={250}

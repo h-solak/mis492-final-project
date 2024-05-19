@@ -22,6 +22,7 @@ import WatchlistNavigator from "./Pages/WatchlistNavigator/WatchlistNavigator";
 import Match from "./Pages/Match/Match";
 import PersonalityTest from "./Pages/Match/Pages/PersonalityTest/PersonalityTest";
 import Characters from "./Pages/Characters/Characters";
+import YourType from "./Pages/YourType/YourType";
 
 function App() {
   return (
@@ -95,6 +96,11 @@ function App() {
                 key="Characters"
                 path="/characters"
                 element={<AuthGuard component={<Characters />} />}
+              />
+              <Route
+                key="Your Type"
+                path="/your-type"
+                element={<AuthGuard component={<YourType />} />}
               />
               <Route key="NotFound" path="*" element={<NotFound />} />
             </Routes>

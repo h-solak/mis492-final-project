@@ -1,6 +1,6 @@
 import { misBaseAxios } from "../api/config";
 
-const matchUser = async (matrices) => {
+const getUserSurveyResults = async (matrices) => {
   try {
     const res = await misBaseAxios.post(`/match/character-survey`, {
       matrices,
@@ -23,4 +23,4 @@ const checkConsistency = async (subcriteriaMatrix, dimension) => {
   }
 };
 
-export { matchUser, checkConsistency };
+export { getUserSurveyResults, checkConsistency };

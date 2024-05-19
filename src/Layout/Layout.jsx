@@ -22,7 +22,7 @@ const Layout = ({
       <Grid container>
         {user?._id && <Sidebar />}
         {/* Page Contents */}
-        <Grid item xs={12} sm={user?._id ? 9.5 : 12}>
+        <Grid item xs={12} sm={user?._id ? 9 : 12}>
           <Grid
             container
             px={disablePaddingX ? 0 : 8}

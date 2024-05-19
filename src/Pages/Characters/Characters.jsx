@@ -144,7 +144,7 @@ const Characters = () => {
               gap={1}
               sx={{
                 background:
-                  " linear-gradient(270deg, #FFFFFF 0%, #AADB89 50%, #518E18 100%)",
+                  "linear-gradient(270deg, #FFFFFF 0%, #AADB89 50%, #518E18 100%)",
                 borderRadius: 99,
                 flex: 1,
               }}

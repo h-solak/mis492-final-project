@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, Grid, Slider, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { checkConsistency } from "../../../../../../Services/Match";
+import {
+  checkConsistency,
+  getUserSurveyResults,
+} from "../../../../../../Services/Match";
 import { useNavigate } from "react-router-dom";
 import ColumnBox from "../../../../../../Components/ColumnBox";
 import CurrentStepNo from "./CurrentStepNo";
 import convertMatrixElementValue from "../../../../../../Utilities/convertMatrixElementValue";
+import toast from "react-hot-toast";
+import useUser from "../../../../../../Contexts/User/useUser";
 
 const ahpMarks = [
   { value: 9, label: "9" }, //actual value 9
@@ -19,7 +24,9 @@ const ahpMarks = [
   { value: 1, label: "9" }, //actual value 1/9
 ];
 
-const Step4 = ({ setCurrentStep, setMatrices }) => {
+const Step4 = ({ setCurrentStep, matrices, setMatrices }) => {
+  const { setUser } = useUser();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -34,6 +41,17 @@ const Step4 = ({ setCurrentStep, setMatrices }) => {
   }, []);
 
   const [consistencyRate, setConsistencyRate] = useState(0);
+
+  const handleCalculation = async (newMatrix) => {
+    const result = await getUserSurveyResults(newMatrix);
+
+    if (result?.resultMatrix?.length > 0) {
+      setUser((prevUser) => ({ ...prevUser, personality: result }));
+      navigate("/your-type?first-time=true");
+    } else {
+      toast.error("Error! Something went wrong!");
+    }
+  };
 
   const onSubmit = async (data) => {
     const {
@@ -88,23 +106,17 @@ const Step4 = ({ setCurrentStep, setMatrices }) => {
       ],
     };
 
-    // const subcriteriaMatrix = {
-    //   row1: [1, 1 / visualFluidity, 1 / emotionalFluidity],
-    //   row2: [visualFluidity, 1, 1 / emotionalVisual],
-    //   row3: [emotionalFluidity, emotionalVisual, 1],
-    // };
-
-    // const crValue = await sendMatrix(subcriteriaMatrix);
-
-    setMatrices((prevMatrices) => ({
-      ...prevMatrices,
+    const newMatrix = {
+      ...matrices,
       emotional5x5matrix: subcriteriaMatrix,
-    }));
+    };
+
+    setMatrices(newMatrix);
 
     const crValue = await checkConsistency(subcriteriaMatrix, 5);
 
     if (crValue < 0.5) {
-      setCurrentStep(5);
+      handleCalculation(newMatrix);
     } else {
       setConsistencyRate(crValue);
       window.scrollTo({

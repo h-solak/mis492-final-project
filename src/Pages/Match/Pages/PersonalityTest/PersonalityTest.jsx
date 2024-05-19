@@ -6,7 +6,6 @@ import Step1 from "./Components/Steps/Step1";
 import Step2 from "./Components/Steps/Step2";
 import Step3 from "./Components/Steps/Step3";
 import Step4 from "./Components/Steps/Step4";
-import ResultScreen from "./Components/Steps/ResultScreen";
 
 const PersonalityTest = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -37,12 +36,10 @@ const PersonalityTest = () => {
           <Step2 setCurrentStep={setCurrentStep} setMatrices={setMatrices} />
         ) : currentStep == 3 ? (
           <Step3 setCurrentStep={setCurrentStep} setMatrices={setMatrices} />
-        ) : currentStep == 4 ? (
-          <Step4 setCurrentStep={setCurrentStep} setMatrices={setMatrices} />
         ) : (
-          <ResultScreen
-            matrices={matrices}
+          <Step4
             setCurrentStep={setCurrentStep}
+            matrices={matrices}
             setMatrices={setMatrices}
           />
         )}

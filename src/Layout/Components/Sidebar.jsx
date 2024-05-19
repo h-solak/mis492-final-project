@@ -108,7 +108,7 @@ const Sidebar = () => {
   return isSmScreen ? null : (
     <Grid
       item
-      sm={2.5}
+      sm={3}
       className="sidebar full-height"
       py={2}
       sx={{
@@ -151,23 +151,50 @@ const Sidebar = () => {
             <Typography fontSize={15} color={"#000"}>
               {`@${user?.username}` || "User"}
             </Typography>
-            {!!user?.personality?.resultMatrix?.length > 0 && (
+            {!!user?.personality?.resultMatrix?.length > 0 ? (
               <Typography
                 fontSize={13}
-                color={"primary.light"}
+                color={
+                  user?.personality?.type == "Action Monkey"
+                    ? "#4E8C15"
+                    : user?.personality?.type == "Drama Queen"
+                    ? "primary.light"
+                    : user?.personality?.type == "Mystic Wizard"
+                    ? "#2D52D5"
+                    : user?.personality?.type == "Comic Sans"
+                    ? "#F5AA0D"
+                    : user?.personality?.type == "Romantic Warrior"
+                    ? "#8C248D"
+                    : "#89898B"
+                }
                 fontWeight={"bold"}
               >
                 {user?.personality?.type}
               </Typography>
+            ) : (
+              <Link to="/match/personality-test">
+                <Button
+                  size="small"
+                  variant="contained"
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: 99,
+                    py: 0,
+                    fontSize: 12,
+                  }}
+                >
+                  {" "}
+                  Take The Quiz
+                </Button>
+              </Link>
             )}
           </ColumnBox>
         </Button>
       </Link>
       <Box>
         {linkItems.map((item, index) => (
-          <>
+          <React.Fragment key={item?.title}>
             <LinkItem
-              key={item?.title}
               title={item?.title}
               url={item?.url}
               onClick={item?.onClick}
@@ -178,7 +205,7 @@ const Sidebar = () => {
             />
             {!!(index == 4) &&
               !!(user?.personality?.resultMatrix?.length > 0) && (
-                <Link>
+                <Link to={"/your-type"}>
                   <Button
                     sx={{
                       textTransform: "none",
@@ -211,7 +238,7 @@ const Sidebar = () => {
                           width={24}
                           alt="character icon"
                         />
-                      ) : user?.personality?.type == "Mystic Queen" ? (
+                      ) : user?.personality?.type == "Mystic Wizard" ? (
                         <img
                           src={MysticWizardIcon}
                           width={24}
@@ -237,7 +264,7 @@ const Sidebar = () => {
                   </Button>
                 </Link>
               )}
-          </>
+          </React.Fragment>
         ))}
         <LinkItem title={"Logout"} onClick={handleLogout} icon={<Logout />} />
       </Box>
