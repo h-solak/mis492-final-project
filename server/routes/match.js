@@ -9,14 +9,10 @@ const segmentation = require("../utils/segmentation");
 const linearAlgebra = require("linear-algebra")();
 const Matrix = linearAlgebra.Matrix;
 
-// const front = {
-//   row1: [1, 2, 3],
-//   row2: [4, 5, 6],
-//   row3: [7, 8, 9],
-// };
-
-router.post("/", checkJwt, async (req, res) => {
+//take or re-take character survey
+router.post("/character-survey", checkJwt, async (req, res) => {
   try {
+    const id = getUserIdFromToken(req.headers.authorization);
     const matrices = req.body.matrices;
 
     console.log("FRONTTAN GELEN MATRİSLER", matrices);
@@ -74,9 +70,16 @@ router.post("/", checkJwt, async (req, res) => {
 
     console.log("FINAL SEGMENTASYON", segmentatedResult);
 
-    // const result = beforeResult1.mul(beforeResult2);
+    const user = await User.findById(id);
+    const userPersonality = {
+      type: segmentatedResult,
+      resultMatrix: resultMatrix5x1,
+    };
 
-    return res.status(200).json({ result: segmentatedResult });
+    user.personality = userPersonality;
+    await user.save();
+
+    return res.status(200).json({ personality: userPersonality });
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);
@@ -137,6 +140,24 @@ router.post("/check-consistency", checkJwt, async (req, res) => {
       dimension == 3 ? subCriteriaMatrixFormed3x3 : subCriteriaMatrixFormed5x5
     );
     console.log(ahpResult);
+
+    /*
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    at this point you should JUST CREATE THE ATTRIBUTE
+    userQuizResult: {
+      values: ...,
+      type: "drama queen"
+    }
+    
+    *MATCH ŞARTLARI: 
+    -Friends olmayacak
+    -AGE --> 
+    -GENDER --> 
+    -CITY? --> 
+    -USER TYPE --> Drama Queen
+
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    */
 
     return res.status(200).json({ consistencyRate: ahpResult?.cr });
   } catch (err) {

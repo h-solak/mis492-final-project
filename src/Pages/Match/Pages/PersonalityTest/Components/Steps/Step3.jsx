@@ -27,12 +27,11 @@ const Step3 = ({ setCurrentStep, setMatrices }) => {
     formState: { errors },
   } = useForm();
 
-  // useEffect(() => {
-  //   window.scrollTo({
-  //     top: 0,
-  //     behavior: "smooth",
-  //   });
-  // }, []);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    });
+  }, []);
 
   const [consistencyRate, setConsistencyRate] = useState(0);
 
@@ -104,7 +103,7 @@ const Step3 = ({ setCurrentStep, setMatrices }) => {
 
     const crValue = await checkConsistency(subcriteriaMatrix, 5);
 
-    if (crValue < 5) {
+    if (crValue < 0.5) {
       setCurrentStep(4);
     } else {
       setConsistencyRate(crValue);
@@ -135,8 +134,6 @@ const Step3 = ({ setCurrentStep, setMatrices }) => {
         <Box my={4} display={"flex"} justifyContent={"center"}>
           <CurrentStepNo no={3} />
         </Box>
-        <Button onClick={() => setCurrentStep((bla) => bla - 1)}>prev</Button>{" "}
-        <Button onClick={() => setCurrentStep((bla) => bla + 1)}>next</Button>
         {!!consistencyRate && (
           <Box
             className="fade-in opening-animation"
@@ -186,7 +183,7 @@ const Step3 = ({ setCurrentStep, setMatrices }) => {
             Romantic
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={8}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -204,7 +201,7 @@ const Step3 = ({ setCurrentStep, setMatrices }) => {
             Comedy
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={8}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -222,7 +219,7 @@ const Step3 = ({ setCurrentStep, setMatrices }) => {
             Mystery
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={8}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -240,7 +237,7 @@ const Step3 = ({ setCurrentStep, setMatrices }) => {
             Action
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={8}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -312,7 +309,7 @@ const Step3 = ({ setCurrentStep, setMatrices }) => {
             Mystery
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={3}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -330,7 +327,7 @@ const Step3 = ({ setCurrentStep, setMatrices }) => {
             Romantic
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={4}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -348,7 +345,7 @@ const Step3 = ({ setCurrentStep, setMatrices }) => {
             Romantic
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={5}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}

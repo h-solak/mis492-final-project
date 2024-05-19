@@ -21,6 +21,7 @@ import Watchlist from "./Pages/Profile/Watchlist/Watchlist";
 import WatchlistNavigator from "./Pages/WatchlistNavigator/WatchlistNavigator";
 import Match from "./Pages/Match/Match";
 import PersonalityTest from "./Pages/Match/Pages/PersonalityTest/PersonalityTest";
+import Characters from "./Pages/Characters/Characters";
 
 function App() {
   return (
@@ -89,6 +90,11 @@ function App() {
                 key="PersonalityTest"
                 path="/match/personality-test"
                 element={<AuthGuard component={<PersonalityTest />} />}
+              />
+              <Route
+                key="Characters"
+                path="/characters"
+                element={<AuthGuard component={<Characters />} />}
               />
               <Route key="NotFound" path="*" element={<NotFound />} />
             </Routes>

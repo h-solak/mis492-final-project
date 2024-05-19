@@ -34,10 +34,10 @@ const theme = createTheme({
   typography: {
     fontFamily: ["Montserrat", "Inter", "sans-serif"].join(","),
     fontSize: 14,
-    fontWeightLight: 300,
-    fontWeightRegular: 400,
-    fontWeightMedium: 500,
-    fontWeightBold: 600,
+    fontWeightLight: 400,
+    fontWeightRegular: 500,
+    fontWeightMedium: 600,
+    fontWeightBold: 700,
     fontWeightBolder: 700,
   },
 });

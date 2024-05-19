@@ -12,7 +12,7 @@ import { ProfileUserContext } from "../Profile";
 
 const UserSidebar = () => {
   const { profileUser, setProfileUser } = useContext(ProfileUserContext);
-  
+
   const navigate = useNavigate();
   const { user } = useUser();
   const isFriend = user?.friends?.find(
@@ -51,7 +51,7 @@ const UserSidebar = () => {
           <Avatar name={profileUser?.username} size={80} />
           <Typography fontWeight={"bold"}>{profileUser?.username}</Typography>
           <Typography color={"primary.light"} fontWeight={"bold"} fontSize={12}>
-            Drama Queen
+            {user?.personality?.type}
           </Typography>
         </ColumnBox>
 

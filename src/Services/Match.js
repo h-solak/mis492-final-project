@@ -2,10 +2,10 @@ import { misBaseAxios } from "../api/config";
 
 const matchUser = async (matrices) => {
   try {
-    const res = await misBaseAxios.post(`/match`, {
+    const res = await misBaseAxios.post(`/match/character-survey`, {
       matrices,
     });
-    return res?.data;
+    return res?.data?.personality;
   } catch (error) {
     console.log(error);
   }

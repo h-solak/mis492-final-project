@@ -30,7 +30,6 @@ const Step4 = ({ setCurrentStep, setMatrices }) => {
   useEffect(() => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
     });
   }, []);
 
@@ -104,7 +103,7 @@ const Step4 = ({ setCurrentStep, setMatrices }) => {
 
     const crValue = await checkConsistency(subcriteriaMatrix, 5);
 
-    if (crValue < 5) {
+    if (crValue < 0.5) {
       setCurrentStep(5);
     } else {
       setConsistencyRate(crValue);
@@ -135,8 +134,33 @@ const Step4 = ({ setCurrentStep, setMatrices }) => {
         <Box my={4} display={"flex"} justifyContent={"center"}>
           <CurrentStepNo no={4} />
         </Box>
-        <Button onClick={() => setCurrentStep((bla) => bla - 1)}>prev</Button>{" "}
-        <Button onClick={() => setCurrentStep((bla) => bla + 1)}>next</Button>
+        {!!consistencyRate && (
+          <Box
+            className="fade-in opening-animation"
+            px={2}
+            py={1}
+            display={"flex"}
+            alignItems={"center"}
+            gap={2}
+            width={"100%"}
+            sx={{
+              backgroundColor: "#ff000030",
+            }}
+          >
+            <Typography fontSize={64} fontWeight={900}>
+              !
+            </Typography>
+            <ColumnBox>
+              <Typography className="fade-in" fontSize={18} fontWeight={"bold"}>
+                {`Your consistency rate is: ${consistencyRate}`}
+              </Typography>
+              <Typography pr={4}>
+                It should be lower for a better matching experience! Avoid using
+                high points such as 7 and 9!
+              </Typography>
+            </ColumnBox>
+          </Box>
+        )}
         <ColumnBox>
           <Typography fontSize={20} fontWeight={"bold"}>
             MovieMate Personality Test
@@ -159,7 +183,7 @@ const Step4 = ({ setCurrentStep, setMatrices }) => {
             Romantic
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={8}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -177,7 +201,7 @@ const Step4 = ({ setCurrentStep, setMatrices }) => {
             Comedy
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={8}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -195,7 +219,7 @@ const Step4 = ({ setCurrentStep, setMatrices }) => {
             Mystery
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={8}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -213,7 +237,7 @@ const Step4 = ({ setCurrentStep, setMatrices }) => {
             Action
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={8}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -285,7 +309,7 @@ const Step4 = ({ setCurrentStep, setMatrices }) => {
             Mystery
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={3}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -303,7 +327,7 @@ const Step4 = ({ setCurrentStep, setMatrices }) => {
             Romantic
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={4}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -321,7 +345,7 @@ const Step4 = ({ setCurrentStep, setMatrices }) => {
             Romantic
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={5}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}

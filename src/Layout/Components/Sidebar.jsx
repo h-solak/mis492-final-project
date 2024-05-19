@@ -15,7 +15,15 @@ import {
   Logout,
   Notifications,
 } from "@mui/icons-material";
+import CharacterTypesSvg from "../../assets/icons/characterTypes.svg";
+import RomanticWarriorIcon from "../../assets/icons/charactersdark/romanticwarrior.svg";
+import DramaQueenIcon from "../../assets/icons/charactersdark/dramaqueen.svg";
+import ComicSansIcon from "../../assets/icons/charactersdark/comicsans.svg";
+import MysticWizardIcon from "../../assets/icons/charactersdark/mysticwizard.svg";
+import ActionMonkeyIcon from "../../assets/icons/charactersdark/actionmonkey.svg";
+import PerfectHarmonyIcon from "../../assets/icons/charactersdark/perfectharmony.svg";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
+/* Other Stuff */
 import ColumnBox from "../../Components/ColumnBox";
 import { removeAccessToken } from "../../api/config";
 import LinkItem from "./LinkItem";
@@ -41,6 +49,11 @@ const linkItems = [
     title: "Movies",
     url: "/movies",
     icon: <Movie />,
+  },
+  {
+    title: "Character types",
+    url: "/characters",
+    icon: <img src={CharacterTypesSvg} width={22} />,
   },
   {
     title: "Watchlist",
@@ -138,28 +151,93 @@ const Sidebar = () => {
             <Typography fontSize={15} color={"#000"}>
               {`@${user?.username}` || "User"}
             </Typography>
-            <Typography
-              fontSize={13}
-              color={"primary.light"}
-              fontWeight={"bold"}
-            >
-              {"Drama Queen"}
-            </Typography>
+            {!!user?.personality?.resultMatrix?.length > 0 && (
+              <Typography
+                fontSize={13}
+                color={"primary.light"}
+                fontWeight={"bold"}
+              >
+                {user?.personality?.type}
+              </Typography>
+            )}
           </ColumnBox>
         </Button>
       </Link>
       <Box>
         {linkItems.map((item, index) => (
-          <LinkItem
-            key={item?.title}
-            title={item?.title}
-            url={item?.url}
-            onClick={item?.onClick}
-            icon={item?.icon}
-            notification={
-              item?.title == "Notifications" ? notificationsCount : 0
-            }
-          />
+          <>
+            <LinkItem
+              key={item?.title}
+              title={item?.title}
+              url={item?.url}
+              onClick={item?.onClick}
+              icon={item?.icon}
+              notification={
+                item?.title == "Notifications" ? notificationsCount : 0
+              }
+            />
+            {!!(index == 4) &&
+              !!(user?.personality?.resultMatrix?.length > 0) && (
+                <Link>
+                  <Button
+                    sx={{
+                      textTransform: "none",
+                      borderRadius: 0,
+                      width: "100%",
+                      textAlign: "left",
+                      justifyContent: "start",
+                      color: "black",
+                      height: 64,
+                      paddingX: 4,
+                      borderColor: "red",
+                      fontWeight: "regular",
+                    }}
+                    startIcon={
+                      user?.personality?.type == "Romantic Warrior" ? (
+                        <img
+                          src={RomanticWarriorIcon}
+                          width={24}
+                          alt="character icon"
+                        />
+                      ) : user?.personality?.type == "Drama Queen" ? (
+                        <img
+                          src={DramaQueenIcon}
+                          width={24}
+                          alt="character icon"
+                        />
+                      ) : user?.personality?.type == "Comic Sans" ? (
+                        <img
+                          src={ComicSansIcon}
+                          width={24}
+                          alt="character icon"
+                        />
+                      ) : user?.personality?.type == "Mystic Queen" ? (
+                        <img
+                          src={MysticWizardIcon}
+                          width={24}
+                          alt="character icon"
+                        />
+                      ) : user?.personality?.type == "Action Monkey" ? (
+                        <img
+                          src={ActionMonkeyIcon}
+                          width={24}
+                          alt="character icon"
+                        />
+                      ) : (
+                        <img
+                          src={PerfectHarmonyIcon}
+                          width={24}
+                          alt="character icon"
+                        />
+                      )
+                    }
+                    size="large"
+                  >
+                    <Typography>Yours: {user?.personality?.type}</Typography>
+                  </Button>
+                </Link>
+              )}
+          </>
         ))}
         <LinkItem title={"Logout"} onClick={handleLogout} icon={<Logout />} />
       </Box>

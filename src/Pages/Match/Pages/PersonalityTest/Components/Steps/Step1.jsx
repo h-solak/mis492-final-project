@@ -44,7 +44,7 @@ const Step1 = ({ setCurrentStep, setMatrices }) => {
       vfe3x3matrix: subcriteriaMatrix,
     }));
 
-    if (crValue < 0.9) {
+    if (crValue < 0.5) {
       setCurrentStep(2);
     } else {
       setConsistencyRate(crValue);
@@ -75,8 +75,6 @@ const Step1 = ({ setCurrentStep, setMatrices }) => {
         <Box my={4} display={"flex"} justifyContent={"center"}>
           <CurrentStepNo no={1} />
         </Box>
-        <Button onClick={() => setCurrentStep((bla) => bla - 1)}>prev</Button>{" "}
-        <Button onClick={() => setCurrentStep((bla) => bla + 1)}>next</Button>
         <ColumnBox>
           <Typography fontSize={20} fontWeight={"bold"}>
             MovieMate Personality Test

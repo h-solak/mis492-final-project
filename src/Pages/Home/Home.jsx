@@ -20,6 +20,7 @@ const Home = () => {
         <Typography fontSize={18} fontWeight={"bolder"}>
           TODO
         </Typography>
+        <li> Character types sayfaları</li>
         <li>
           <b>
             FOCUS ON MAIN FEATURES: CHARACTER PAGES & SURVEY STRUCTURE - DON'T

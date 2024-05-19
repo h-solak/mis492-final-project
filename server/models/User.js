@@ -73,7 +73,10 @@ const UserSchema = new mongoose.Schema(
     },
     personality: {
       type: Object,
-      //cant access match feature unless has a personality object
+      default: {
+        character: "not assigned", //if not assigned, can't use match feature
+        resultMatrix: [],
+      },
     },
   },
   { timestamps: true }

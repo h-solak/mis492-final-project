@@ -30,7 +30,6 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
   useEffect(() => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
     });
   }, []);
 
@@ -102,7 +101,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
 
     const crValue = await checkConsistency(subcriteriaMatrix, 5);
 
-    if (crValue < 5) {
+    if (crValue < 0.5) {
       setCurrentStep(3);
     } else {
       setConsistencyRate(crValue);
@@ -133,8 +132,6 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
         <Box my={4} display={"flex"} justifyContent={"center"}>
           <CurrentStepNo no={2} />
         </Box>
-        <Button onClick={() => setCurrentStep((bla) => bla - 1)}>prev</Button>{" "}
-        <Button onClick={() => setCurrentStep((bla) => bla + 1)}>next</Button>
         <ColumnBox>
           <Typography fontSize={20} fontWeight={"bold"}>
             MovieMate Personality Test
@@ -184,7 +181,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Romantic
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={8}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -202,7 +199,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Comedy
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={8}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -220,7 +217,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Mystery
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={8}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -238,7 +235,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Action
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={8}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -310,7 +307,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Mystery
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={3}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -328,7 +325,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Romantic
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={4}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -346,7 +343,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Romantic
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={5}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
