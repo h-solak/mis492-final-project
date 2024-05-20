@@ -1,8 +1,13 @@
 import { misBaseAxios } from "../api/config";
 
-const addToFavorites = async ({ movieId }) => {
+const addToFavorites = async ({ id, title, posterPath, releaseDate }) => {
   try {
-    const res = await misBaseAxios.post(`/favorites`, { movieId });
+    const res = await misBaseAxios.post(`/favorites`, {
+      id,
+      title,
+      posterPath,
+      releaseDate,
+    });
     return res?.data?.favorites;
   } catch (error) {
     console.log(error);

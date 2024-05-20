@@ -44,7 +44,7 @@ const Chat = () => {
 
     //start socket ( https:// )
     socket.current = io(
-      "ws://localhost:8900" || "ws://movie-mate-492.netlify.app"
+      "ws://localhost:15492" || "ws://movie-mate-492.netlify.app"
     );
     socket.current.emit("addUser", user?._id);
     socket.current.on("getMessage", (data) => {

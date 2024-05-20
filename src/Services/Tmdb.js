@@ -78,6 +78,8 @@ const getRecommendationsForAMovie = async (movieId) => {
   }
 };
 
+//get streaming services https://api.themoviedb.org/3/movie/{movie_id}/watch/providers
+// response.data.TR türkiye oluyor
 export {
   searchMovie,
   getMovieDetails,

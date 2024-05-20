@@ -25,12 +25,21 @@ router.post("/create", checkJwt, async (req, res) => {
 //add movie to default watchlist
 router.post("/", checkJwt, async (req, res) => {
   try {
-    const id = getUserIdFromToken(req.headers.authorization);
-    const movieId = req.body.movieId;
-    const user = await User.findById(id);
+    const userId = getUserIdFromToken(req.headers.authorization);
+    const id = req.body.id;
+    const title = req.body.title;
+    const poster_path = req.body.posterPath;
+    const release_date = req.body.releaseDate;
+
+    const user = await User.findById(userId);
 
     let newWatchlist = user?.defaultWatchlist || [];
-    newWatchlist.push(movieId);
+    newWatchlist.push({
+      id,
+      title,
+      poster_path,
+      release_date,
+    });
 
     user.defaultWatchlist = newWatchlist;
     await user.save();
@@ -50,7 +59,7 @@ router.delete("/:movieId", checkJwt, async (req, res) => {
     const user = await User.findById(id);
 
     let newWatchlist = user?.defaultWatchlist || [];
-    newWatchlist = newWatchlist?.filter((item) => item != movieId);
+    newWatchlist = newWatchlist?.filter((item) => item?.id != movieId);
 
     user.defaultWatchlist = newWatchlist;
     await user.save();

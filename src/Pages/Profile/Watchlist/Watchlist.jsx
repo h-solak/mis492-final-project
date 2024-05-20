@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../../Layout/Layout";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Breadcrumbs from "../../../Components/Breadcrumbs/Breadcrumbs";
-import { Box, Grid, IconButton, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
 import useUser from "../../../Contexts/User/useUser";
 import { getProfileUser } from "../../../Services/User";
 import { CloseRounded, SearchRounded } from "@mui/icons-material";
+import MovieItem from "../../../Components/Movie/MovieItem";
+import CenteredBox from "../../../Components/CenteredBox";
+import ColumnBox from "../../../Components/ColumnBox";
+import NoDataSvg from "../../../assets/illustrations/nodata.svg";
 
 const Watchlist = () => {
   const { user } = useUser();
@@ -29,7 +40,7 @@ const Watchlist = () => {
     setPageLoading(false);
   };
   return (
-    <Layout>
+    <Layout pageLoading={pageLoading}>
       <Breadcrumbs
         links={[
           {
@@ -51,11 +62,11 @@ const Watchlist = () => {
             justifyContent={"space-between"}
           >
             <Typography fontWeight={"bold"} fontSize={20}>
-              {username != user?.username
+              {username == user?.username
                 ? "Your watchlist"
                 : `${username}'s Watchlist`}
             </Typography>
-            <TextField
+            {/* <TextField
               size="small"
               // ref={searchInputRef}
               placeholder="Search a movie"
@@ -94,8 +105,38 @@ const Watchlist = () => {
                   borderRadius: 4,
                 },
               }}
-            />
+            /> */}
           </Box>
+        </Grid>
+
+        <Grid container spacing={4} px={4} mt={1}>
+          {profileUser?.defaultWatchlist?.length > 0 ? (
+            profileUser?.defaultWatchlist?.map((movie) => (
+              <MovieItem key={movie?.id} movie={movie} />
+            ))
+          ) : (
+            <CenteredBox>
+              <ColumnBox alignItems="center" gap={1}>
+                <img src={NoDataSvg} width={100} />
+                <Typography color={"secondary"}>
+                  No movies found in{" "}
+                  {!!(username == user?.username) ? "your" : `${username}'s`}{" "}
+                  watchlist
+                </Typography>
+                <Link to={"/movies"}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                      textTransform: "none",
+                    }}
+                  >
+                    Go to Movies Page
+                  </Button>
+                </Link>
+              </ColumnBox>
+            </CenteredBox>
+          )}
         </Grid>
       </Grid>
     </Layout>

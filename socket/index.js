@@ -1,4 +1,4 @@
-const io = require("socket.io")(8900, {
+const io = require("socket.io")(15492, {
   cors: {
     origin: "http://localhost:5173" || "https://moviemate492.netlify.app",
   },

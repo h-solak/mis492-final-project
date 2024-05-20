@@ -20,6 +20,7 @@ const Home = () => {
         <Typography fontSize={18} fontWeight={"bolder"}>
           TODO
         </Typography>
+        <li>zaman kalırsa streaming services yap</li>
         <li> Character types sayfaları</li>
         <li>
           <b>

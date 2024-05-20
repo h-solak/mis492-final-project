@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { getChatIdByUserId } from "../../../Services/Chat";
 import useUser from "../../../Contexts/User/useUser";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Tooltip, Typography } from "@mui/material";
 import ColumnBox from "../../../Components/ColumnBox";
 import Avatar from "../../../Components/Avatar";
 import { Chat } from "@mui/icons-material";
@@ -9,6 +9,13 @@ import AddFriendsButton from "./AddFriendsButton";
 import Friends from "./Friends";
 import { useNavigate } from "react-router-dom";
 import { ProfileUserContext } from "../Profile";
+/* images */
+import RomanticWarrior from "../../../assets/images/characters/romanticwarrior.jpeg";
+import DramaQueen from "../../../assets/images/characters/dramaqueen.jpeg";
+import ComicSans from "../../../assets/images/characters/comicsans.jpeg";
+import MysticWizard from "../../../assets/images/characters/mysticwizard.jpeg";
+import ActionMonkey from "../../../assets/images/characters/actionmonkey.jpeg";
+import PerfectHarmony from "../../../assets/images/characters/perfectharmony.jpg";
 
 const UserSidebar = () => {
   const { profileUser, setProfileUser } = useContext(ProfileUserContext);
@@ -47,7 +54,54 @@ const UserSidebar = () => {
           borderRadius: 4,
         }}
       >
-        <ColumnBox alignItems="center" alignSelf="center">
+        <Tooltip
+          title={
+            profileUser?.personality?.resultMatrix?.length > 0
+              ? profileUser?.personality
+              : "Haven't taken the quiz yet"
+          }
+        >
+          <Box
+            sx={{
+              height: 150,
+              width: "100%",
+              background:
+                profileUser?.personality?.resultMatrix?.length > 0
+                  ? `url(${
+                      profileUser?.personality?.type == "Romantic Warrior"
+                        ? RomanticWarrior
+                        : profileUser?.personality?.type == "Drama Queen"
+                        ? DramaQueen
+                        : profileUser?.personality?.type == "Comic Sans"
+                        ? ComicSans
+                        : profileUser?.personality?.type == "Mystic Wizard"
+                        ? MysticWizard
+                        : profileUser?.personality?.type == "Action Monkey"
+                        ? ActionMonkey
+                        : PerfectHarmony
+                    })`
+                  : "none",
+              backgroundColor:
+                !profileUser?.personality?.resultMatrix?.length > 0
+                  ? "secondary.main"
+                  : "none",
+              backgroundPosition: "top",
+              backgroundRepeat: "none",
+              backgroundSize: "cover",
+              borderRadius: "40px 40px 0px 0px ",
+            }}
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}
+          >
+            {!!(!profileUser?.personality?.resultMatrix?.length > 0) && (
+              <Typography fontSize={64} color={"#fff"}>
+                ?
+              </Typography>
+            )}
+          </Box>
+        </Tooltip>
+        <ColumnBox alignItems="center" alignSelf="center" mt={2}>
           <Avatar name={profileUser?.username} size={80} />
           <Typography fontWeight={"bold"}>{profileUser?.username}</Typography>
           <Typography color={"primary.light"} fontWeight={"bold"} fontSize={12}>

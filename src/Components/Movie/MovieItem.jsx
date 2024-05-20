@@ -26,9 +26,9 @@ const Bottombar = ({ height, movie }) => {
   const { user, setUser } = useUser();
 
   const handleWatchlist = async () => {
-    if (!user?.defaultWatchlist?.includes(movieId)) {
+    if (!user?.defaultWatchlist?.find((item) => item?.id == movieId)) {
       //add to default watchlist
-      const newWatchlist = await addToDefaultWatchlist({ movieId });
+      const newWatchlist = await addToDefaultWatchlist({});
       if (newWatchlist) {
         setUser((userItem) => ({
           ...userItem,
@@ -48,9 +48,14 @@ const Bottombar = ({ height, movie }) => {
   };
 
   const handleFavorites = async () => {
-    if (!user?.favoriteMovies?.includes(movieId)) {
+    if (!user?.favoriteMovies?.find((item) => item?.id == movieId)) {
       //add to favorites
-      const newFavorites = await addToFavorites({ movieId });
+      const newFavorites = await addToFavorites({
+        id: movieId,
+        title: movie?.title,
+        posterPath: movie?.poster_path,
+        releaseDate: movie?.release_date,
+      });
       if (newFavorites) {
         setUser((userItem) => ({
           ...userItem,
@@ -100,7 +105,7 @@ const Bottombar = ({ height, movie }) => {
     >
       <Tooltip title="Favorite">
         <IconButton className="fade-in" onClick={handleFavorites}>
-          {user?.favoriteMovies?.includes(movieId) ? (
+          {user?.favoriteMovies?.find((item) => item?.id == movieId) ? (
             <img src={FavoriteActiveSvg} width={21} alt="Favorite Active" />
           ) : (
             <img src={FavoriteSvg} width={21} alt="Favorite" />
@@ -109,7 +114,7 @@ const Bottombar = ({ height, movie }) => {
       </Tooltip>
       <Tooltip title="Add to watchlist" onClick={handleWatchlist}>
         <IconButton className="fade-in">
-          {user?.defaultWatchlist?.includes(movieId) ? (
+          {user?.defaultWatchlist?.find((item) => item?.id == movieId) ? (
             <img src={BookmarkActiveSvg} width={15} alt="Bookmark" />
           ) : (
             <img src={BookmarkSvg} width={15} alt="Bookmark" />

@@ -9,9 +9,19 @@ const createWatchlist = async ({ title }) => {
   }
 };
 
-const addToDefaultWatchlist = async ({ movieId }) => {
+const addToDefaultWatchlist = async ({
+  id,
+  title,
+  posterPath,
+  releaseDate,
+}) => {
   try {
-    const res = await misBaseAxios.post(`/watchlist`, { movieId });
+    const res = await misBaseAxios.post(`/watchlist`, {
+      id,
+      title,
+      posterPath,
+      releaseDate,
+    });
     return res?.data?.watchlist;
   } catch (error) {
     console.log(error);
