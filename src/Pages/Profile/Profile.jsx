@@ -4,9 +4,11 @@ import { Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { getProfileUser } from "../../Services/User";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import RecentActivity from "./Components/RecentActivity";
+import RecentActivityPreview from "./Components/RecentActivityPreview";
 import UserSidebar from "./Components/UserSidebar";
 import ProfileNowWatching from "./Components/ProfileNowWatching";
+import RecentCommentsPreview from "./Components/RecentCommentsPreview";
+import UserLists from "./Components/UserLists";
 
 export const ProfileUserContext = createContext();
 
@@ -55,8 +57,11 @@ const Profile = () => {
             </Grid>
           )}
           <Grid item xs={12} md={9} marginBottom={4} px={4}>
-            <RecentActivity />
+            <RecentActivityPreview />
+            <RecentCommentsPreview />
+            <UserLists />
           </Grid>
+
           {/* Sidebar - User Info - md={3} */}
           <UserSidebar />
         </Grid>

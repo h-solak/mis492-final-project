@@ -23,6 +23,7 @@ import Match from "./Pages/Match/Match";
 import PersonalityTest from "./Pages/Match/Pages/PersonalityTest/PersonalityTest";
 import Characters from "./Pages/Characters/Characters";
 import YourType from "./Pages/YourType/YourType";
+import Favorites from "./Pages/Profile/Favorites/Favorites";
 
 function App() {
   return (
@@ -51,6 +52,11 @@ function App() {
                 key="Profile"
                 path="/profile/:username/watchlist"
                 element={<AuthGuard component={<Watchlist />} />}
+              />
+              <Route
+                key="Favorites"
+                path="/profile/:username/favorites"
+                element={<AuthGuard component={<Favorites />} />}
               />
               <Route
                 key="WatchlistNavigator"

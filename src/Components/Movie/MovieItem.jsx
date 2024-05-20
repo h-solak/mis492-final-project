@@ -28,7 +28,12 @@ const Bottombar = ({ height, movie }) => {
   const handleWatchlist = async () => {
     if (!user?.defaultWatchlist?.find((item) => item?.id == movieId)) {
       //add to default watchlist
-      const newWatchlist = await addToDefaultWatchlist({});
+      const newWatchlist = await addToDefaultWatchlist({
+        id: movieId,
+        title: movie?.title,
+        posterPath: movie?.poster_path,
+        releaseDate: movie?.release_date,
+      });
       if (newWatchlist) {
         setUser((userItem) => ({
           ...userItem,

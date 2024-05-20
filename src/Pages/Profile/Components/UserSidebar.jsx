@@ -56,7 +56,7 @@ const UserSidebar = () => {
       >
         <Tooltip
           title={
-            profileUser?.personality?.resultMatrix?.length > 0
+            profileUser?.personality?.type > 0
               ? profileUser?.personality
               : "Haven't taken the quiz yet"
           }
@@ -66,7 +66,7 @@ const UserSidebar = () => {
               height: 150,
               width: "100%",
               background:
-                profileUser?.personality?.resultMatrix?.length > 0
+                profileUser?.personality?.type > 0
                   ? `url(${
                       profileUser?.personality?.type == "Romantic Warrior"
                         ? RomanticWarrior
@@ -82,9 +82,7 @@ const UserSidebar = () => {
                     })`
                   : "none",
               backgroundColor:
-                !profileUser?.personality?.resultMatrix?.length > 0
-                  ? "secondary.main"
-                  : "none",
+                !profileUser?.personality?.type > 0 ? "secondary.main" : "none",
               backgroundPosition: "top",
               backgroundRepeat: "none",
               backgroundSize: "cover",
@@ -94,7 +92,7 @@ const UserSidebar = () => {
             alignItems={"center"}
             justifyContent={"center"}
           >
-            {!!(!profileUser?.personality?.resultMatrix?.length > 0) && (
+            {!!(!profileUser?.personality?.type > 0) && (
               <Typography fontSize={64} color={"#fff"}>
                 ?
               </Typography>
@@ -185,7 +183,7 @@ const UserSidebar = () => {
       )}
 
       {/* Friends List */}
-      <Friends profileUser={profileUser} />
+      <Friends userProfile={profileUser} />
     </Grid>
   );
 };
