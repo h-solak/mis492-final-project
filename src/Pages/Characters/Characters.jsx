@@ -81,7 +81,7 @@ const Characters = () => {
               fontSize: 18,
             }}
           >
-            {user?.personality?.resultMatrix?.length > 0
+            {user?.personality?.type?.length > 0
               ? "Re-take the quiz"
               : "Take the quiz"}
           </Button>

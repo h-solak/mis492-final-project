@@ -45,7 +45,7 @@ const Step4 = ({ setCurrentStep, matrices, setMatrices }) => {
   const handleCalculation = async (newMatrix) => {
     const result = await getUserSurveyResults(newMatrix);
 
-    if (result?.resultMatrix?.length > 0) {
+    if (result?.type?.length > 0) {
       setUser((prevUser) => ({ ...prevUser, personality: result }));
       navigate("/your-type?first-time=true");
     } else {

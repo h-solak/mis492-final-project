@@ -151,7 +151,7 @@ const Sidebar = () => {
             <Typography fontSize={15} color={"#000"}>
               {`@${user?.username}` || "User"}
             </Typography>
-            {!!user?.personality?.resultMatrix?.length > 0 ? (
+            {!!user?.personality?.type?.length > 0 ? (
               <Typography
                 fontSize={13}
                 color={
@@ -203,67 +203,66 @@ const Sidebar = () => {
                 item?.title == "Notifications" ? notificationsCount : 0
               }
             />
-            {!!(index == 4) &&
-              !!(user?.personality?.resultMatrix?.length > 0) && (
-                <Link to={"/your-type"}>
-                  <Button
-                    sx={{
-                      textTransform: "none",
-                      borderRadius: 0,
-                      width: "100%",
-                      textAlign: "left",
-                      justifyContent: "start",
-                      color: "black",
-                      height: 64,
-                      paddingX: 4,
-                      borderColor: "red",
-                      fontWeight: "regular",
-                    }}
-                    startIcon={
-                      user?.personality?.type == "Romantic Warrior" ? (
-                        <img
-                          src={RomanticWarriorIcon}
-                          width={24}
-                          alt="character icon"
-                        />
-                      ) : user?.personality?.type == "Drama Queen" ? (
-                        <img
-                          src={DramaQueenIcon}
-                          width={24}
-                          alt="character icon"
-                        />
-                      ) : user?.personality?.type == "Comic Sans" ? (
-                        <img
-                          src={ComicSansIcon}
-                          width={24}
-                          alt="character icon"
-                        />
-                      ) : user?.personality?.type == "Mystic Wizard" ? (
-                        <img
-                          src={MysticWizardIcon}
-                          width={24}
-                          alt="character icon"
-                        />
-                      ) : user?.personality?.type == "Action Monkey" ? (
-                        <img
-                          src={ActionMonkeyIcon}
-                          width={24}
-                          alt="character icon"
-                        />
-                      ) : (
-                        <img
-                          src={PerfectHarmonyIcon}
-                          width={24}
-                          alt="character icon"
-                        />
-                      )
-                    }
-                    size="large"
-                  >
-                    <Typography>Yours: {user?.personality?.type}</Typography>
-                  </Button>
-                </Link>
-              )}
+            {!!(index == 4) && !!(user?.personality?.type?.length > 0) && (
+              <Link to={"/your-type"}>
+                <Button
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: 0,
+                    width: "100%",
+                    textAlign: "left",
+                    justifyContent: "start",
+                    color: "black",
+                    height: 64,
+                    paddingX: 4,
+                    borderColor: "red",
+                    fontWeight: "regular",
+                  }}
+                  startIcon={
+                    user?.personality?.type == "Romantic Warrior" ? (
+                      <img
+                        src={RomanticWarriorIcon}
+                        width={24}
+                        alt="character icon"
+                      />
+                    ) : user?.personality?.type == "Drama Queen" ? (
+                      <img
+                        src={DramaQueenIcon}
+                        width={24}
+                        alt="character icon"
+                      />
+                    ) : user?.personality?.type == "Comic Sans" ? (
+                      <img
+                        src={ComicSansIcon}
+                        width={24}
+                        alt="character icon"
+                      />
+                    ) : user?.personality?.type == "Mystic Wizard" ? (
+                      <img
+                        src={MysticWizardIcon}
+                        width={24}
+                        alt="character icon"
+                      />
+                    ) : user?.personality?.type == "Action Monkey" ? (
+                      <img
+                        src={ActionMonkeyIcon}
+                        width={24}
+                        alt="character icon"
+                      />
+                    ) : (
+                      <img
+                        src={PerfectHarmonyIcon}
+                        width={24}
+                        alt="character icon"
+                      />
+                    )
+                  }
+                  size="large"
+                >
+                  <Typography>Yours: {user?.personality?.type}</Typography>
+                </Button>
+              </Link>
+            )}
           </React.Fragment>
         ))}
         <LinkItem title={"Logout"} onClick={handleLogout} icon={<Logout />} />

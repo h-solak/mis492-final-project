@@ -68,7 +68,7 @@ const Match = () => {
             before this week please come back later :)
           </Typography>
         </Grid>
-        {!user?.personality?.resultMatrix?.length > 0 ? (
+        {!user?.personality?.type?.length > 0 ? (
           <Grid
             container
             mt={6}

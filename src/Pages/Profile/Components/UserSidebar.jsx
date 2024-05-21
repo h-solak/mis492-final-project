@@ -57,7 +57,7 @@ const UserSidebar = () => {
         <Tooltip
           title={
             profileUser?.personality?.type > 0
-              ? profileUser?.personality
+              ? profileUser?.personality?.type
               : "Haven't taken the quiz yet"
           }
         >
@@ -66,7 +66,7 @@ const UserSidebar = () => {
               height: 150,
               width: "100%",
               background:
-                profileUser?.personality?.type > 0
+                profileUser?.personality?.type?.length > 0
                   ? `url(${
                       profileUser?.personality?.type == "Romantic Warrior"
                         ? RomanticWarrior
@@ -92,7 +92,7 @@ const UserSidebar = () => {
             alignItems={"center"}
             justifyContent={"center"}
           >
-            {!!(!profileUser?.personality?.type > 0) && (
+            {!!(!profileUser?.personality?.type?.length > 0) && (
               <Typography fontSize={64} color={"#fff"}>
                 ?
               </Typography>

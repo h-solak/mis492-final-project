@@ -80,7 +80,7 @@ const YourType = () => {
   };
 
   useEffect(() => {
-    if (user?.personality?.resultMatrix?.length > 0) {
+    if (user?.personality?.type?.length > 0) {
       handleDiscoverMovies();
     }
   }, []);

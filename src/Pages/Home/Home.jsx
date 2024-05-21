@@ -21,7 +21,6 @@ const Home = () => {
           TODO
         </Typography>
         <li>zaman kalırsa streaming services yap</li>
-        <li> Character types sayfaları</li>
         <li>
           <b>
             FOCUS ON MAIN FEATURES: CHARACTER PAGES & SURVEY STRUCTURE - DON'T
@@ -30,11 +29,7 @@ const Home = () => {
         </li>
         <li>Now watching *anasayfa* arkadaşlar ne izlio</li>
         <li>Profile edit your description</li>
-        <li>1. Movie Watchlist feature</li>
         <li>Like & Comment on reviews feature</li>
-        <li>Profile - UI implementation</li>
-        <li>Notifications</li>
-        <li>Password: 8 karakter, büyük harf, özel karakter</li>
         <li>
           Match özelliği kullanıldığında yeni match direkt olarak arkadaşlara
           eklenecek, kullanıcı isterse veya eşleşmeyi reddederse kaldırılacak..
