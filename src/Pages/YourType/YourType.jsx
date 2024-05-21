@@ -30,9 +30,11 @@ const YourType = () => {
   let [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    setTimeout(() => {
-      setSearchParams({});
-    }, 5000);
+    if (searchParams.get("first-time")) {
+      setTimeout(() => {
+        setSearchParams({});
+      }, 2000);
+    }
   }, []);
 
   const handleDiscoverMovies = async () => {

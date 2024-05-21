@@ -9,6 +9,26 @@ const segmentation = require("../utils/segmentation");
 const linearAlgebra = require("linear-algebra")();
 const Matrix = linearAlgebra.Matrix;
 
+//match request
+router.post("/", checkJwt, async (req, res) => {
+  try {
+    const id = getUserIdFromToken(req.headers.authorization);
+
+    const user = await User.findById(id);
+
+    //users have to have a personality
+    if (!user?.personality?.type?.character?.length > 0) {
+      return res.status(500).json(err);
+    }
+    //find other user --> filter: has same personality type, not a friend,
+
+    return res.status(200).json({ personality: userPersonality });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
+
 //take or re-take character survey
 router.post("/character-survey", checkJwt, async (req, res) => {
   try {
