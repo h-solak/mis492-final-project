@@ -63,16 +63,6 @@ a {
   display: flex;
 }
 
-/*-----*/
-
-.character-bg {
-  background: linear-gradient(180deg, #141d54 0%, #ff0000 48.4%, #141d54 100%);
-}
-
-.chosen-character-bg {
-  background: linear-gradient(180deg, #ff4444 0%, #fdcccc 48.4%, #ffffff 100%);
-}
-
 /* Animations */
 
 .shimmer {

@@ -24,23 +24,43 @@ router.get("/", checkJwt, async (req, res) => {
     }
 
     const crrUserFriends = crrUser?.friends?.map((item) => item?.id);
-    const matchingUsers = await User.find({
-      _id: { $ne: id, $nin: crrUserFriends }, // Exclude the current user &  Not already friends
+    const matchingUser = await User.findOne({
+      _id: { $ne: crrUser?._id, $nin: crrUserFriends }, // Exclude the current user &  Not already friends
       "personality.type": crrUser.personality.type, // Same personality type
     });
 
-    //ADD TO FRIENDS AND FRIEND TYPE MUST BE MATCH (NOT DEFAULT)
-
-    if (matchingUsers.length === 0) {
+    if (!matchingUser) {
       return res.status(404).json({ errorTitle: "Not found" });
     }
 
-    console.log(
-      "naha",
-      matchingUsers?.map((item) => item?.username)
-    );
+    //ADD TO FRIENDS AND FRIEND TYPE MUST BE MATCH (NOT DEFAULT)
+    // const newMatchUser = matchingUsers[0];
 
-    return res.status(200).json({ user: matchingUsers[0] });
+    // console.log(
+    //   "naha",
+    //   matchingUsers?.map((item) => item?.username)
+    // );
+
+    crrUser?.friends.push({
+      id: matchingUser?._id,
+      type: "match",
+      matchDate: new Date(),
+      sender: crrUser?._id,
+    });
+    await crrUser.save();
+
+    matchingUser?.friends.push({
+      id: crrUser?._id,
+      type: "match",
+      matchDate: new Date(),
+      sender: crrUser?._id,
+    });
+    await matchingUser.save();
+
+    console.log(matchingUser);
+    const { password, ...matchingUserData } = matchingUser?._doc;
+
+    return res.status(200).json({ user: matchingUserData });
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);

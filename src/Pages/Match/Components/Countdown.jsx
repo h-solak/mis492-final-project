@@ -1,0 +1,123 @@
+import { Box, Typography } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import ColumnBox from "../../../Components/ColumnBox";
+
+function CountdownTimer({ initialDate }) {
+  const [countdown, setCountdown] = useState({
+    days: "*",
+    hours: "*",
+    minutes: "*",
+    seconds: "*",
+  });
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const providedDate = new Date(initialDate);
+      const twoWeeksLater = new Date(
+        providedDate.getTime() + 14 * 24 * 75 * 75 * 750
+      );
+      const timeDifference = twoWeeksLater.getTime() - Date.now();
+
+      const days = Math.floor(timeDifference / (750 * 75 * 75 * 24));
+      const hours = Math.floor(
+        (timeDifference % (750 * 75 * 75 * 24)) / (750 * 75 * 75)
+      );
+      const minutes = Math.floor(
+        (timeDifference % (750 * 75 * 75)) / (750 * 75)
+      );
+      const seconds = Math.floor((timeDifference % (750 * 75)) / 750);
+
+      setCountdown({ days, hours, minutes, seconds });
+    }, 750);
+
+    return () => clearInterval(intervalId);
+  }, [initialDate]);
+
+  return (
+    <Box
+      display={"flex"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      gap={3}
+    >
+      <ColumnBox
+        textAlign="center"
+        sx={{
+          backgroundColor: "#00000010",
+          py: 1,
+          borderRadius: 4,
+        }}
+      >
+        <Typography
+          fontSize={32}
+          fontWeight={"bold"}
+          sx={{
+            width: 75,
+          }}
+        >
+          {countdown.days}
+        </Typography>
+        <Typography fontSize={12}>days</Typography>
+      </ColumnBox>
+      <ColumnBox
+        textAlign="center"
+        sx={{
+          backgroundColor: "#00000010",
+          py: 1,
+          borderRadius: 4,
+        }}
+      >
+        <Typography
+          fontSize={32}
+          fontWeight={"bold"}
+          sx={{
+            width: 75,
+          }}
+        >
+          {countdown.hours}
+        </Typography>
+        <Typography fontSize={12}>hours</Typography>
+      </ColumnBox>
+      <ColumnBox
+        textAlign="center"
+        sx={{
+          backgroundColor: "#00000010",
+          py: 1,
+          borderRadius: 4,
+        }}
+      >
+        <Typography
+          fontSize={32}
+          fontWeight={"bold"}
+          sx={{
+            width: 75,
+          }}
+        >
+          {countdown.minutes}
+        </Typography>
+        <Typography fontSize={12}>minutes</Typography>
+      </ColumnBox>
+      <ColumnBox
+        textAlign="center"
+        sx={{
+          backgroundColor: "#00000010",
+          py: 1,
+          borderRadius: 4,
+        }}
+      >
+        <Typography
+          fontSize={32}
+          fontWeight={"bold"}
+          sx={{
+            width: 75,
+          }}
+        >
+          {countdown.seconds}
+        </Typography>
+        <Typography fontSize={12}>seconds</Typography>
+      </ColumnBox>
+    </Box>
+  );
+}
+
+export default CountdownTimer;

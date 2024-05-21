@@ -28,6 +28,7 @@ import ColumnBox from "../../Components/ColumnBox";
 import { removeAccessToken } from "../../api/config";
 import LinkItem from "./LinkItem";
 import Avatar from "../../Components/Avatar";
+import getCharacterColor from "../../Utilities/getCharacterColor";
 const linkItems = [
   {
     title: "Home",
@@ -154,19 +155,7 @@ const Sidebar = () => {
             {!!user?.personality?.type?.length > 0 ? (
               <Typography
                 fontSize={13}
-                color={
-                  user?.personality?.type == "Action Monkey"
-                    ? "#4E8C15"
-                    : user?.personality?.type == "Drama Queen"
-                    ? "primary.light"
-                    : user?.personality?.type == "Mystic Wizard"
-                    ? "#2D52D5"
-                    : user?.personality?.type == "Comic Sans"
-                    ? "#F5AA0D"
-                    : user?.personality?.type == "Romantic Warrior"
-                    ? "#8C248D"
-                    : "#89898B"
-                }
+                color={getCharacterColor(user?.personality?.type)}
                 fontWeight={"bold"}
               >
                 {user?.personality?.type}

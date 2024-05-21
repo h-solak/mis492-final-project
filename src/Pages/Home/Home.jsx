@@ -20,6 +20,12 @@ const Home = () => {
         <Typography fontSize={18} fontWeight={"bolder"}>
           TODO
         </Typography>
+        <li>
+          USER MATCHİ YAPAN KİŞİ DEĞİLSE - SENDER DEĞİLSE - HERE IS YOUR MATCH
+          FOR THE WEEK'İ SİL!!!!!
+        </li>
+        <li>START CHAT'İ ÇALIŞTIR MATCH EKRANINDAKİ</li>
+        <li>match filtrelerini ve şehri? ekle</li>
         <li>zaman kalırsa streaming services yap</li>
         <li>
           <b>

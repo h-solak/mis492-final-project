@@ -10,4 +10,14 @@ const getProfileUser = async (username) => {
   }
 };
 
-export { getProfileUser };
+const getProfileUserUsingId = async (id) => {
+  try {
+    const res = await misBaseAxios.get(`/user/withId/${id}`);
+    console.log(res);
+    return res?.data?.user;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getProfileUser, getProfileUserUsingId };

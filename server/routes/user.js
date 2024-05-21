@@ -27,6 +27,29 @@ router.get("/:username", checkJwt, async (req, res) => {
   }
 });
 
+//GET A USER PROFILE USING ID
+router.get("/withId/:userId", checkJwt, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    const userMovieRates = await Rate.find({
+      user: user?._id,
+    });
+    const sortedUserMovieRates = userMovieRates.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+    const { password, privateChats, ...otherUserData } = user._doc; //get the user except password
+
+    const allUserData = {
+      ...otherUserData,
+      rates: sortedUserMovieRates,
+    };
+
+    return res.status(200).json({ user: allUserData });
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
 //UPDATE USER
 router.put("/:id", checkJwt, async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
