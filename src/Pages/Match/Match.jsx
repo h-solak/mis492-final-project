@@ -22,6 +22,7 @@ import MysticWizard from "../../assets/images/characters/mysticwizard.jpeg";
 import ActionMonkey from "../../assets/images/characters/actionmonkey.jpeg";
 import PerfectHarmony from "../../assets/images/characters/perfectharmony.jpg";
 import ColumnBox from "../../Components/ColumnBox";
+import { matchUser } from "../../Services/Match";
 
 const Match = () => {
   const { user } = useUser();
@@ -46,6 +47,11 @@ const Match = () => {
         Math.max(newValue[1], ageSlider[0] + minDistance),
       ]);
     }
+  };
+
+  const handleMatchUser = async () => {
+    const newMatch = await matchUser();
+    console.log(newMatch);
   };
   return (
     <Layout>
@@ -302,7 +308,7 @@ const Match = () => {
               <Button
                 size="large"
                 variant="contained"
-                onClick={() => navigate("/match/personality-test")}
+                onClick={handleMatchUser}
                 sx={{
                   alignSelf: "self-start",
                   px: 8,

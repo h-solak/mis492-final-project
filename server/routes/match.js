@@ -10,19 +10,37 @@ const linearAlgebra = require("linear-algebra")();
 const Matrix = linearAlgebra.Matrix;
 
 //match request
-router.post("/", checkJwt, async (req, res) => {
+router.get("/", checkJwt, async (req, res) => {
   try {
     const id = getUserIdFromToken(req.headers.authorization);
+    console.log(id);
+    const crrUser = await User.findById(id);
 
-    const user = await User.findById(id);
-
-    //users have to have a personality
-    if (!user?.personality?.type?.character?.length > 0) {
-      return res.status(500).json(err);
+    //if user hasn't taken the quiz yet
+    if (!crrUser?.personality?.type?.length > 0) {
+      return res
+        .status(500)
+        .json({ errorTitle: "You have to take the quiz if you want to match" });
     }
-    //find other user --> filter: has same personality type, not a friend,
 
-    return res.status(200).json({ personality: userPersonality });
+    const crrUserFriends = crrUser?.friends?.map((item) => item?.id);
+    const matchingUsers = await User.find({
+      _id: { $ne: id, $nin: crrUserFriends }, // Exclude the current user &  Not already friends
+      "personality.type": crrUser.personality.type, // Same personality type
+    });
+
+    //ADD TO FRIENDS AND FRIEND TYPE MUST BE MATCH (NOT DEFAULT)
+
+    if (matchingUsers.length === 0) {
+      return res.status(404).json({ errorTitle: "Not found" });
+    }
+
+    console.log(
+      "naha",
+      matchingUsers?.map((item) => item?.username)
+    );
+
+    return res.status(200).json({ user: matchingUsers[0] });
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);

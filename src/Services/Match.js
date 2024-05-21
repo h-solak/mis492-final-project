@@ -1,5 +1,14 @@
 import { misBaseAxios } from "../api/config";
 
+const matchUser = async () => {
+  try {
+    const res = await misBaseAxios.get(`/match`);
+    return res?.data?.user;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const getUserSurveyResults = async (matrices) => {
   try {
     const res = await misBaseAxios.post(`/match/character-survey`, {
@@ -23,4 +32,4 @@ const checkConsistency = async (subcriteriaMatrix, dimension) => {
   }
 };
 
-export { getUserSurveyResults, checkConsistency };
+export { matchUser, getUserSurveyResults, checkConsistency };
