@@ -35,7 +35,7 @@ const RecentActivityPreview = ({ rate }) => {
         mt={1}
         sx={{
           overflow: "hidden",
-          height: profileUser?.rates?.length > 0 ? 260 : 100,
+          height: profileUser?.rates?.length > 0 ? 260 : 40,
         }}
       >
         {profileUser?.rates?.length > 0 ? (

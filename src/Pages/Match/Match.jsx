@@ -27,6 +27,8 @@ import { getProfileUser, getProfileUserUsingId } from "../../Services/User";
 import Avatar from "../../Components/Avatar";
 import getCharacterColor from "../../Utilities/getCharacterColor";
 import CountdownTimer from "./Components/Countdown";
+import toast from "react-hot-toast";
+import { getChatIdByUserId } from "../../Services/Chat";
 
 const Match = () => {
   const { user } = useUser();
@@ -35,6 +37,9 @@ const Match = () => {
   const [ageSlider, setAgeSlider] = useState([18, 30]);
   const [currentMatch, setCurrentMatch] = useState({});
   const [pageLoading, setPageLoading] = useState(true);
+  const lastMatch = user?.friends
+    .filter((friend) => friend?.type == "match")
+    .slice(-1)[0];
 
   useEffect(() => {
     handleUserHasActiveMatch();
@@ -62,6 +67,8 @@ const Match = () => {
     }
   };
 
+  console.log("crr", currentMatch);
+
   const handleUserHasActiveMatch = async () => {
     setPageLoading(true);
     function hasTwoWeeksPassed(dateString) {
@@ -73,10 +80,6 @@ const Match = () => {
       const currentDate = new Date();
       return currentDate > twoWeeksAfter;
     }
-
-    const lastMatch = user?.friends
-      .filter((friend) => friend?.type == "match")
-      .slice(-1)[0];
 
     if (!hasTwoWeeksPassed(lastMatch?.matchDate)) {
       const crrActiveMatch = await getProfileUserUsingId(lastMatch?.id);
@@ -91,12 +94,16 @@ const Match = () => {
 
   const handleMatchUser = async () => {
     const newMatch = await matchUser();
-    window.location.reload();
+    if (newMatch?._id) {
+      window.location.reload();
+    } else {
+      toast.error("No match found! Please try again later!");
+    }
   };
 
   const handleSendMessage = async () => {
     //SHOULD CREATE CHAT AND SET THE FIRST MESSAGE TO ***YOU ARE A MATCH***
-    const chatId = await getChatIdByUserId(currentMatch?._id);
+    const chatId = await getChatIdByUserId(currentMatch?._id, true);
     if (chatId) {
       navigate(`/chat?chatId=${chatId}`);
     } else {
@@ -257,7 +264,7 @@ const Match = () => {
               </Typography>
             </Grid>
           </Grid>
-        ) : currentMatch?._id ? (
+        ) : currentMatch?._id && lastMatch?.sender == user?._id ? (
           // has a character and a current match
           <Grid
             container
@@ -375,7 +382,7 @@ const Match = () => {
                   <Button
                     size="large"
                     variant="contained"
-                    onClick={handleMatchUser}
+                    onClick={handleSendMessage}
                     sx={{
                       alignSelf: "self-start",
                       px: 8,
@@ -391,7 +398,7 @@ const Match = () => {
             </Grid>
           </Grid>
         ) : (
-          // Has a character & no current match
+          // Has a character & no current match (not a sender)
           <Grid
             container
             mt={6}

@@ -18,6 +18,9 @@ import { findLatestMessage } from "../../../Utilities/chatFunctions";
 import UserContext from "../../../Contexts/User/UserContext";
 import { Link } from "react-router-dom";
 import Avatar from "../../../Components/Avatar";
+import ColumnBox from "../../../Components/ColumnBox";
+import { format } from "date-fns";
+import getCharacterColor from "../../../Utilities/getCharacterColor";
 
 const CurrentChat = ({ chatLoading }) => {
   const { user } = useContext(UserContext);
@@ -66,6 +69,12 @@ const CurrentChat = ({ chatLoading }) => {
         borderColor={"secondary.light"}
         display={"flex"}
         justifyContent={"space-between"}
+        // sx={{
+        //   backgroundColor:
+        //     crrChat?.receiver?.personality?.type?.length > 0
+        //       ? `${getCharacterColor(crrChat?.receiver?.personality?.type)}25`
+        //       : "none",
+        // }}
       >
         <Link to={`/profile/${crrChat?.receiver?.username}`}>
           <Box display={"flex"} alignItems={"center"} gap={1} pl={4}>
@@ -97,6 +106,24 @@ const CurrentChat = ({ chatLoading }) => {
       >
         {crrChat?.messages?.length > 0 ? (
           crrChat?.messages?.map((message) => {
+            if (message?.sender == "moviemate") {
+              return (
+                <ColumnBox pt={2} pb={4} width={"100%"}>
+                  <Typography
+                    fontSize={14}
+                    color={"secondary"}
+                    textAlign={"center"}
+                  >
+                    {" "}
+                    {format(message?.createdAt, "dd/MM/yyyy") !==
+                    format(new Date(), "dd/MM/yyyy")
+                      ? format(message?.createdAt, "MMMM d, yyyy - HH:mm")
+                      : format(message?.createdAt, "HH:mm")}{" "}
+                    · {message?.content}
+                  </Typography>
+                </ColumnBox>
+              );
+            }
             return <Message key={message?._id} message={message} />;
           })
         ) : (

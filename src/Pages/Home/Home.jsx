@@ -15,16 +15,10 @@ const Home = () => {
 
   return (
     <Layout>
-      <ReleaseRadar />
-      <ul>
+      <ul style={{ fontSize: 10 }}>
         <Typography fontSize={18} fontWeight={"bolder"}>
           TODO
         </Typography>
-        <li>
-          USER MATCHİ YAPAN KİŞİ DEĞİLSE - SENDER DEĞİLSE - HERE IS YOUR MATCH
-          FOR THE WEEK'İ SİL!!!!!
-        </li>
-        <li>START CHAT'İ ÇALIŞTIR MATCH EKRANINDAKİ</li>
         <li>match filtrelerini ve şehri? ekle</li>
         <li>zaman kalırsa streaming services yap</li>
         <li>
@@ -44,6 +38,7 @@ const Home = () => {
         <li>Ortak arkadaşlar</li>
         <li>Oyuncular film sayfasında</li>
       </ul>
+      <ReleaseRadar />
     </Layout>
   );
 };

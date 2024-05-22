@@ -45,9 +45,11 @@ const deleteMessage = async ({ chatId, messageId }) => {
 };
 
 /* Create or get a chat id by providing the second user's id */
-const getChatIdByUserId = async (userId) => {
+const getChatIdByUserId = async (userId, isMatchChat = false) => {
   try {
-    const res = await misBaseAxios.get(`/chats/user/${userId}`);
+    const res = await misBaseAxios.get(
+      `/chats/user/${userId}?isMatchChat=${isMatchChat}`
+    );
     return res?.data?.chatId; //if chat is created or it already exists, backend will return chatId
   } catch (error) {
     console.log(error);

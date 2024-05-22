@@ -41,11 +41,13 @@ const UserSidebar = () => {
       xs={12}
       md={3}
       justifyContent={"center"}
-      sx={{
-        position: "sticky",
-        top: 50,
-        maxHeight: "50vh",
-      }}
+      sx={
+        {
+          // position: "sticky",
+          // top: 50,
+          // maxHeight: "50vh",
+        }
+      }
     >
       <ColumnBox
         py={4}

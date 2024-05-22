@@ -11,9 +11,12 @@ const ChatSchema = new mongoose.Schema(
     ],
     messages: [
       {
-        id: String,
+        id: {
+          type: String,
+          required: false, //? might cause bugs
+        },
         sender: {
-          type: mongoose.Schema.Types.ObjectId,
+          type: String,
           ref: "User",
           required: true,
         },

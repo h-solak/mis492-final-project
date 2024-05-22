@@ -2,7 +2,7 @@ const getCharacterColor = (character) => {
   return character == "Action Monkey"
     ? "#4E8C15"
     : character == "Drama Queen"
-    ? "primary.light"
+    ? "#F94040"
     : character == "Mystic Wizard"
     ? "#2D52D5"
     : character == "Comic Sans"

@@ -5,6 +5,7 @@ const checkJwt = require("../utils/authenticate");
 const getUserIdFromToken = require("../utils/getUserIdFromToken");
 const sortByDate = require("../utils/sortByDate");
 const isMessageRead = require("../utils/isMessageRead");
+const { ObjectId } = require("mongodb");
 
 //GET CHAT LIST - PREVIEWS
 router.get("/", checkJwt, async (req, res) => {
@@ -102,6 +103,7 @@ router.get("/:chatId", checkJwt, async (req, res) => {
         id: receiverData?._id,
         username: receiverData?.username,
         avatar: receiverData?.crrAvatar,
+        personality: receiverData?.personality,
       },
     };
     const currentChat = { ...chat._doc, ...newReceiverData };
@@ -117,6 +119,8 @@ router.get("/user/:user2Id", checkJwt, async (req, res) => {
   try {
     const id = getUserIdFromToken(req.headers.authorization);
     const user2Id = req.params.user2Id;
+    const isMatchChat = req?.query?.isMatchChat;
+
     const chat = await Chat.findOne({
       "participants.id": { $all: [id, user2Id] },
     });
@@ -136,21 +140,22 @@ router.get("/user/:user2Id", checkJwt, async (req, res) => {
         read: crrDate,
       };
 
-      /*
-      FIRST MESSAGE SHOULD BE LIKE THIS BY DEFAULT..
-         messages: [
-        {
-          "sender": "MOVIEMATE_SYSTEM",
-          "content": "Welcome to chat!",
-          "createdAt": new Date(),
-          "id": 1
-        }
-      ]
-      */
-
       const newChat = new Chat({
         participants: [user1Obj, user2Obj],
       });
+
+      if (isMatchChat) {
+        const newObjectId = new ObjectId();
+        const date = new Date();
+        const newMessage = {
+          sender: "moviemate",
+          content: "You are matched!🔥",
+          createdAt: date,
+          id: newObjectId.toString(),
+        };
+        newChat?.messages.push(newMessage);
+      }
+
       await newChat.save();
       return res.status(200).json({ chatId: newChat?._id });
     }

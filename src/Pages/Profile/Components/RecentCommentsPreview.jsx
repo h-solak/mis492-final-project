@@ -109,7 +109,7 @@ const RecentCommentsPreview = ({ rate }) => {
             </ColumnBox>
           </Box>
         ) : (
-          <Box px={2} py={1}>
+          <Box py={1}>
             <Typography color={"secondary"}>No comments yet</Typography>
           </Box>
         )}

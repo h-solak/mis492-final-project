@@ -34,7 +34,7 @@ const Bottombar = ({ height, movie }) => {
         posterPath: movie?.poster_path,
         releaseDate: movie?.release_date,
       });
-      if (newWatchlist) {
+      if (newWatchlist?.length > 0) {
         setUser((userItem) => ({
           ...userItem,
           defaultWatchlist: newWatchlist,
@@ -43,7 +43,7 @@ const Bottombar = ({ height, movie }) => {
     } else {
       //remove movie from watchlist
       const newWatchlist = await removeFromDefaultWatchlist({ movieId });
-      if (newWatchlist) {
+      if (newWatchlist?.length > 0) {
         setUser((userItem) => ({
           ...userItem,
           defaultWatchlist: newWatchlist,
@@ -61,7 +61,7 @@ const Bottombar = ({ height, movie }) => {
         posterPath: movie?.poster_path,
         releaseDate: movie?.release_date,
       });
-      if (newFavorites) {
+      if (newFavorites?.length > 0) {
         setUser((userItem) => ({
           ...userItem,
           favoriteMovies: newFavorites,
@@ -70,7 +70,7 @@ const Bottombar = ({ height, movie }) => {
     } else {
       //remove movie from favorites
       const newFavorites = await removeFromFavorites({ movieId });
-      if (newFavorites) {
+      if (newFavorites?.length > 0) {
         setUser((userItem) => ({
           ...userItem,
           favoriteMovies: newFavorites,
@@ -146,6 +146,10 @@ const Bottombar = ({ height, movie }) => {
 const MovieItem = ({ xs = 12, sm = 6, md = 3, height = 240, movie }) => {
   const navigate = useNavigate();
   const { user } = useUser();
+
+  if (!movie?.id) {
+    return null;
+  }
   return (
     <Grid item xs={xs} sm={sm} md={md} className="opening-animation">
       {/* Grid in this component is a container, ColumnBox is the actual movie item user see on the screen */}
