@@ -14,18 +14,18 @@ function CountdownTimer({ initialDate }) {
     const intervalId = setInterval(() => {
       const providedDate = new Date(initialDate);
       const twoWeeksLater = new Date(
-        providedDate.getTime() + 14 * 24 * 75 * 75 * 750
+        providedDate.getTime() + 14 * 24 * 60 * 60 * 1000
       );
       const timeDifference = twoWeeksLater.getTime() - Date.now();
 
-      const days = Math.floor(timeDifference / (750 * 75 * 75 * 24));
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
-        (timeDifference % (750 * 75 * 75 * 24)) / (750 * 75 * 75)
+        (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
       );
       const minutes = Math.floor(
-        (timeDifference % (750 * 75 * 75)) / (750 * 75)
+        (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
       );
-      const seconds = Math.floor((timeDifference % (750 * 75)) / 750);
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
       setCountdown({ days, hours, minutes, seconds });
     }, 750);

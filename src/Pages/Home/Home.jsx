@@ -19,6 +19,7 @@ const Home = () => {
         <Typography fontSize={18} fontWeight={"bolder"}>
           TODO
         </Typography>
+        <li>RATE MODAL STARS NOT WORKING PROPERLY </li>
         <li>match filtrelerini ve şehri? ekle</li>
         <li>zaman kalırsa streaming services yap</li>
         <li>

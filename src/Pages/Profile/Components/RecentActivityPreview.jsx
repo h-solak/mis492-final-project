@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { ProfileUserContext } from "../Profile";
 import RateItem from "./RateItem";
 import MovieItem from "../../../Components/Movie/MovieItem";
+import { Link } from "react-router-dom";
 
 const RecentActivityPreview = ({ rate }) => {
   const { profileUser } = useContext(ProfileUserContext);
@@ -19,14 +20,16 @@ const RecentActivityPreview = ({ rate }) => {
           py={1}
         >
           <Typography fontWeight={"medium"}>Recent Activity</Typography>
-          <Button
-            size="small"
-            sx={{
-              textTransform: "none",
-            }}
-          >
-            See All Activity
-          </Button>
+          <Link to={`/profile/${profileUser?.username}/recent-activity`}>
+            <Button
+              size="small"
+              sx={{
+                textTransform: "none",
+              }}
+            >
+              See All Activity
+            </Button>
+          </Link>
         </Box>
       </Grid>
       <Grid

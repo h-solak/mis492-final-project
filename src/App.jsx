@@ -24,6 +24,7 @@ import PersonalityTest from "./Pages/Match/Pages/PersonalityTest/PersonalityTest
 import Characters from "./Pages/Characters/Characters";
 import YourType from "./Pages/YourType/YourType";
 import Favorites from "./Pages/Profile/Favorites/Favorites";
+import RecentActivity from "./Pages/Profile/RecentActivity/RecentActivity";
 
 function App() {
   return (
@@ -62,6 +63,11 @@ function App() {
                 key="WatchlistNavigator"
                 path="/watchlist"
                 element={<AuthGuard component={<WatchlistNavigator />} />}
+              />
+              <Route
+                key="RecentActivity"
+                path="/profile/:username/recent-activity"
+                element={<AuthGuard component={<RecentActivity />} />}
               />
               <Route
                 key="Chat"

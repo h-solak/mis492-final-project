@@ -119,7 +119,7 @@ const Movie = () => {
             </Button>
             {movie?.vote_average ? (
               <ColumnBox>
-                <Typography color={"#fff"}>User Rating</Typography>
+                <Typography color={"#fff"}>Tmdb Rating </Typography>
                 <Box display={"flex"} alignItems={"center"} gap={1}>
                   <Star
                     sx={{
@@ -127,7 +127,7 @@ const Movie = () => {
                     }}
                   />
                   <Typography fontSize={18} color="#fff" fontWeight={"medium"}>
-                    {movie?.vote_average?.toString()?.slice(0, 3)}
+                    {movie?.vote_average?.toString()?.slice(0, 3)}/10
                   </Typography>
                 </Box>
               </ColumnBox>
@@ -143,7 +143,7 @@ const Movie = () => {
                     }}
                   />
                   <Typography fontSize={18} color="#fff" fontWeight={"medium"}>
-                    {userRates?.find((rate) => rate?.movie === movieId)?.rate}
+                    {userRates?.find((rate) => rate?.movie === movieId)?.rate}/5
                   </Typography>
                 </Box>
               </ColumnBox>

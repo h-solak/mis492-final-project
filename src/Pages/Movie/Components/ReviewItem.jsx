@@ -14,6 +14,7 @@ import ReplyItem from "./ReplyItem";
 import ColumnBox from "../../../Components/ColumnBox";
 import useUser from "../../../Contexts/User/useUser";
 import { replyReview } from "../../../Services/Movie";
+import { Rating } from "react-simple-star-rating";
 
 const ReviewItem = ({ review, handleGetMovieReviews }) => {
   const [isReplyInputOpen, setIsReplyInputOpen] = useState(false);
@@ -44,20 +45,14 @@ const ReviewItem = ({ review, handleGetMovieReviews }) => {
             <Link to={`/profile/${review.username}`}>
               <Typography fontWeight={"bold"}>{review?.username}</Typography>
             </Link>
-            <Box display={"flex"} alignItems={"center"} gap={0}>
-              <Star
-                sx={{
-                  color: "highlight.main",
-                  fontSize: 20,
-                }}
-              />
-              <Typography fontSize={16}>
-                {review?.rate}
-                <Typography variant={"span"} fontSize={12}>
-                  /10
-                </Typography>
-              </Typography>
-            </Box>
+            <Rating
+              initialValue={review?.rate > 5 ? 5 : review?.rate}
+              size={20}
+              disableFillHover={true}
+              readOnly={true}
+              fillColor="#000"
+              style={{ marginLeft: "8px" }}
+            />
           </Box>
           <Typography
             sx={{
