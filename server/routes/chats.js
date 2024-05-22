@@ -215,28 +215,28 @@ router.put("/:chatId/read", checkJwt, async (req, res) => {
   }
 });
 
-/********NOT IMPLEMENTED AND PROBABLY WONT BE*********** */
-//CHAT SUGGESTIONS (WILL INCLUDE PEOPLE WE DIDNT CHAT BEFORE AND WE FOLLOW)
-router.get("/suggestions/:userId", checkJwt, async (req, res) => {
-  try {
-    const user = await User.findById(req.params.userId);
-    const followings = await Promise.all(
-      user.followings.map(async (followingId) => {
-        const data = await User.findById(followingId);
-        return {
-          userId: data._id,
-          username: data.username,
-          crrAvatar: data.crrAvatar,
-          //followers: suggestedUser.followers,
-        };
-      })
-    );
-    return res.status(200).json({
-      data: followings,
-    });
-  } catch (err) {
-    return res.status(500).json(err);
-  }
-});
+// /********NOT IMPLEMENTED AND PROBABLY WONT BE*********** */
+// //CHAT SUGGESTIONS (WILL INCLUDE PEOPLE WE DIDNT CHAT BEFORE AND WE FOLLOW)
+// router.get("/suggestions/:userId", checkJwt, async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.userId);
+//     const followings = await Promise.all(
+//       user.followings.map(async (followingId) => {
+//         const data = await User.findById(followingId);
+//         return {
+//           userId: data._id,
+//           username: data.username,
+//           crrAvatar: data.crrAvatar,
+//           //followers: suggestedUser.followers,
+//         };
+//       })
+//     );
+//     return res.status(200).json({
+//       data: followings,
+//     });
+//   } catch (err) {
+//     return res.status(500).json(err);
+//   }
+// });
 
 module.exports = router;

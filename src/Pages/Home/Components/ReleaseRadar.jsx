@@ -28,7 +28,7 @@ const ReleaseRadar = () => {
   }, []);
   return (
     <React.Fragment>
-      <Grid container>
+      <Grid container mt={8}>
         <ColumnBox mt={1} mb={2}>
           <Typography fontSize={20} fontWeight={"bolder"} mb={-0.5}>
             Release Radar
