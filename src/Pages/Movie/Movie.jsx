@@ -143,7 +143,12 @@ const Movie = () => {
                     }}
                   />
                   <Typography fontSize={18} color="#fff" fontWeight={"medium"}>
-                    {userRates?.find((rate) => rate?.movie === movieId)?.rate}/5
+                    {userRates?.find((rate) => rate?.movie === movieId)?.rate >
+                    5
+                      ? 5
+                      : userRates?.find((rate) => rate?.movie === movieId)
+                          ?.rate}
+                    /5
                   </Typography>
                 </Box>
               </ColumnBox>
