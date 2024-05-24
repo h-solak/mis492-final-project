@@ -58,7 +58,7 @@ const UserSidebar = () => {
       >
         <Tooltip
           title={
-            profileUser?.personality?.type > 0
+            profileUser?.personality?.type?.length > 0
               ? profileUser?.personality?.type
               : "Haven't taken the quiz yet"
           }
