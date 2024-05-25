@@ -9,13 +9,24 @@ import ComicSansIcon from "../../assets/icons/characters/comicsans.svg";
 import MysticWizardIcon from "../../assets/icons/characters/mysticwizard.svg";
 import ActionMonkeyIcon from "../../assets/icons/characters/actionmonkey.svg";
 import PerfectHarmonyIcon from "../../assets/icons/characters/perfectharmony.svg";
-/* images */
+/* character images */
 import RomanticWarrior from "../../assets/images/characters/romanticwarrior.jpeg";
 import DramaQueen from "../../assets/images/characters/dramaqueen.jpeg";
 import ComicSans from "../../assets/images/characters/comicsans.jpeg";
 import MysticWizard from "../../assets/images/characters/mysticwizard.jpeg";
 import ActionMonkey from "../../assets/images/characters/actionmonkey.jpeg";
 import PerfectHarmony from "../../assets/images/characters/perfectharmony.jpg";
+/* Metric & Genre Images */
+import ActionImg from "../../assets/images/yourtypepage/action.png";
+import ComedyImg from "../../assets/images/yourtypepage/comedy.png";
+import DramaImg from "../../assets/images/yourtypepage/drama.png";
+import EmotionalImpactImg from "../../assets/images/yourtypepage/emotionalimpact.png";
+import FluidityImg from "../../assets/images/yourtypepage/fluidity.png";
+import MysteryImg from "../../assets/images/yourtypepage/mystery.png";
+import QuestionImg from "../../assets/images/yourtypepage/question.png";
+import RomanticImg from "../../assets/images/yourtypepage/romantic.png";
+import VisualTechnicalElementsImg from "../../assets/images/yourtypepage/visualtechnicalelements.png";
+
 import { discoverMovies } from "../../Services/Tmdb";
 import MovieItem from "../../Components/Movie/MovieItem";
 import ColumnBox from "../../Components/ColumnBox";
@@ -84,6 +95,12 @@ const YourType = () => {
       handleDiscoverMovies();
     }
   }, []);
+
+  const leastFavoriteGenre = user?.personality?.resultMatrix?.reduce(
+    (minIdx, currentValue, currentIndex, arr) =>
+      currentValue < arr[minIdx] ? currentIndex : minIdx,
+    0
+  );
   return (
     <Layout disablePaddingX>
       {/* If user has a type */}
@@ -168,8 +185,21 @@ const YourType = () => {
             <ColumnBox alignItems="center" gap={1}>
               <Typography fontWeight={"bold"}>Top Genre</Typography>
               <img
-                src="https://placehold.co/100x100"
+                src={
+                  user?.personality?.type == "Drama Queen"
+                    ? DramaImg
+                    : user?.personality?.type == "Action Monkey"
+                    ? ActionImg
+                    : user?.personality?.type == "Comic Sans"
+                    ? ComedyImg
+                    : user?.personality?.type == "Mystic Wizard"
+                    ? MysticWizard
+                    : user?.personality?.type == "Romantic Warrior"
+                    ? RomanticImg
+                    : QuestionImg
+                }
                 width={100}
+                alt="metric"
                 style={{
                   borderRadius: 24,
                 }}
@@ -180,18 +210,39 @@ const YourType = () => {
                 YOUR LEAST <br /> FAVORITE GENRE
               </Typography>
               <img
-                src="https://placehold.co/100x100"
+                src={
+                  leastFavoriteGenre == 0
+                    ? RomanticImg
+                    : leastFavoriteGenre == 1
+                    ? DramaImg
+                    : leastFavoriteGenre == 2
+                    ? ComedyImg
+                    : leastFavoriteGenre == 3
+                    ? MysteryImg
+                    : leastFavoriteGenre == 4
+                    ? ActionImg
+                    : QuestionImg
+                }
                 width={100}
+                alt="metric"
                 style={{
                   borderRadius: 24,
                 }}
               />
             </ColumnBox>
             <ColumnBox alignItems="center" gap={1}>
-              <Typography fontWeight={"bold"}>Top Genre</Typography>
+              <Typography fontWeight={"bold"}>Favorite Metric</Typography>
               <img
-                src="https://placehold.co/100x100"
+                src={
+                  user?.personality?.favoriteMetric == "Emotional Impact"
+                    ? EmotionalImpactImg
+                    : user?.personality?.favoriteMetric ==
+                      "Visual and Technical Elements"
+                    ? VisualTechnicalElementsImg
+                    : FluidityImg
+                }
                 width={100}
+                alt="metric"
                 style={{
                   borderRadius: 24,
                 }}

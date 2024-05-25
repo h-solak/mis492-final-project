@@ -6,6 +6,7 @@ const getUserIdFromToken = require("../utils/getUserIdFromToken");
 const ahp = require("ahp-lite");
 const multiplyMatrices = require("../utils/multiplyMatrices");
 const segmentation = require("../utils/segmentation");
+const getFavoriteMetric = require("../utils/getFavoriteMetric");
 const linearAlgebra = require("linear-algebra")();
 const Matrix = linearAlgebra.Matrix;
 
@@ -132,6 +133,7 @@ router.post("/character-survey", checkJwt, async (req, res) => {
     const userPersonality = {
       type: segmentatedResult,
       resultMatrix: resultMatrix5x1,
+      favoriteMetric: getFavoriteMetric(evaluatedVfe3x3matrix),
     };
 
     user.personality = userPersonality;

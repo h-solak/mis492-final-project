@@ -76,6 +76,7 @@ const UserSchema = new mongoose.Schema(
       default: {
         character: "", //if not assigned, can't use match feature
         resultMatrix: [],
+        favoriteMetric: "Fluidity",
       },
     },
   },

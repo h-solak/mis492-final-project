@@ -33,7 +33,11 @@ const NowWatching = ({ homeData }) => {
           ?.map((userItem) => {
             const watchDate = userItem?.nowWatching?.watchDate || new Date();
             return (
-              <Box display={"flex"} alignItems={"center"}>
+              <Box
+                key={userItem?.username}
+                display={"flex"}
+                alignItems={"center"}
+              >
                 <Typography fontSize={14}>
                   {/* {format(watchDate, "dd/MM/yyyy") !==
                   format(new Date(), "dd/MM/yyyy")
