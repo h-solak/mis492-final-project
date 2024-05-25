@@ -20,14 +20,24 @@ const Notifications = () => {
     handleGetFriendRequests();
   }, [user]);
 
-  const handleGetFriendRequests = async () => {
+  const handleGetFriendRequests = async (optionalData) => {
     setPageLoading(true);
-    const arrayOfIds = user?.pendingFriendRequests
-      ?.filter((request) => request?.receiver == user?._id)
-      .map((request) => request?.sender);
+    let arrayOfIds;
+
+    if (optionalData) {
+      arrayOfIds = optionalData
+        ?.filter((request) => request?.receiver == user?._id)
+        .map((request) => request?.sender);
+    } else {
+      arrayOfIds = user?.pendingFriendRequests
+        ?.filter((request) => request?.receiver == user?._id)
+        .map((request) => request?.sender);
+    }
     if (arrayOfIds?.length > 0) {
       const users = await getUsers(arrayOfIds);
       setFriendRequests(users);
+    } else {
+      setFriendRequests([]);
     }
     setPageLoading(false);
   };
@@ -38,17 +48,19 @@ const Notifications = () => {
       sender: otherUserId,
       action: action,
     });
-    if (data?.pendingFriendRequests && data?.friends) {
+    if (data?.success) {
+      console.log("tf", data);
       setUser((oldUser) => ({
         ...oldUser,
-        pendingFriendRequests: data?.pendingFriendRequests,
-        friends: data?.friends,
+        pendingFriendRequests: data?.pendingFriendRequests || [],
+        friends: data?.friends || [],
       }));
+      handleGetFriendRequests(data?.pendingFriendRequests);
     }
   };
 
   return (
-    <Layout>
+    <Layout pageLoading={pageLoading}>
       <Breadcrumbs
         links={[
           {

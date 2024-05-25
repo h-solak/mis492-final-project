@@ -182,9 +182,11 @@ router.put("/request", checkJwt, async (req, res) => {
 
     const newFriends = userIsSender ? sender.friends : receiver.friends;
 
-    return res
-      .status(200)
-      .json({ pendingFriendRequests: newPendingRequests, friends: newFriends });
+    return res.status(200).json({
+      success: true,
+      pendingFriendRequests: newPendingRequests,
+      friends: newFriends,
+    });
   } catch (err) {
     return res.status(500).json(err);
   }
