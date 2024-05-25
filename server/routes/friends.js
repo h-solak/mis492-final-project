@@ -19,7 +19,6 @@ router.get("/:userId", checkJwt, async (req, res) => {
     // Wait for all promises to resolve
     const friends = await Promise.all(friendPromises);
 
-    console.log(friends);
     return res.status(200).json({ friends: friends });
   } catch (err) {
     return res.status(500).json(err);
@@ -94,18 +93,6 @@ router.post("/request", checkJwt, async (req, res) => {
         I will remove the request instead, a bad solution but at least a solution
       */
 
-      console.log(
-        "bu 1",
-        sender.pendingFriendRequests.find(
-          (item) => item.receiver == receiverId || item.sender == receiverId
-        )
-      );
-      console.log(
-        "bu 2",
-        receiver.pendingFriendRequests.find(
-          (item) => item.receiver == senderId || item.sender == senderId
-        )
-      );
       sender.pendingFriendRequests = sender?.pendingFriendRequests?.filter(
         (userItem) =>
           !(userItem?.sender == receiverId || userItem?.receiver == receiverId)
@@ -210,12 +197,9 @@ router.delete("/request", checkJwt, async (req, res) => {
     const senderId = req.body.sender;
     const receiverId = req.body.receiver;
 
-    console.log(req.body);
     const userIsSender = userId == senderId;
     const sender = await User.findById(senderId);
     const receiver = await User.findById(receiverId);
-
-    console.log(senderId, receiverId);
 
     //Handle delete the request from both users
     const newReceiverRequests = receiver.pendingFriendRequests.filter(

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../Layout/Layout";
 import useUser from "../../Contexts/User/useUser";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 /* icons */
 import RomanticWarriorIcon from "../../assets/icons/characters/romanticwarrior.svg";
 import DramaQueenIcon from "../../assets/icons/characters/dramaqueen.svg";
@@ -27,15 +27,18 @@ import QuestionImg from "../../assets/images/yourtypepage/question.png";
 import RomanticImg from "../../assets/images/yourtypepage/romantic.png";
 import VisualTechnicalElementsImg from "../../assets/images/yourtypepage/visualtechnicalelements.png";
 
+import Banner from "../../assets/images/banner.jpeg";
+
 import { discoverMovies } from "../../Services/Tmdb";
 import MovieItem from "../../Components/Movie/MovieItem";
 import ColumnBox from "../../Components/ColumnBox";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import CenteredBox from "../../Components/CenteredBox";
 import PopcornLoader from "../../assets/animations/popcorn.json";
 import Lottie from "lottie-react";
 
 const YourType = () => {
+  const navigate = useNavigate();
   const { user } = useUser();
   const [movieRecommendations, setMovieRecommendations] = useState();
   let [searchParams, setSearchParams] = useSearchParams();
@@ -82,7 +85,6 @@ const YourType = () => {
         )
       ),
     ];
-    console.log(userMatrix);
     const movies = await discoverMovies({
       withGenreIds: withGenreIds,
       withoutGenreIds: withoutGenreIds,
@@ -181,7 +183,12 @@ const YourType = () => {
           pr={4}
           mt={4}
         >
-          <Box display={"flex"} alignItems={"center"} gap={4}>
+          <Box
+            className="fade-in-ltr"
+            display={"flex"}
+            alignItems={"center"}
+            gap={4}
+          >
             <ColumnBox alignItems="center" gap={1}>
               <Typography fontWeight={"bold"}>Top Genre</Typography>
               <img
@@ -250,6 +257,7 @@ const YourType = () => {
             </ColumnBox>
           </Box>
           <img
+            className="fade-in-rtl"
             src={
               user?.personality?.type == "Romantic Warrior"
                 ? RomanticWarrior
@@ -284,6 +292,56 @@ const YourType = () => {
             </Grid>
           </Grid>
         )}
+
+        <Grid
+          item
+          xs={12}
+          my={8}
+          sx={{
+            background: `url(${Banner})`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+          }}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"end"}
+          gap={2}
+          px={12}
+          height={240}
+        >
+          <ColumnBox>
+            <Typography
+              fontSize={24}
+              fontWeight={"bold"}
+              color={"#fff"}
+              textAlign={"center"}
+            >
+              Hey {user?.personality?.type}!
+            </Typography>
+            <Typography
+              color={"#fff"}
+              fontWeight={"light"}
+              textAlign={"center"}
+            >
+              Find compatible friends and start a conversation.
+            </Typography>
+            <Button
+              variant="contained"
+              onClick={() => navigate("/match")}
+              sx={{
+                borderRadius: 99,
+                py: 1,
+                px: 2,
+                mt: 1,
+                fontSize: 18,
+                alignSelf: "center",
+              }}
+            >
+              MATCH
+            </Button>
+          </ColumnBox>
+        </Grid>
       </Grid>
     </Layout>
   );

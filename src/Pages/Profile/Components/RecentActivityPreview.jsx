@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 const RecentActivityPreview = ({ rate }) => {
   const { profileUser } = useContext(ProfileUserContext);
 
-  console.log(profileUser?.rates);
   return (
     <Grid container>
       <Grid item xs={12}>

@@ -25,7 +25,6 @@ router.get("/", checkJwt, async (req, res) => {
       })
     );
 
-    console.log(friendsData);
     return res.status(200).json({ home: friendsData });
   } catch (err) {
     console.log(err);

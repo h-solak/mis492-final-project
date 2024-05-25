@@ -29,7 +29,6 @@ const UserLists = ({ rate }) => {
     (rate) => rate?.review?.length > 0
   );
 
-  console.log(profileUser?.rates);
   return (
     <Grid container>
       <Grid item xs={12} mt={8}>

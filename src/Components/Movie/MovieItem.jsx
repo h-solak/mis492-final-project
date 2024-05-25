@@ -100,6 +100,7 @@ const Bottombar = ({ height, movie }) => {
       bottom={0}
       zIndex={999}
       sx={{
+        overflow: "hidden",
         backgroundColor: "#F9F7F7",
       }}
       height={height}

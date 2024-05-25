@@ -47,7 +47,6 @@ const Movie = () => {
 
   const handleGetMovieReviews = async () => {
     const reviews = await getMovieReviews(movieId);
-    console.log(reviews);
     setUserReviews(reviews);
   };
 

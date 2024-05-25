@@ -131,7 +131,11 @@ router.get("/:movieId/reviews", checkJwt, async (req, res) => {
       );
     }
 
-    return res.status(200).json({ reviews: reviews });
+    const reviewsSortedByDate = reviews.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
+    return res.status(200).json({ reviews: reviewsSortedByDate });
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);

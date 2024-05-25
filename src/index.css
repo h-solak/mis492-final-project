@@ -187,6 +187,38 @@ a {
   }
 }
 
+/*Fade In RTL LTR*/
+
+@keyframes fadeInRightToLeft {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in-rtl {
+  animation: fadeInRightToLeft 1s ease-in-out;
+}
+
+@keyframes fadeInLeftToRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in-ltr {
+  animation: fadeInLeftToRight 1s ease-in-out;
+}
+
 /* SWIPER CUSTOMIZATIONS */
 .swiper-button-next,
 .swiper-button-prev {

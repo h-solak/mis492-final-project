@@ -15,6 +15,7 @@ import ColumnBox from "../../../Components/ColumnBox";
 import useUser from "../../../Contexts/User/useUser";
 import { likeReview, replyReview } from "../../../Services/Movie";
 import { Rating } from "react-simple-star-rating";
+import { formatDistance } from "date-fns";
 
 const ReviewItem = ({ review, handleGetMovieReviews }) => {
   const [isReplyInputOpen, setIsReplyInputOpen] = useState(false);
@@ -61,6 +62,9 @@ const ReviewItem = ({ review, handleGetMovieReviews }) => {
               fillColor="#000"
               style={{ marginLeft: "8px" }}
             />
+            <Typography color={"secondary"} fontSize={12} ml={1}>
+              {formatDistance(review?.createdAt, new Date())} ago
+            </Typography>
           </Box>
           <Typography
             sx={{

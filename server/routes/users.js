@@ -4,7 +4,6 @@ const checkJwt = require("../utils/authenticate");
 
 //get user(s) display data using array of user ids
 router.get("/", checkJwt, async (req, res) => {
-  console.log("first");
   try {
     const arrayOfIds = req.query.user_ids.split(",");
     const userList = await Promise.all(
@@ -19,8 +18,6 @@ router.get("/", checkJwt, async (req, res) => {
         return otherUserData;
       })
     );
-
-    console.log(userList);
 
     return res.status(200).json({ users: userList || [] });
   } catch (err) {

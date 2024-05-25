@@ -14,7 +14,6 @@ const Matrix = linearAlgebra.Matrix;
 router.get("/", checkJwt, async (req, res) => {
   try {
     const id = getUserIdFromToken(req.headers.authorization);
-    console.log(id);
     const crrUser = await User.findById(id);
 
     //if user hasn't taken the quiz yet
@@ -58,7 +57,6 @@ router.get("/", checkJwt, async (req, res) => {
     });
     await matchingUser.save();
 
-    console.log(matchingUser);
     const { password, ...matchingUserData } = matchingUser?._doc;
 
     return res.status(200).json({ user: matchingUserData });
@@ -74,7 +72,7 @@ router.post("/character-survey", checkJwt, async (req, res) => {
     const id = getUserIdFromToken(req.headers.authorization);
     const matrices = req.body.matrices;
 
-    console.log("FRONTTAN GELEN MATRİSLER", matrices);
+    // console.log("FRONTTAN GELEN MATRİSLER", matrices);
 
     const evaluatedVfe3x3matrix = new Matrix([
       calculateAhp(matrices.vfe3x3matrix, 3).ev,
@@ -89,9 +87,9 @@ router.post("/character-survey", checkJwt, async (req, res) => {
       calculateAhp(matrices.emotional5x5matrix, 5).ev,
     ]);
 
-    console.log("111111", evaluatedVisual5x5Matrix.data);
-    console.log("222222", evaluatedFluidity5x5Matrix.data);
-    console.log("333333", evaluatedEmotional5x5Matrix.data);
+    // console.log("111111", evaluatedVisual5x5Matrix.data);
+    // console.log("222222", evaluatedFluidity5x5Matrix.data);
+    // console.log("333333", evaluatedEmotional5x5Matrix.data);
 
     // Ensure matrices are correctly formatted for multiplication
     const firstMatrix = new Matrix([
@@ -100,13 +98,13 @@ router.post("/character-survey", checkJwt, async (req, res) => {
       calculateAhp(matrices.emotional5x5matrix, 5).ev,
     ]);
 
-    console.log("First Matrix before transpose", firstMatrix.data);
+    // console.log("First Matrix before transpose", firstMatrix.data);
 
     const transposedFirstMatrix = firstMatrix.trans();
     const transposedSecondMatrix = evaluatedVfe3x3matrix.trans();
 
-    console.log("Transposed First Matrix", transposedFirstMatrix.data);
-    console.log("Transposed Second Matrix", transposedSecondMatrix.data);
+    // console.log("Transposed First Matrix", transposedFirstMatrix.data);
+    // console.log("Transposed Second Matrix", transposedSecondMatrix.data);
 
     // Ensure transposed matrices are properly formatted for multiplication
     const formattedTransposedFirstMatrix = new Matrix(
@@ -119,15 +117,15 @@ router.post("/character-survey", checkJwt, async (req, res) => {
     const beforeResult1 = formattedTransposedFirstMatrix.data;
     const beforeResult2 = formattedTransposedSecondMatrix.data;
 
-    console.log("beforeResult1", formattedTransposedFirstMatrix.data);
-    console.log("beforeResult2", formattedTransposedSecondMatrix.data);
+    // console.log("beforeResult1", formattedTransposedFirstMatrix.data);
+    // console.log("beforeResult2", formattedTransposedSecondMatrix.data);
 
     const resultMatrix5x1 = multiplyMatrices(beforeResult1, beforeResult2);
-    console.log("FINAL", resultMatrix5x1);
+    // console.log("FINAL", resultMatrix5x1);
 
     const segmentatedResult = segmentation(resultMatrix5x1);
 
-    console.log("FINAL SEGMENTASYON", segmentatedResult);
+    // console.log("FINAL SEGMENTASYON", segmentatedResult);
 
     const user = await User.findById(id);
     const userPersonality = {
@@ -193,21 +191,7 @@ router.post("/check-consistency", checkJwt, async (req, res) => {
       ]);
     }
 
-    console.log(
-      dimension == 3 ? subCriteriaMatrixFormed3x3 : subCriteriaMatrixFormed5x5
-    );
-    const ahpResult = ahp.getWeights(
-      dimension == 3 ? subCriteriaMatrixFormed3x3 : subCriteriaMatrixFormed5x5
-    );
-    console.log(ahpResult);
-
     /*
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    at this point you should JUST CREATE THE ATTRIBUTE
-    userQuizResult: {
-      values: ...,
-      type: "drama queen"
-    }
     
     *MATCH ŞARTLARI: 
     -Friends olmayacak

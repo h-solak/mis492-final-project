@@ -51,7 +51,6 @@ const CurrentChat = ({ chatLoading }) => {
       crrChat?.participants?.find((participant) => participant.id == user?._id)
         ?.read
     );
-    console.log(latestMessage);
   };
 
   return chatLoading ? (

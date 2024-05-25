@@ -36,9 +36,7 @@ const Chat = () => {
     /* Get chats on page load */
     handleGetChats();
 
-    console.log(searchParams.get("chatId"));
     if (searchParams.get("chatId")) {
-      console.log("yep");
       handleGetChat(searchParams.get("chatId"));
     }
 

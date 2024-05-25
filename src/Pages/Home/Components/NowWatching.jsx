@@ -45,9 +45,11 @@ const NowWatching = ({ homeData }) => {
                     : format(watchDate, "HH:mm")}{" "} */}
                   {format(watchDate, "MMMM d - HH:mm")}
                 </Typography>
-                <Typography ml={2} fontSize={14}>
-                  {userItem?.username}:
-                </Typography>
+                <Link to={`/profile/${userItem?.username}`}>
+                  <Typography ml={2} fontSize={14}>
+                    {userItem?.username}:
+                  </Typography>
+                </Link>
                 <Link to={`/movies/${userItem?.nowWatching?.id}`}>
                   <Typography
                     color={"primary.main"}

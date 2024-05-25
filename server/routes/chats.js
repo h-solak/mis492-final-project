@@ -125,8 +125,6 @@ router.get("/user/:user2Id", checkJwt, async (req, res) => {
       "participants.id": { $all: [id, user2Id] },
     });
 
-    console.log(chat);
-
     if (chat?._id) {
       return res.status(200).json({ chatId: chat?._id });
     } else {

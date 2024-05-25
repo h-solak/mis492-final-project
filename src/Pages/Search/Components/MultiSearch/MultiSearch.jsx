@@ -50,7 +50,6 @@ const MultiSearch = ({ searchParams, setSearchParams, setSearchMode }) => {
     setResponse((prevData) => ({ ...prevData, isLoading: true }));
     const newData = await searchMulti(watch("searchQuery")?.trim(), 1);
     setResponse({ data: newData, isLoading: false });
-    console.log(newData?.results?.map((item) => item?.media_type));
     setSearchParams((prevParams) => ({
       ...prevParams,
       multiSearch: watch("searchQuery")?.trim(),

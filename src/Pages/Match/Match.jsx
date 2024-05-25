@@ -44,9 +44,6 @@ const Match = () => {
   useEffect(() => {
     handleUserHasActiveMatch();
   }, []);
-  useEffect(() => {
-    console.log(currentMatch);
-  }, [currentMatch]);
 
   const handleAgeSliderChange = (event, newValue, activeThumb) => {
     const minDistance = 1;
@@ -66,8 +63,6 @@ const Match = () => {
       ]);
     }
   };
-
-  console.log("crr", currentMatch);
 
   const handleUserHasActiveMatch = async () => {
     setPageLoading(true);
