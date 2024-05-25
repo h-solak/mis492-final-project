@@ -13,13 +13,13 @@ import Avatar from "../../../Components/Avatar";
 import ReplyItem from "./ReplyItem";
 import ColumnBox from "../../../Components/ColumnBox";
 import useUser from "../../../Contexts/User/useUser";
-import { replyReview } from "../../../Services/Movie";
+import { likeReview, replyReview } from "../../../Services/Movie";
 import { Rating } from "react-simple-star-rating";
 
 const ReviewItem = ({ review, handleGetMovieReviews }) => {
   const [isReplyInputOpen, setIsReplyInputOpen] = useState(false);
   const [replyInput, setReplyInput] = useState("");
-  const { user } = useUser();
+  const { user, setUser } = useUser();
 
   const handleReplyReview = async () => {
     if (replyInput?.length > 0) {
@@ -32,6 +32,14 @@ const ReviewItem = ({ review, handleGetMovieReviews }) => {
       await handleGetMovieReviews();
     }
   };
+
+  const handleLike = async () => {
+    const res = await likeReview({
+      reviewId: review?._id,
+    });
+    await handleGetMovieReviews();
+  };
+
   return (
     <Grid item xs={12}>
       <Box display={"flex"} alignItems={"start"} gap={1}>
@@ -65,13 +73,20 @@ const ReviewItem = ({ review, handleGetMovieReviews }) => {
           <Box display={"flex"} alignItems={"center"} gap={0}>
             <Button
               color="dark"
-              startIcon={!"isLiked" ? <ThumbUp /> : <ThumbUpOutlined />}
+              onClick={handleLike}
+              startIcon={
+                review?.likes?.includes(user?._id) ? (
+                  <ThumbUp />
+                ) : (
+                  <ThumbUpOutlined />
+                )
+              }
               sx={{
                 textTransform: "capitalize",
                 alignSelf: "start",
               }}
             >
-              Like
+              {!!review?.likes?.length ? review?.likes?.length : "Like"}
             </Button>
             <Button
               color="dark"

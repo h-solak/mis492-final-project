@@ -161,7 +161,28 @@ router.post("/review/reply/:reviewId", checkJwt, async (req, res) => {
   }
 });
 
-//like a review, or a reply of a review
-router.post("/review/like/:reviewId", checkJwt, async (req, res) => {});
+//like/unlike a review
+router.post("/review/like/:reviewId", checkJwt, async (req, res) => {
+  try {
+    const id = getUserIdFromToken(req.headers.authorization);
+    const reviewId = req.params.reviewId;
+    const review = await Rate.findById(reviewId);
+
+    let newReview;
+    if (review?.likes?.includes(id)) {
+      newReview = review?.likes?.filter((userItem) => userItem != id);
+    } else {
+      newReview = [...review?.likes, id];
+    }
+
+    review.likes = newReview;
+    await review.save();
+
+    return res.status(200).json({ review: review });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
 
 module.exports = router;

@@ -2,7 +2,7 @@ import { Box, Grid, IconButton, Tooltip, Typography } from "@mui/material";
 import React from "react";
 import ColumnBox from "../ColumnBox";
 import StarIcon from "@mui/icons-material/Star";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Bookmark, Favorite, LiveTv, Reviews } from "@mui/icons-material";
 import NowWatchingSvg from "../../assets/icons/movieItem/nowWatching.svg";
@@ -22,6 +22,7 @@ import { addToFavorites, removeFromFavorites } from "../../Services/Favorites";
 import { removeNowWatching, setNowWatching } from "../../Services/NowWatching";
 
 const Bottombar = ({ height, movie }) => {
+  const navigate = useNavigate();
   const movieId = movie?.id;
   const { user, setUser } = useUser();
 
@@ -127,9 +128,11 @@ const Bottombar = ({ height, movie }) => {
         </IconButton>
       </Tooltip>
       <Tooltip title="Write a review">
-        <IconButton className="fade-in">
-          <img src={ReviewSvg} width={21} alt="Review" />
-        </IconButton>
+        <Link to={`/movies/${movie?.id}`}>
+          <IconButton className="fade-in">
+            <img src={ReviewSvg} width={21} alt="Review" />
+          </IconButton>
+        </Link>
       </Tooltip>
       <Tooltip title="Now watching" onClick={handleNowWatching}>
         <IconButton className="fade-in">

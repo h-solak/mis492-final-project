@@ -62,4 +62,20 @@ const replyReview = async ({ reviewId, content }) => {
   }
 };
 
-export { rateMovie, getUserMovieRates, getMovieReviews, replyReview };
+//like or unlike review
+const likeReview = async ({ reviewId }) => {
+  try {
+    const res = await misBaseAxios.post(`/movie/review/like/${reviewId}`);
+    return res?.data?.reviews;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  rateMovie,
+  getUserMovieRates,
+  getMovieReviews,
+  replyReview,
+  likeReview,
+};
