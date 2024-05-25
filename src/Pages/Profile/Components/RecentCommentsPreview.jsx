@@ -21,10 +21,8 @@ const RecentCommentsPreview = ({ rate }) => {
     return undefined;
   };
 
-  const crrMovie = findLatestReview(
-    profileUser?.rates,
-    (rate) => rate?.review?.length > 0
-  );
+  const crrMovie =
+    profileUser?.rates?.filter((item) => item?.review?.length > 0)?.[0] || null;
 
   return (
     <Grid container>

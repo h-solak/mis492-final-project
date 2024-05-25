@@ -41,7 +41,7 @@ const RecentActivityPreview = ({ rate }) => {
         }}
       >
         {profileUser?.rates?.length > 0 ? (
-          profileUser?.rates?.slice(-10)?.map((rate) => {
+          profileUser?.rates?.reverse()?.map((rate) => {
             const movie = {
               id: rate?.movie,
               title: rate?.movieTitle,

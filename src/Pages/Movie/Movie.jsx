@@ -77,6 +77,7 @@ const Movie = () => {
           userHasVotedBefore: userHasVotedBefore,
         });
         await handleGetUserMovieRates();
+        await handleGetMovieReviews();
         setRateModal(false);
         toast.success("Your review is saved.");
       } catch (err) {
