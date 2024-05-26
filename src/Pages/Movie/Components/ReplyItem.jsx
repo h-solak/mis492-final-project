@@ -16,7 +16,7 @@ const ReplyItem = ({ reply }) => {
             <Link to={`/profile/${reply.username}`}>
               <Typography fontWeight={"bold"}>{reply?.username}</Typography>
             </Link>
-            <Typography fontSize={"secondary"} fontSize={12}>
+            <Typography color={"secondary"} fontSize={12}>
               {formatDistance(reply?.createdAt, new Date())} ago
             </Typography>
           </Box>

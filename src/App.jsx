@@ -25,6 +25,7 @@ import Characters from "./Pages/Characters/Characters";
 import YourType from "./Pages/YourType/YourType";
 import Favorites from "./Pages/Profile/Favorites/Favorites";
 import RecentActivity from "./Pages/Profile/RecentActivity/RecentActivity";
+import Settings from "./Pages/Settings/Settings";
 
 function App() {
   return (
@@ -113,6 +114,11 @@ function App() {
                 key="Your Type"
                 path="/your-type"
                 element={<AuthGuard component={<YourType />} />}
+              />
+              <Route
+                key="Settings"
+                path="/settings"
+                element={<AuthGuard component={<Settings />} />}
               />
               <Route key="NotFound" path="*" element={<NotFound />} />
             </Routes>

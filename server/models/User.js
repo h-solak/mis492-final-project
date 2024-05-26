@@ -49,6 +49,7 @@ const UserSchema = new mongoose.Schema(
     city: {
       type: String,
       max: 50,
+      default: "İstanbul",
     },
     defaultWatchlist: {
       //array of movie ids
@@ -61,10 +62,10 @@ const UserSchema = new mongoose.Schema(
       default: [],
     },
     nowWatching: {},
-    age: {
-      type: Number,
+    birthday: {
+      type: Date,
       required: true,
-      default: 24,
+      default: new Date("01/01/2006"),
     },
     gender: {
       type: String,

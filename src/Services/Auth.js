@@ -31,7 +31,14 @@ const registerUser = async ({ username, password }) => {
     return res?.data?.data;
   } catch (error) {
     console.error(error);
-    toast.error("Something went wrong!");
+    if (error?.response?.data?.keyValue?.username?.length > 0) {
+      toast.error(
+        "This username is already in use: " +
+          error?.response?.data?.keyValue?.username
+      );
+    } else {
+      toast.error("Something went wrong!");
+    }
   }
 };
 

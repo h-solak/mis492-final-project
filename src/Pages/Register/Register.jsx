@@ -124,7 +124,9 @@ const Register = () => {
               minLength: 3,
               maxLength: 20,
             })}
+            inputProps={{ maxLength: 20 }}
           />
+
           <TextfieldError title={"Username"} errors={errors.username} />
         </ColumnBox>
 
@@ -138,6 +140,7 @@ const Register = () => {
               minLength: 6,
               maxLength: 20,
             })}
+            inputProps={{ maxLength: 20 }}
           />
           <TextfieldError title={"Password"} errors={errors.password} />
         </ColumnBox>

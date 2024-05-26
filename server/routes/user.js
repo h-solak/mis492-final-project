@@ -3,6 +3,7 @@ const Rate = require("../models/Rate");
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const checkJwt = require("../utils/authenticate");
+const getUserIdFromToken = require("../utils/getUserIdFromToken");
 
 //GET A USER PROFILE
 router.get("/:username", checkJwt, async (req, res) => {
@@ -50,28 +51,42 @@ router.get("/withId/:userId", checkJwt, async (req, res) => {
   }
 });
 
-//UPDATE USER
-router.put("/:id", checkJwt, async (req, res) => {
-  if (req.body.userId === req.params.id || req.body.isAdmin) {
-    if (req.body.password) {
-      try {
-        const salt = await bcrypt.genSalt(10);
-        req.body.password = await bcrypt.hash(req.body.password, salt);
-      } catch (err) {
-        return res.status(500).json(err);
+//UPDATE USER - settings
+router.put("/", checkJwt, async (req, res) => {
+  try {
+    const id = getUserIdFromToken(req.headers.authorization);
+    const user = await User.findById(id);
+
+    const birthday = req.body.birthday || user?.birthday;
+
+    function isUserOver18(date) {
+      const birthDate = new Date(date);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDifference = today.getMonth() - birthDate.getMonth();
+      if (
+        monthDifference < 0 ||
+        (monthDifference === 0 && today.getDate() < birthDate.getDate())
+      ) {
+        age--;
       }
+      return age >= 18;
     }
 
-    try {
-      const user = await User.findByIdAndUpdate(req.params.id, {
-        $set: req.body,
-      });
-      return res.status(200).json("Account is successfully updated!");
-    } catch (err) {
-      return res.status(500).json(err);
-    }
-  } else {
-    return res.status(403).json("You can update only your own account!");
+    user.username = req.body.username;
+    user.gender = req.body.gender;
+    user.city = req.body.city;
+    user.birthday = isUserOver18(birthday) ? birthday : user?.birthday;
+    user.desc = req.body.about;
+
+    await user.save();
+
+    return res
+      .status(200)
+      .json({ user: user, isAgeOver18: isUserOver18(birthday) });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -173,18 +188,18 @@ router.put("/unfollow/:id", checkJwt, async (req, res) => {
   }
 });
 
-//CHANGE AVATAR OF THE USER
-router.put("/avatar/:userId", checkJwt, async (req, res) => {
-  try {
-    const user = await User.findById(req.params.userId); //user that will be unfollowed
-    await user.updateOne({ $set: { crrAvatar: req.body.avatarId } });
-    return res.status(200).json({
-      desc: "User avatar has been changed.",
-    });
-  } catch (err) {
-    return res.status(500).json(err);
-  }
-});
+// //CHANGE AVATAR OF THE USER
+// router.put("/avatar/:userId", checkJwt, async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.userId); //user that will be unfollowed
+//     await user.updateOne({ $set: { crrAvatar: req.body.avatarId } });
+//     return res.status(200).json({
+//       desc: "User avatar has been changed.",
+//     });
+//   } catch (err) {
+//     return res.status(500).json(err);
+//   }
+// });
 
 // //USER SUGGESTIONS (5 suggestions on timeline)
 // router.get("/timeline/suggestions/:userId", checkJwt, async (req, res) => {
