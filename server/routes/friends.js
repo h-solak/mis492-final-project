@@ -35,7 +35,7 @@ router.delete("/", checkJwt, async (req, res) => {
 
     user.friends = user.friends.filter((friend) => friend.id != user2id);
     user.save();
-    user2.friends = user.friends.filter((friend) => friend.id != id);
+    user2.friends = user2.friends.filter((friend) => friend.id != id);
     user2.save();
 
     return res.status(200).json({ friends: user.friends });
