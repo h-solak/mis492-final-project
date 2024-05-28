@@ -191,6 +191,10 @@ router.post("/check-consistency", checkJwt, async (req, res) => {
       ]);
     }
 
+    const ahpResult = ahp.getWeights(
+      dimension == 3 ? subCriteriaMatrixFormed3x3 : subCriteriaMatrixFormed5x5
+    );
+
     /*
     
     *MATCH ŞARTLARI: 
