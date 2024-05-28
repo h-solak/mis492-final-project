@@ -185,7 +185,9 @@ const UserSidebar = () => {
       )}
 
       {/* Friends List */}
-      <Friends userProfile={profileUser} />
+      {!isOwnProfile && !profileUser?.privacy?.friendsListVisible ? null : (
+        <Friends userProfile={profileUser} />
+      )}
     </Grid>
   );
 };

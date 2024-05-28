@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../Layout/Layout";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import {
   Box,
   Button,
+  FormControlLabel,
   Grid,
   MenuItem,
   Select,
+  Switch,
   TextField,
   Typography,
 } from "@mui/material";
@@ -21,11 +23,16 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import cities from "../../constants/cities";
-import { updateUser } from "../../Services/User";
+import { changePrivacySettings, updateUser } from "../../Services/User";
 import toast from "react-hot-toast";
 
 const Settings = () => {
   const { user, setUser } = useUser();
+  const [privacySettings, setPrivacySettings] = useState({
+    profileVisible: user?.privacy?.profileVisible,
+    friendsListVisible: user?.privacy?.friendsListVisible,
+    matchedFriendsVisible: user?.privacy?.matchedFriendsVisible,
+  });
 
   const {
     register,
@@ -53,8 +60,34 @@ const Settings = () => {
   };
 
   useEffect(() => {
-    console.log(watch("birthday"));
-  }, [watch("birthday")]);
+    console.log(privacySettings);
+  }, [privacySettings]);
+
+  const handlePrivacyChange = async (event, action) => {
+    let newSettings;
+    if (action == "profileVisible") {
+      newSettings = {
+        ...privacySettings,
+        profileVisible: event.target.checked,
+      };
+    } else if (action == "friendsListVisible") {
+      newSettings = {
+        ...privacySettings,
+        friendsListVisible: event.target.checked,
+      };
+    } else {
+      newSettings = {
+        ...privacySettings,
+        matchedFriendsVisible: event.target.checked,
+      };
+    }
+
+    console.log("result", newSettings);
+    const crrUser = await changePrivacySettings(newSettings);
+    setPrivacySettings(newSettings);
+
+    setUser(crrUser);
+  };
 
   return (
     <Layout>
@@ -78,7 +111,7 @@ const Settings = () => {
           </ColumnBox>
         </Grid>
 
-        {/* Form */}
+        {/* Details Form */}
         <Grid
           item
           xs={12}
@@ -225,18 +258,18 @@ const Settings = () => {
                 <TextField
                   defaultValue={user?.desc}
                   multiline
-                  maxRows={2}
+                  rows={3}
                   size="small"
                   {...register("about", {
                     required: true,
-                    maxLength: 41,
+                    maxLength: 75,
                   })}
                   maxLength={10}
                   sx={{
                     fontSize: 12,
                     flex: 1,
                   }}
-                  inputProps={{ maxLength: 40 }}
+                  inputProps={{ maxLength: 75 }}
                 />
               </Box>
 
@@ -255,6 +288,51 @@ const Settings = () => {
                 Save
               </Button>
             </ColumnBox>
+          </Box>
+        </Grid>
+
+        <Grid item xs={12} mt={8}>
+          <Typography fontWeight={700} fontSize={18}>
+            Privacy
+          </Typography>
+          <Box display={"flex"} alignItems={"center"} mt={2}>
+            <Box width={175} />
+            <Typography fontSize={14} fontWeight={600}>
+              Show on Profile
+            </Typography>
+          </Box>
+          <Box display={"flex"} alignItems={"center"} mt={2}>
+            <Typography width={200}>Profile</Typography>
+            <FormControlLabel
+              checked={privacySettings.profileVisible}
+              defaultChecked={user?.privacy?.profileVisible}
+              onChange={async (event) =>
+                handlePrivacyChange(event, "profileVisible")
+              }
+              control={<Switch color="success" />}
+            />
+          </Box>
+          <Box display={"flex"} alignItems={"center"}>
+            <Typography width={200}>Friends List</Typography>
+            <FormControlLabel
+              checked={privacySettings.friendsListVisible}
+              defaultChecked={user?.privacy?.friendsListVisible}
+              onChange={async (event) =>
+                handlePrivacyChange(event, "friendsListVisible")
+              }
+              control={<Switch color="success" />}
+            />
+          </Box>
+          <Box display={"flex"} alignItems={"center"}>
+            <Typography width={200}>Matched Profiles</Typography>
+            <FormControlLabel
+              checked={privacySettings.matchedFriendsVisible}
+              defaultChecked={user?.privacy?.matchedFriendsVisible}
+              onChange={async (event) =>
+                handlePrivacyChange(event, "matchedFriendsVisible")
+              }
+              control={<Switch color="success" />}
+            />
           </Box>
         </Grid>
       </Grid>

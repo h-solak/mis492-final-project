@@ -50,10 +50,37 @@ const Friends = ({ userProfile }) => {
         </Grid>
         {friends?.slice(0, 8).map((friend) => {
           const { _id, username } = friend;
+          const isMatched =
+            userProfile?.friends?.find((userItem) => userItem?.id == _id)
+              ?.type == "match";
+          if (
+            !(user?._id == userProfile?._id) &&
+            !userProfile?.privacy?.matchedFriendsVisible &&
+            isMatched
+          ) {
+            return null;
+          } else if (
+            !(user?._id == userProfile?._id) &&
+            isMatched &&
+            !userProfile?.privacy?.profileVisible
+          ) {
+            //WHEN profile is private, HIDE matched friends but show default friends
+            return null;
+          }
+
           return (
             <Grid item key={_id}>
               <Link to={`/profile/${username}`}>
-                <Tooltip title={user?._id == _id ? "You" : username}>
+                <Tooltip
+                  title={
+                    user?._id == _id
+                      ? "You"
+                      : user?.friends?.find((userItem) => userItem?.id == _id)
+                          ?.type == "match"
+                      ? `${username} (Match)`
+                      : username
+                  }
+                >
                   {" "}
                   <Avatar
                     name={username}
@@ -64,6 +91,7 @@ const Friends = ({ userProfile }) => {
                           ? "rgba(0, 0, 0, 0.16) 0px 1px4px, rgba(255, 0, 0, 0.8) 0px 0px 0px 3px"
                           : 0,
                     }}
+                    isMatched={isMatched}
                   />{" "}
                 </Tooltip>
               </Link>
@@ -71,7 +99,14 @@ const Friends = ({ userProfile }) => {
           );
         })}
         <Modal isModalOpen={friendsModal} setIsModalOpen={setFriendsModal}>
-          <Grid container spacing={3}>
+          <Grid
+            container
+            spacing={3}
+            sx={{
+              overflowY: "scroll",
+              height: "50vh",
+            }}
+          >
             <Grid item xs={12}>
               <Typography>
                 Friends of{" "}
@@ -82,8 +117,29 @@ const Friends = ({ userProfile }) => {
             </Grid>
             {friends?.map((friend) => {
               const { _id, username } = friend;
+              const isMatched =
+                userProfile?.friends?.find((userItem) => userItem?.id == _id)
+                  ?.type == "match";
+
+              if (
+                !(user?._id == userProfile?._id) &&
+                !userProfile?.privacy?.matchedFriendsVisible &&
+                isMatched
+                //  && !userProfile?.privacy?.profileVisible
+              ) {
+                //if user chose not to display matched friends
+                return null;
+              } else if (
+                !(user?._id == userProfile?._id) &&
+                isMatched &&
+                !userProfile?.privacy?.profileVisible
+              ) {
+                //WHEN profile is private, HIDE matched friends but show default friends
+                return null;
+              }
+
               return (
-                <Grid item key={_id}>
+                <Grid item xs={12} key={_id}>
                   <Link to={`/profile/${username}`}>
                     <Box display={"flex"} alignItems={"center"} gap={1}>
                       <Avatar
@@ -95,6 +151,7 @@ const Friends = ({ userProfile }) => {
                               ? "rgba(0, 0, 0, 0.16) 0px 1px4px, rgba(255, 0, 0, 0.8) 0px 0px 0px 3px"
                               : 0,
                         }}
+                        isMatched={isMatched}
                       />{" "}
                       <Typography>{username}</Typography>
                     </Box>

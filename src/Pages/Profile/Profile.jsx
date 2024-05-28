@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import Layout from "../../Layout/Layout";
-import { Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { getProfileUser } from "../../Services/User";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
@@ -9,10 +9,15 @@ import UserSidebar from "./Components/UserSidebar";
 import ProfileNowWatching from "./Components/ProfileNowWatching";
 import RecentCommentsPreview from "./Components/RecentCommentsPreview";
 import UserLists from "./Components/UserLists";
+import useUser from "../../Contexts/User/useUser";
+import ColumnBox from "../../Components/ColumnBox";
+import LockedSvg from "../../assets/illustrations/locked.svg";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export const ProfileUserContext = createContext();
 
 const Profile = () => {
+  const { user } = useUser();
   const [pageLoading, setPageLoading] = useState(true);
   const [profileUser, setProfileUser] = useState({
     _id: "",
@@ -20,6 +25,11 @@ const Profile = () => {
     rates: [],
   });
   const { username } = useParams();
+  const isFriend = user?.friends?.find(
+    (friend) => friend.id == profileUser?._id
+  );
+
+  console.log(isFriend);
 
   useEffect(() => {
     //Call this function everytime username param changes, empty brackets cause problems when user jumps on another user's profile
@@ -56,10 +66,38 @@ const Profile = () => {
               <ProfileNowWatching />
             </Grid>
           )}
+
           <Grid item xs={12} md={9} marginBottom={4} px={4}>
-            <RecentActivityPreview />
-            <RecentCommentsPreview />
-            <UserLists />
+            {!(user?._id == profileUser?._id) &&
+            !user?.friends?.find((friend) => friend.id == profileUser?._id) &&
+            !profileUser?.privacy?.profileVisible ? (
+              <Box height={"100%"}>
+                <ColumnBox
+                  alignItems="center"
+                  justifyContent="center"
+                  height="100%"
+                >
+                  <LazyLoadImage
+                    src={LockedSvg}
+                    width={"100px"}
+                    height={"120px"}
+                  />
+                  <Typography textAlign={"center"} fontWeight={700}>
+                    This account is private
+                  </Typography>
+                  <Typography mt={2} color={"secondary"} textAlign={"center"}>
+                    Be friends to access their rates, reviews, <br />
+                    and all other activities!
+                  </Typography>
+                </ColumnBox>
+              </Box>
+            ) : (
+              <>
+                <RecentActivityPreview />
+                <RecentCommentsPreview />
+                <UserLists />
+              </>
+            )}
           </Grid>
 
           {/* Sidebar - User Info - md={3} */}

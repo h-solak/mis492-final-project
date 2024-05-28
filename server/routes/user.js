@@ -90,6 +90,29 @@ router.put("/", checkJwt, async (req, res) => {
   }
 });
 
+//User privacy settings
+router.put("/privacy", checkJwt, async (req, res) => {
+  try {
+    const id = getUserIdFromToken(req.headers.authorization);
+    const user = await User.findById(id);
+    const { profileVisible, friendsListVisible, matchedFriendsVisible } =
+      req.body;
+
+    console.log(req.body);
+
+    user.privacy.profileVisible = profileVisible ? true : false;
+    user.privacy.friendsListVisible = friendsListVisible ? true : false;
+    user.privacy.matchedFriendsVisible = matchedFriendsVisible ? true : false;
+
+    await user.save();
+
+    return res.status(200).json({ user: user });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
+
 //DELETE USER
 router.delete("/:id", checkJwt, async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {

@@ -24,6 +24,9 @@ const theme = createTheme({
       //accent color - call to action (cta)
       main: "#FFBC0B",
     },
+    success: {
+      main: "#58C67C",
+    },
     error: {
       main: "#950101",
     },

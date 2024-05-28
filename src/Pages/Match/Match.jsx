@@ -343,7 +343,11 @@ const Match = () => {
               position={"relative"}
             >
               <ColumnBox alignItems="center" gap={3}>
-                <Avatar name={currentMatch?.username} size={200} />
+                <Avatar
+                  name={currentMatch?.username}
+                  size={200}
+                  isMatched={true}
+                />
                 <ColumnBox alignItems="center" gap={0.5}>
                   <Link to={`/profile/${currentMatch?.username}`}>
                     <Typography fontWeight={"medium"}>

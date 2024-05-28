@@ -51,4 +51,27 @@ const updateUser = async ({ username, gender, city, birthday, about }) => {
   }
 };
 
-export { getProfileUser, getProfileUserUsingId, updateUser };
+const changePrivacySettings = async (newSettings) => {
+  try {
+    const res = await misBaseAxios.put(`/user/privacy`, {
+      profileVisible: !!newSettings?.profileVisible,
+      friendsListVisible: !!newSettings?.friendsListVisible,
+      matchedFriendsVisible: !!newSettings?.matchedFriendsVisible,
+    });
+    console.log("aga nası", {
+      profileVisible: !!newSettings?.profileVisible,
+      friendsListVisible: !!newSettings?.friendsListVisible,
+      matchedFriendsVisible: !!newSettings?.matchedFriendsVisible,
+    });
+    return res?.data?.user;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  getProfileUser,
+  getProfileUserUsingId,
+  updateUser,
+  changePrivacySettings,
+};

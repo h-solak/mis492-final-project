@@ -24,6 +24,8 @@ const UserItem = ({ userData }) => {
   const { user, setUser } = useUser();
   const { _id, username, crrAvatar, friends, desc } = userData;
   const isFriend = user?.friends?.find((friend) => friend.id == _id);
+  const isMatch =
+    user?.friends?.find((friend) => friend?.id == _id)?.type == "match";
   const pendingRequest = user?.pendingFriendRequests?.find(
     (request) => request.sender == _id || request.receiver == _id
   ); //undefined if there is no such a request
@@ -131,7 +133,7 @@ const UserItem = ({ userData }) => {
         )}
         <Link to={`/profile/${username}`}>
           <Box display={"flex"} alignItems={"center"} gap={1}>
-            <Avatar name={username} size={48} />
+            <Avatar name={username} size={48} isMatched={isMatch} />
             <ColumnBox>
               <Typography>@{username}</Typography>
               <Typography color={"secondary"} fontSize={14}>

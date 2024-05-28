@@ -80,6 +80,27 @@ const UserSchema = new mongoose.Schema(
         favoriteMetric: "Fluidity",
       },
     },
+    privacy: {
+      type: {
+        profileVisible: {
+          type: Boolean,
+          default: true,
+        },
+        friendsListVisible: {
+          type: Boolean,
+          default: true,
+        },
+        matchedFriendsVisible: {
+          type: Boolean,
+          default: true,
+        },
+      },
+      default: {
+        profileVisible: true,
+        friendsListVisible: true,
+        matchedFriendsVisible: true,
+      },
+    },
   },
   { timestamps: true }
 ); //whenever a new user is created, timestamps will be updated
