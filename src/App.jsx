@@ -26,6 +26,7 @@ import YourType from "./Pages/YourType/YourType";
 import Favorites from "./Pages/Profile/Favorites/Favorites";
 import RecentActivity from "./Pages/Profile/RecentActivity/RecentActivity";
 import Settings from "./Pages/Settings/Settings";
+import FriendsActivity from "./Pages/FriendsActivity/FriendsActivity";
 
 function App() {
   return (
@@ -114,6 +115,11 @@ function App() {
                 key="Your Type"
                 path="/your-type"
                 element={<AuthGuard component={<YourType />} />}
+              />
+              <Route
+                key="Friends Activity"
+                path="/friends-activity"
+                element={<AuthGuard component={<FriendsActivity />} />}
               />
               <Route
                 key="Settings"

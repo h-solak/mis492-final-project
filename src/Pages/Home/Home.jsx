@@ -31,15 +31,11 @@ const Home = () => {
         <Typography fontSize={18} fontWeight={"bolder"}>
           TODO
         </Typography>
-        <li>REGISTER'A BDAY, CİNSİYET, ŞEHİR EKLE </li>
-        <li>MATCH ARKADAŞLARIN YANINDA ALEV BADGE'İ GÖSTER</li>
         <li>match filtrelerini ve şehri? ekle</li>
         <li>zaman kalırsa streaming services yap</li>
         <li>
           <b>HOME PAGE UI</b>
         </li>
-        <li>Profile edit your description</li>
-        <li>Like on reviews feature</li>
         <li>kullanıcı isterse veya eşleşmeyi reddederse kaldırılacak???</li>
         <li>Ortak arkadaşlar</li>
       </ul>

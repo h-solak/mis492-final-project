@@ -38,7 +38,7 @@ const NowWatching = ({ homeData }) => {
                 display={"flex"}
                 alignItems={"center"}
               >
-                <Typography fontSize={14}>
+                <Typography fontSize={14} width={110}>
                   {/* {format(watchDate, "dd/MM/yyyy") !==
                   format(new Date(), "dd/MM/yyyy")
                     ? format(watchDate, "MMMM d - HH:mm")

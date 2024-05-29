@@ -62,8 +62,8 @@ const linkItems = [
     icon: <Bookmark />,
   },
   {
-    title: "Friend Activity",
-    url: "/friends",
+    title: "Friends' Activity",
+    url: "/friends-activity",
     icon: <People />,
   },
   {

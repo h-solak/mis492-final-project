@@ -9,8 +9,11 @@ import {
   FormControlLabel,
   FormLabel,
   Grid,
+  InputLabel,
+  MenuItem,
   Radio,
   RadioGroup,
+  Select,
   Slider,
   Typography,
 } from "@mui/material";
@@ -29,12 +32,14 @@ import getCharacterColor from "../../Utilities/getCharacterColor";
 import CountdownTimer from "./Components/Countdown";
 import toast from "react-hot-toast";
 import { getChatIdByUserId } from "../../Services/Chat";
+import cities from "../../constants/cities";
 
 const Match = () => {
   const { user } = useUser();
   const navigate = useNavigate();
   const [genderFilter, setGenderFilter] = useState("none");
-  const [ageSlider, setAgeSlider] = useState([18, 30]);
+  const [ageSlider, setAgeSlider] = useState([18, 50]);
+  const [crrCityFilter, setCrrCityFilter] = useState("none"); //if "" --> no city filter
   const [currentMatch, setCurrentMatch] = useState({});
   const [pageLoading, setPageLoading] = useState(true);
   const lastMatch = user?.friends
@@ -88,7 +93,12 @@ const Match = () => {
     .slice(-1)[0]?.matchDate;
 
   const handleMatchUser = async () => {
-    const newMatch = await matchUser();
+    console.log(genderFilter, ageSlider, crrCityFilter);
+    // const newMatch = await matchUser({
+    //   genderFilter: genderFilter,
+    //   ageRange: ageSlider,
+    //   cityFilter: crrCityFilter,
+    // });
     if (newMatch?._id) {
       window.location.reload();
     } else {
@@ -443,8 +453,7 @@ const Match = () => {
               xs={12}
               md={6}
               px={8}
-              pt={12}
-              pb={8}
+              mt={12}
               display={"flex"}
               flexDirection={"column"}
               justifyContent={"space-between"}
@@ -461,7 +470,7 @@ const Match = () => {
                 </FormLabel>
                 <RadioGroup
                   row
-                  defaultValue="female"
+                  defaultValue="none"
                   onChange={(e) => setGenderFilter(e.target.value)}
                 >
                   <FormControlLabel
@@ -481,21 +490,41 @@ const Match = () => {
                   />
                 </RadioGroup>
               </FormControl>
-              <ColumnBox textAlign="start" mt={8}>
+              <ColumnBox textAlign="start">
                 <Typography mb={2} fontWeight={"medium"}>
                   Within age range
                 </Typography>
                 <Box display={"flex"} alignItems={"center"} gap={0.5}>
-                  <Typography>{ageSlider[0]}</Typography>
+                  <Typography px={1}>{ageSlider[0]}</Typography>
                   <Slider
+                    min={18}
                     getAriaLabel={() => "Minimum Range"}
                     value={ageSlider}
                     onChange={handleAgeSliderChange}
                     valueLabelDisplay="auto"
                   />
-                  <Typography>{ageSlider[1]}</Typography>
+                  <Typography px={1}>{ageSlider[1]}</Typography>
                 </Box>
               </ColumnBox>
+              <FormControl fullWidth>
+                <InputLabel>City</InputLabel>
+                <Select
+                  label="City"
+                  defaultValue={"none"}
+                  onChange={(e) => setCrrCityFilter(e.target.value)}
+                  size="small"
+                  sx={{
+                    flex: 1,
+                  }}
+                >
+                  <MenuItem value="none">Doesn't matter</MenuItem>
+                  {cities?.map((city) => (
+                    <MenuItem key={city} value={city}>
+                      {city}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
               <Button
                 size="large"
                 variant="contained"
@@ -504,8 +533,8 @@ const Match = () => {
                   alignSelf: "self-start",
                   px: 8,
                   py: 1.5,
+                  mb: 4,
                   borderRadius: 99,
-                  mt: 8,
                 }}
               >
                 Match Now
@@ -531,6 +560,7 @@ const Match = () => {
             >
               {user?.personality?.type == "Romantic Warrior" ? (
                 <img
+                  className="fade-in"
                   src={RomanticWarrior}
                   width={250}
                   style={{ borderRadius: 40 }}
@@ -538,6 +568,7 @@ const Match = () => {
                 />
               ) : user?.personality?.type == "Drama Queen" ? (
                 <img
+                  className="fade-in"
                   src={DramaQueen}
                   width={250}
                   style={{ borderRadius: 40 }}
@@ -545,6 +576,7 @@ const Match = () => {
                 />
               ) : user?.personality?.type == "Comic Sans" ? (
                 <img
+                  className="fade-in"
                   src={ComicSans}
                   width={250}
                   style={{ borderRadius: 40 }}
@@ -552,6 +584,7 @@ const Match = () => {
                 />
               ) : user?.personality?.type == "Mystic Wizard" ? (
                 <img
+                  className="fade-in"
                   src={MysticWizard}
                   width={250}
                   style={{ borderRadius: 40 }}
@@ -559,6 +592,7 @@ const Match = () => {
                 />
               ) : user?.personality?.type == "Action Monkey" ? (
                 <img
+                  className="fade-in"
                   src={ActionMonkey}
                   width={250}
                   style={{ borderRadius: 40 }}
@@ -566,27 +600,27 @@ const Match = () => {
                 />
               ) : (
                 <img
+                  className="fade-in"
                   src={PerfectHarmony}
                   width={250}
                   style={{ borderRadius: 40 }}
                   alt="character"
                 />
               )}
-              <Typography
-                textAlign={"center"}
-                position={"absolute"}
-                bottom={32}
-              >
-                you are <br />
+              <ColumnBox position={"absolute"} bottom={32}>
+                <Typography textAlign={"center"} className="fade-in-ltr">
+                  you are
+                </Typography>
                 <Typography
                   variant="span"
                   fontSize={24}
                   color={"primary.main"}
                   fontWeight={"bold"}
+                  className="fade-in-rtl"
                 >
                   {user?.personality?.type}
                 </Typography>
-              </Typography>
+              </ColumnBox>
             </Grid>
           </Grid>
         )}
