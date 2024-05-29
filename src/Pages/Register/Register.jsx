@@ -1,20 +1,32 @@
 import {
   Box,
   Button,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
   Grid,
+  InputLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
   TextField,
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { registerUser } from "../../Services/Auth";
 import TextfieldError from "../../Components/Forms/TextFieldError";
 import ColumnBox from "../../Components/ColumnBox";
 import { useNavigate, Link } from "react-router-dom";
-import Layout from "../../Layout/Layout";
 import Logo from "../../assets/logo.svg";
 import GoogleButton from "../../Components/Buttons/GoogleButton";
+import cities from "../../constants/cities";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -25,29 +37,55 @@ const Register = () => {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
-    const res = await registerUser({
-      username: data.username,
-      password: data.password,
-    });
-    if (res === data.username) {
-      //backend returns username if register is successful
-      navigate("/login");
+    try {
+      function isUserOver18(date) {
+        const birthDate = new Date(date);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+        if (
+          monthDifference < 0 ||
+          (monthDifference === 0 && today.getDate() < birthDate.getDate())
+        ) {
+          age--;
+        }
+        return age >= 18;
+      }
+
+      if (isUserOver18(data.birthday)) {
+        const res = await registerUser({
+          username: data.username,
+          password: data.password,
+          birthday: data.birthday,
+          city: data.city,
+          gender: data.gender,
+        });
+        if (res === data.username) {
+          //backend returns username if register is successful
+          navigate("/login");
+        }
+      } else {
+        toast.error("You have to be older than 18!");
+      }
+
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+      console.error(err);
     }
   };
 
+  useEffect(() => {
+    console.log(watch("birthday"));
+  }, []);
+
   return (
-    <Grid
-      container
-      component={"form"}
-      onSubmit={handleSubmit(onSubmit)}
-      height={"100dvh"}
-      px={isXsScreen ? 4 : 10}
-      py={6}
-    >
+    <Grid container px={isXsScreen ? 4 : 10} py={6}>
       {/* Navbar for auth pages */}
 
       <Grid item xs={12} alignItems={"center"} mb={4}>
@@ -66,6 +104,8 @@ const Register = () => {
         flexDirection={"column"}
         gap={3}
         px={isMobileScreen ? 0 : 10}
+        component={"form"}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <Typography fontWeight={"bolder"} fontSize={24}>
           Start Your Journey with MovieMate
@@ -141,9 +181,70 @@ const Register = () => {
               maxLength: 20,
             })}
             inputProps={{ maxLength: 20 }}
+            autoComplete="new-password"
           />
           <TextfieldError title={"Password"} errors={errors.password} />
         </ColumnBox>
+
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            label="Birth Date"
+            defaultValue={dayjs(new Date("01/01/2005"))}
+            sx={{
+              fontSize: 14,
+            }}
+            slotProps={{ textField: { size: "small" } }}
+            onChange={(value) => setValue("birthday", value)}
+          />
+        </LocalizationProvider>
+
+        <Box display={"flex"} alignItems={"center"} gap={2}>
+          <FormControl fullWidth>
+            <InputLabel>City</InputLabel>
+            <Select
+              label="City"
+              defaultValue={"İstanbul"}
+              {...register("city", {
+                required: true,
+                minLength: 3,
+                maxLength: 20,
+              })}
+              size="small"
+              sx={{
+                flex: 1,
+              }}
+            >
+              {cities?.map((city) => (
+                <MenuItem key={city} value={city}>
+                  {city}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+
+        <FormControl component="fieldset">
+          <FormLabel
+            component="legend"
+            sx={{
+              fontSize: 14,
+            }}
+          >
+            Gender
+          </FormLabel>
+          <RadioGroup
+            defaultValue={"female"}
+            row
+            onChange={(e) => setValue("gender", e.target.value)}
+          >
+            <FormControlLabel
+              value="female"
+              control={<Radio />}
+              label="Female"
+            />
+            <FormControlLabel value="male" control={<Radio />} label="Male" />
+          </RadioGroup>
+        </FormControl>
 
         <Button
           variant="contained"

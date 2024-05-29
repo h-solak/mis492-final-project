@@ -19,11 +19,14 @@ const loginUser = async ({ username, password }) => {
   }
 };
 
-const registerUser = async ({ username, password }) => {
+const registerUser = async ({ username, password, birthday, city, gender }) => {
   try {
     const res = await misBaseAxios.post(`/auth/register`, {
-      username: username,
-      password: password,
+      username,
+      password,
+      birthday,
+      city,
+      gender,
     });
     toast(res?.data?.desc, {
       icon: "👤",
