@@ -45,7 +45,7 @@ const deleteMessage = async ({ chatId, messageId }) => {
 };
 
 /* Create or get a chat id by providing the second user's id */
-const getChatIdByUserId = async (userId, isMatchChat = false) => {
+const getChatIdByUserId = async (userId, isMatchChat = "no") => {
   try {
     const res = await misBaseAxios.get(
       `/chats/user/${userId}?isMatchChat=${isMatchChat}`

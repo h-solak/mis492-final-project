@@ -30,7 +30,7 @@ const UserSidebar = () => {
   const isOwnProfile = user?.username == profileUser?.username;
 
   const handleSendMessage = async () => {
-    const chatId = await getChatIdByUserId(profileUser?._id);
+    const chatId = await getChatIdByUserId(profileUser?._id, "no");
     if (chatId) {
       navigate(`/chat?chatId=${chatId}`);
     } else {

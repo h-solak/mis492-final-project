@@ -119,7 +119,7 @@ router.get("/user/:user2Id", checkJwt, async (req, res) => {
   try {
     const id = getUserIdFromToken(req.headers.authorization);
     const user2Id = req.params.user2Id;
-    const isMatchChat = req?.query?.isMatchChat;
+    const isMatchChat = req?.query?.isMatchChat || "no";
 
     const chat = await Chat.findOne({
       "participants.id": { $all: [id, user2Id] },
@@ -142,7 +142,7 @@ router.get("/user/:user2Id", checkJwt, async (req, res) => {
         participants: [user1Obj, user2Obj],
       });
 
-      if (isMatchChat) {
+      if (isMatchChat == "yes") {
         const newObjectId = new ObjectId();
         const date = new Date();
         const newMessage = {

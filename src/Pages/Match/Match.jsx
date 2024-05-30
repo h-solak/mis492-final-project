@@ -113,7 +113,7 @@ const Match = () => {
 
   const handleSendMessage = async () => {
     //SHOULD CREATE CHAT AND SET THE FIRST MESSAGE TO ***YOU ARE A MATCH***
-    const chatId = await getChatIdByUserId(currentMatch?._id, true);
+    const chatId = await getChatIdByUserId(currentMatch?._id, "yes");
     if (chatId) {
       navigate(`/chat?chatId=${chatId}`);
     } else {
