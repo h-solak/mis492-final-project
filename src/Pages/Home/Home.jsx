@@ -31,12 +31,12 @@ const Home = () => {
         <Typography fontSize={18} fontWeight={"bolder"}>
           TODO
         </Typography>
-        <li>match filtrelerini ve şehri? ekle</li>
+        <li>match filtreleri BACKEND YAP</li>
         <li>zaman kalırsa streaming services yap</li>
         <li>
           <b>HOME PAGE UI</b>
         </li>
-        <li>kullanıcı isterse veya eşleşmeyi reddederse kaldırılacak???</li>
+        <li>Friend activites</li>
         <li>Ortak arkadaşlar</li>
       </ul>
       {!!homeData?.find((userItem) => userItem?.nowWatching?.id) && (

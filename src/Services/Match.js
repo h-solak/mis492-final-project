@@ -1,8 +1,10 @@
 import { misBaseAxios } from "../api/config";
 
-const matchUser = async () => {
+const matchUser = async ({ genderFilter, ageRange, cityFilter }) => {
   try {
-    const res = await misBaseAxios.get(`/match`);
+    const res = await misBaseAxios.get(
+      `/match?genderFilter=${genderFilter}&ageRange1=${ageRange[0]}&ageRange2=${ageRange[1]}&cityFilter=${cityFilter}`
+    );
     return res?.data?.user;
   } catch (error) {
     console.log(error);

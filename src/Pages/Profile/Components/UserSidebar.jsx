@@ -16,6 +16,8 @@ import ComicSans from "../../../assets/images/characters/comicsans.jpeg";
 import MysticWizard from "../../../assets/images/characters/mysticwizard.jpeg";
 import ActionMonkey from "../../../assets/images/characters/actionmonkey.jpeg";
 import PerfectHarmony from "../../../assets/images/characters/perfectharmony.jpg";
+import getCharacterColor from "../../../Utilities/getCharacterColor";
+import calculateAge from "../../../Utilities/calculateAge";
 
 const UserSidebar = () => {
   const { profileUser, setProfileUser } = useContext(ProfileUserContext);
@@ -104,8 +106,18 @@ const UserSidebar = () => {
         <ColumnBox alignItems="center" alignSelf="center" mt={2}>
           <Avatar name={profileUser?.username} size={80} />
           <Typography fontWeight={"bold"}>{profileUser?.username}</Typography>
-          <Typography color={"primary.light"} fontWeight={"bold"} fontSize={12}>
+          <Typography
+            color={getCharacterColor(user?.personality?.type)}
+            fontWeight={"bolder"}
+            fontSize={12}
+          >
             {user?.personality?.type}
+          </Typography>
+          <Typography fontSize={14}>
+            {`${calculateAge(user?.birthday)} · ${
+              user?.gender?.charAt(0).toUpperCase() +
+              user?.gender?.slice(1).toLowerCase()
+            } · ${user?.city}`}
           </Typography>
         </ColumnBox>
 

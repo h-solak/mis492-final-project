@@ -14,6 +14,11 @@ const Matrix = linearAlgebra.Matrix;
 router.get("/", checkJwt, async (req, res) => {
   try {
     const id = getUserIdFromToken(req.headers.authorization);
+    const genderFilter = req.query.genderFilter;
+    const ageRange1 = req.query.ageRange1;
+    const ageRange2 = req.query.ageRange2;
+    const cityFilter = req.query.cityFilter;
+    console.log(genderFilter, ageRange1, ageRange2, cityFilter);
     const crrUser = await User.findById(id);
 
     //if user hasn't taken the quiz yet
@@ -24,22 +29,36 @@ router.get("/", checkJwt, async (req, res) => {
     }
 
     const crrUserFriends = crrUser?.friends?.map((item) => item?.id);
-    const matchingUser = await User.findOne({
-      _id: { $ne: crrUser?._id, $nin: crrUserFriends }, // Exclude the current user &  Not already friends
+    const query = {
+      _id: { $ne: crrUser?._id, $nin: crrUserFriends }, // Exclude the current user & Not already friends
       "personality.type": crrUser.personality.type, // Same personality type
-    });
+      $gt: ageRange1 || 18,
+      $lt: ageRange2 || 50,
+    };
 
+    // Add gender filter if it's not "none"
+    if (genderFilter && genderFilter !== "none") {
+      query.gender = genderFilter;
+    }
+
+    // Add city filter if it's not "none"
+    if (cityFilter && cityFilter !== "none") {
+      query.city = cityFilter;
+    }
+
+    const matchingUser = await User.findOne(query);
+
+    console.log(
+      matchingUser?.username,
+      matchingUser?.personality?.type,
+      matchingUser?.birthday,
+      matchingUser?.city,
+      matchingUser?.gender,
+      crrUser?.friends?.includes((item) => item?.id == matchingUser?._id)
+    );
     if (!matchingUser) {
       return res.status(404).json({ errorTitle: "Not found" });
     }
-
-    //ADD TO FRIENDS AND FRIEND TYPE MUST BE MATCH (NOT DEFAULT)
-    // const newMatchUser = matchingUsers[0];
-
-    // console.log(
-    //   "naha",
-    //   matchingUsers?.map((item) => item?.username)
-    // );
 
     crrUser?.friends.push({
       id: matchingUser?._id,

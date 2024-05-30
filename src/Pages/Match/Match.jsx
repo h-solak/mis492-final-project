@@ -94,15 +94,20 @@ const Match = () => {
 
   const handleMatchUser = async () => {
     console.log(genderFilter, ageSlider, crrCityFilter);
-    // const newMatch = await matchUser({
-    //   genderFilter: genderFilter,
-    //   ageRange: ageSlider,
-    //   cityFilter: crrCityFilter,
-    // });
+    const newMatch = await matchUser({
+      genderFilter: genderFilter,
+      ageRange: ageSlider,
+      cityFilter: crrCityFilter,
+    });
     if (newMatch?._id) {
       window.location.reload();
     } else {
       toast.error("No match found! Please try again later!");
+      setTimeout(() => {
+        toast("Try to avoid using filters as much as possible.", {
+          icon: "💡",
+        });
+      }, 2500);
     }
   };
 
