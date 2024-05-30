@@ -52,7 +52,7 @@ const RecentActivity = () => {
           },
           {
             title: `Recent Activity`,
-            url: `/profile/${username}/watchlist`,
+            url: `/profile/${username}/recent-activity`,
           },
         ]}
       />

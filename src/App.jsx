@@ -27,6 +27,7 @@ import Favorites from "./Pages/Profile/Favorites/Favorites";
 import RecentActivity from "./Pages/Profile/RecentActivity/RecentActivity";
 import Settings from "./Pages/Settings/Settings";
 import FriendsActivity from "./Pages/FriendsActivity/FriendsActivity";
+import RecentComments from "./Pages/Profile/RecentComments/RecentComments";
 
 function App() {
   return (
@@ -70,6 +71,11 @@ function App() {
                 key="RecentActivity"
                 path="/profile/:username/recent-activity"
                 element={<AuthGuard component={<RecentActivity />} />}
+              />
+              <Route
+                key="RecentComments"
+                path="/profile/:username/recent-comments"
+                element={<AuthGuard component={<RecentComments />} />}
               />
               <Route
                 key="Chat"

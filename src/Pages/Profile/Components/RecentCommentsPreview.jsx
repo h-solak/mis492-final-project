@@ -35,14 +35,16 @@ const RecentCommentsPreview = ({ rate }) => {
           py={1}
         >
           <Typography fontWeight={"medium"}>Recent Comments</Typography>
-          <Button
-            size="small"
-            sx={{
-              textTransform: "none",
-            }}
-          >
-            See All Comments
-          </Button>
+          <Link to={`/profile/${profileUser?.username}/recent-comments`}>
+            <Button
+              size="small"
+              sx={{
+                textTransform: "none",
+              }}
+            >
+              See All Comments
+            </Button>
+          </Link>
         </Box>
       </Grid>
       <Grid container spacing={2} mt={1} px={2}>

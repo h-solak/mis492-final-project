@@ -189,8 +189,23 @@ const YourType = () => {
             alignItems={"center"}
             gap={4}
           >
-            <ColumnBox alignItems="center" gap={1}>
-              <Typography fontWeight={"bold"}>Top Genre</Typography>
+            <ColumnBox
+              alignItems="center"
+              gap={1}
+              position="relative"
+              minWidth={150}
+            >
+              <Typography
+                fontWeight={"bold"}
+                textAlign={"center"}
+                sx={{
+                  position: "absolute",
+                  top: -40,
+                  width: 150,
+                }}
+              >
+                TOP GENRE
+              </Typography>
               <img
                 src={
                   user?.personality?.type == "Drama Queen"
@@ -212,8 +227,21 @@ const YourType = () => {
                 }}
               />
             </ColumnBox>
-            <ColumnBox alignItems="center" gap={1}>
-              <Typography textAlign={"center"} fontWeight={"bold"}>
+            <ColumnBox
+              alignItems="center"
+              gap={1}
+              position="relative"
+              minWidth={150}
+            >
+              <Typography
+                textAlign={"center"}
+                fontWeight={"bold"}
+                sx={{
+                  position: "absolute",
+                  top: -50,
+                  width: 150,
+                }}
+              >
                 YOUR LEAST <br /> FAVORITE GENRE
               </Typography>
               <img
@@ -237,8 +265,24 @@ const YourType = () => {
                 }}
               />
             </ColumnBox>
-            <ColumnBox alignItems="center" gap={1}>
-              <Typography fontWeight={"bold"}>Favorite Metric</Typography>
+            <ColumnBox
+              alignItems="center"
+              gap={1}
+              position="relative"
+              minWidth={150}
+            >
+              <Typography
+                fontWeight={"bold"}
+                textAlign={"center"}
+                sx={{
+                  position: "absolute",
+                  top: -47,
+                  width: 150,
+                  lineHeight: 1.25,
+                }}
+              >
+                YOUR FAVORITE METRIC
+              </Typography>
               <img
                 src={
                   user?.personality?.favoriteMetric == "Emotional Impact"
@@ -305,7 +349,7 @@ const YourType = () => {
           }}
           display={"flex"}
           alignItems={"center"}
-          justifyContent={"end"}
+          justifyContent={"center"}
           gap={2}
           px={12}
           height={240}
@@ -332,7 +376,7 @@ const YourType = () => {
               sx={{
                 borderRadius: 99,
                 py: 1,
-                px: 2,
+                px: 4,
                 mt: 1,
                 fontSize: 18,
                 alignSelf: "center",

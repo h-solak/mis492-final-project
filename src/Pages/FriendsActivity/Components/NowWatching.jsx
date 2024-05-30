@@ -46,7 +46,8 @@ const NowWatching = ({ homeData, loading }) => {
               </Box>
             </ColumnBox>
           </>
-        ) : (
+        ) : homeData?.filter((userItem) => userItem?.nowWatching?.id)?.length >
+          0 ? (
           homeData
             ?.filter((userItem) => userItem?.nowWatching?.id)
             ?.map((userItem) => {
@@ -83,6 +84,11 @@ const NowWatching = ({ homeData, loading }) => {
                 </Box>
               );
             })
+        ) : (
+          <Typography color={"secondary"}>
+            No one is watching a movie right now. Maybe they need some movie
+            suggestions, huh?
+          </Typography>
         )}
         <LazyLoadImage
           src={RedTvImg}
