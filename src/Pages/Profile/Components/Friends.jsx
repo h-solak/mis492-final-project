@@ -53,18 +53,20 @@ const Friends = ({ userProfile }) => {
           const isMatched =
             userProfile?.friends?.find((userItem) => userItem?.id == _id)
               ?.type == "match";
+          /* Two different ways to not display matched friends on the user profile */
           if (
-            !(user?._id == userProfile?._id) &&
+            !(user?._id == userProfile?._id) && //if its not our own profile
             !userProfile?.privacy?.matchedFriendsVisible &&
-            isMatched
+            isMatched //if display friend's type is matched
           ) {
             return null;
           } else if (
-            !(user?._id == userProfile?._id) &&
-            isMatched &&
-            !userProfile?.privacy?.profileVisible
+            !(user?._id == userProfile?._id) && //if its not our own profile
+            isMatched && //if display friend's type is matched
+            !userProfile?.privacy?.profileVisible &&
+            !user?.friends?.some((userItem) => (userItem.id = userProfile?._id)) //if our user is a friend of profile user
           ) {
-            //WHEN profile is private, HIDE matched friends but show default friends
+            //WHEN profile is private, HIDE matched friends but show default friends. IF USER IS NOT A FRIEND OF US
             return null;
           }
 
