@@ -36,9 +36,9 @@ router.get("/withId/:userId", checkJwt, async (req, res) => {
     const userMovieRates = await Rate.find({
       user: user?._id,
     });
-    const sortedUserMovieRates = userMovieRates.sort(
-      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-    );
+    const sortedUserMovieRates = userMovieRates
+      .slice()
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     const { password, privateChats, ...otherUserData } = user._doc; //get the user except password
 
     const allUserData = {
