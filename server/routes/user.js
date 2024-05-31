@@ -13,7 +13,8 @@ router.get("/:username", checkJwt, async (req, res) => {
       user: user?._id,
     });
     const sortedUserMovieRates = userMovieRates.sort(
-      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
     const { password, privateChats, ...otherUserData } = user._doc; //get the user except password
 
