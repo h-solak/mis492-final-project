@@ -48,7 +48,7 @@ const RecentActivityPreview = ({ rate }) => {
               poster_path: rate?.moviePoster,
               release_date: rate?.release_date || "",
             };
-            return <MovieItem movie={movie} md={3} />;
+            return <MovieItem key={rate?.movie} movie={movie} md={3} />;
           })
         ) : (
           <Box px={2} py={1}>

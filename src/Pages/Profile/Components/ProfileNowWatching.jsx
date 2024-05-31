@@ -17,7 +17,7 @@ const ProfileNowWatching = () => {
         width: "100%",
         height: 44,
         borderRadius: 6,
-        background: `url(${NowWatchingBgSvg})`,
+        background: `linear-gradient(83.57deg, #FFFFFF 5.42%, #E5E4E4 24.61%, #F8B0B0 54.72%, #FF0000 92.33%)`,
         backgroundSize: "cover",
       }}
     >

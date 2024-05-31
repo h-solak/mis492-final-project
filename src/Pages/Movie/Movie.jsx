@@ -282,7 +282,9 @@ const Movie = () => {
               }}
               onClick={handleNowWatching}
             >
-              Show as “Now Watching”
+              {user?.nowWatching?.id == movieId
+                ? "Now Watching"
+                : "Show as “Now Watching”"}
             </Button>
             <Button
               color="dark"
