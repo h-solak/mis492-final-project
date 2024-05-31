@@ -33,6 +33,7 @@ import CountdownTimer from "./Components/Countdown";
 import toast from "react-hot-toast";
 import { getChatIdByUserId } from "../../Services/Chat";
 import cities from "../../constants/cities";
+import calculateAge from "../../Utilities/calculateAge";
 
 const Match = () => {
   const { user } = useUser();
@@ -382,7 +383,7 @@ const Match = () => {
                     {currentMatch?.personality?.type}
                   </Typography>
                   <Typography>
-                    {currentMatch?.age}{" "}
+                    {calculateAge(currentMatch?.birthday)}{" "}
                     <Typography
                       variant="span"
                       fontSize={20}
