@@ -107,17 +107,17 @@ const UserSidebar = () => {
           <Avatar name={profileUser?.username} size={80} />
           <Typography fontWeight={"bold"}>{profileUser?.username}</Typography>
           <Typography
-            color={getCharacterColor(user?.personality?.type)}
+            color={getCharacterColor(profileUser?.personality?.type)}
             fontWeight={"bolder"}
             fontSize={12}
           >
-            {user?.personality?.type}
+            {profileUser?.personality?.type}
           </Typography>
           <Typography fontSize={14}>
-            {`${calculateAge(user?.birthday)} · ${
-              user?.gender?.charAt(0).toUpperCase() +
-              user?.gender?.slice(1).toLowerCase()
-            } · ${user?.city}`}
+            {`${calculateAge(profileUser?.birthday)} · ${
+              profileUser?.gender?.charAt(0).toUpperCase() +
+              profileUser?.gender?.slice(1).toLowerCase()
+            } · ${profileUser?.city}`}
           </Typography>
         </ColumnBox>
 
