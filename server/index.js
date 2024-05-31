@@ -18,7 +18,7 @@ const movieRoute = require("./routes/movie");
 const watchlistRoute = require("./routes/watchlist");
 const favoritesRoute = require("./routes/favorites");
 const nowWatchingRoute = require("./routes/nowWatching");
-const homeRoute = require("./routes/home");
+const friendActivityRoute = require("./routes/friendActivity");
 
 dotenv.config();
 //middleware
@@ -37,7 +37,7 @@ app.use("/api/movie", movieRoute);
 app.use("/api/watchlist", watchlistRoute);
 app.use("/api/favorites", favoritesRoute);
 app.use("/api/nowWatching", nowWatchingRoute);
-app.use("/api/home", homeRoute);
+app.use("/api/friend-activity", friendActivityRoute);
 
 // Create GET request
 app.get("/", (req, res) => {

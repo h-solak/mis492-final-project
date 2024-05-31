@@ -14,7 +14,6 @@ import ColumnBox from "../../Components/ColumnBox";
 import { useNavigate, Link } from "react-router-dom";
 import Layout from "../../Layout/Layout";
 import Logo from "../../assets/logo.svg";
-import GoogleButton from "../../Components/Buttons/GoogleButton";
 import useUser from "../../Contexts/User/useUser";
 
 const Login = () => {
@@ -57,122 +56,97 @@ const Login = () => {
         </Link>
       </Grid>
 
-      {/* Form */}
-      <Grid
-        item
-        xs={12}
-        md={6}
-        lg={5}
-        display={"flex"}
-        flexDirection={"column"}
-        gap={3}
-        px={isMobileScreen ? 0 : 10}
-      >
-        <Typography fontWeight={"bolder"} fontSize={24}>
-          Pursue Your Journey with MovieMate
-        </Typography>
-        <Link
-          variant="body2"
-          to={"/register"}
-          color="primary"
-          sx={{ cursor: "pointer", textDecoration: "none" }}
-        >
-          <Typography color={"dark.main"}>
-            Need a new account?{" "}
-            <Typography
-              variant="span"
-              color={"primary.main"}
-              fontWeight={"bold"}
-            >
-              Register
-            </Typography>
-          </Typography>
-        </Link>
-        <GoogleButton />
+      <Grid container alignItems={"center"}>
+        {/* Form */}
         <Grid
           item
           xs={12}
+          md={6}
+          lg={5}
           display={"flex"}
-          alignItems={"center"}
-          sx={{
-            maxHeight: 14,
-          }}
+          flexDirection={"column"}
+          gap={3}
+          px={isMobileScreen ? 0 : 10}
         >
-          <Box
-            sx={{
-              height: "1px",
-              width: "100%",
-              backgroundColor: "secondary.main",
-            }}
-          ></Box>
-          <Typography fontSize={12} fontWeight={"medium"}>
-            OR
+          <Typography fontWeight={"bolder"} fontSize={24}>
+            Pursue Your Journey with MovieMate
           </Typography>
-          <Box
-            sx={{
-              height: "1px",
-              width: "100%",
-              backgroundColor: "secondary.main",
-            }}
-          ></Box>
-        </Grid>
-        <ColumnBox>
-          <TextField
-            size="small"
-            label="Username"
-            autoComplete="on"
-            {...register("username", {
-              required: true,
-              minLength: 3,
-              maxLength: 20,
-            })}
-          />
-          <TextfieldError title={"Username"} errors={errors.username} />
-        </ColumnBox>
+          <Link
+            variant="body2"
+            to={"/register"}
+            color="primary"
+            sx={{ cursor: "pointer", textDecoration: "none" }}
+          >
+            <Typography color={"dark.main"}>
+              Need a new account?{" "}
+              <Typography
+                variant="span"
+                color={"primary.main"}
+                fontWeight={"bold"}
+              >
+                Register
+              </Typography>
+            </Typography>
+          </Link>
 
-        <ColumnBox>
-          <TextField
-            type="password"
-            size="small"
-            label="Password"
-            autoComplete="on"
-            {...register("password", {
-              required: true,
-              minLength: 6,
-              maxLength: 20,
-            })}
-          />
-          <TextfieldError title={"Password"} errors={errors.password} />
-        </ColumnBox>
-        <Button
-          variant="contained"
-          type="submit"
-          sx={{
-            borderRadius: 99,
-            py: 1,
-            px: 0,
-            fontSize: 16,
-            width: 200,
-            alignSelf: "center",
-          }}
-        >
-          Login
-        </Button>
-      </Grid>
-      {/* Image */}
-      {!isMobileScreen && (
-        <Grid item xs={0} md={6} lg={7} px={5}>
-          <img
-            src={
-              "https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            }
-            height={500}
-            width={"100%"}
-            alt="Movie"
-            style={{ borderRadius: 40, objectFit: "cover" }}
-          />
+          <ColumnBox>
+            <TextField
+              size="small"
+              label="Username"
+              autoComplete="on"
+              {...register("username", {
+                required: true,
+                minLength: 3,
+                maxLength: 20,
+              })}
+            />
+            <TextfieldError title={"Username"} errors={errors.username} />
+          </ColumnBox>
+
+          <ColumnBox>
+            <TextField
+              type="password"
+              size="small"
+              label="Password"
+              autoComplete="on"
+              {...register("password", {
+                required: true,
+                minLength: 6,
+                maxLength: 20,
+              })}
+            />
+            <TextfieldError title={"Password"} errors={errors.password} />
+          </ColumnBox>
+          <Button
+            variant="contained"
+            type="submit"
+            sx={{
+              borderRadius: 99,
+              py: 1,
+              px: 0,
+              fontSize: 16,
+              width: 200,
+              alignSelf: "center",
+            }}
+          >
+            Login
+          </Button>
         </Grid>
-      )}
+        {/* Image */}
+        {!isMobileScreen && (
+          <Grid item xs={0} md={6} lg={7} px={5}>
+            <img
+              src={
+                "https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              }
+              height={500}
+              width={"100%"}
+              alt="Movie"
+              style={{ borderRadius: 40, objectFit: "cover" }}
+            />
+          </Grid>
+        )}
+      </Grid>
     </Grid>
   );
 };

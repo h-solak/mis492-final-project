@@ -12,6 +12,7 @@ router.post("/", checkJwt, async (req, res) => {
     const title = req.body.title;
     const poster_path = req.body.posterPath;
     const release_date = req.body.releaseDate;
+    const createdAt = new Date();
 
     const user = await User.findById(userId);
 
@@ -21,6 +22,7 @@ router.post("/", checkJwt, async (req, res) => {
       title,
       poster_path,
       release_date,
+      createdAt,
     });
 
     user.favoriteMovies = newFavorites;

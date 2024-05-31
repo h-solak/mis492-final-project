@@ -8,6 +8,8 @@ import ColumnBox from "../../../Components/ColumnBox";
 import { Rating } from "react-simple-star-rating";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import NotesIcon from "@mui/icons-material/Notes";
 
 const RecentCommentsPreview = ({ rate }) => {
   const { profileUser } = useContext(ProfileUserContext);
@@ -98,10 +100,24 @@ const RecentCommentsPreview = ({ rate }) => {
                 <Typography fontSize={12} color={"secondary"}>
                   {format(crrMovie?.createdAt, "dd.MM.yyyy")}
                 </Typography>
-                <Typography fontSize={12} color={"secondary"}>
+                <Typography
+                  fontSize={12}
+                  color={"dark"}
+                  display={"flex"}
+                  alignItems={"center"}
+                  gap={0.5}
+                >
+                  <FavoriteIcon sx={{ fontSize: 12 }} />{" "}
                   {crrMovie?.likes?.length || 0} likes
                 </Typography>
-                <Typography fontSize={12} color={"secondary"}>
+                <Typography
+                  fontSize={12}
+                  color={"dark"}
+                  display={"flex"}
+                  alignItems={"center"}
+                  gap={0.5}
+                >
+                  <NotesIcon sx={{ fontSize: 12 }} />
                   {crrMovie?.replies?.length || 0} comments
                 </Typography>
               </Box>

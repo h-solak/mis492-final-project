@@ -21,7 +21,6 @@ import TextfieldError from "../../Components/Forms/TextFieldError";
 import ColumnBox from "../../Components/ColumnBox";
 import { useNavigate, Link } from "react-router-dom";
 import Logo from "../../assets/logo.svg";
-import GoogleButton from "../../Components/Buttons/GoogleButton";
 import cities from "../../constants/cities";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -88,7 +87,7 @@ const Register = () => {
     <Grid container px={isXsScreen ? 4 : 10} py={6}>
       {/* Navbar for auth pages */}
 
-      <Grid item xs={12} alignItems={"center"} mb={4}>
+      <Grid item xs={12} alignItems={"center"} mb={8}>
         <Link to="/" style={{ cursor: "pointer" }}>
           <img src={Logo} height={24} alt="" />
         </Link>
@@ -127,34 +126,7 @@ const Register = () => {
             </Typography>
           </Typography>
         </Link>
-        <GoogleButton />
-        <Grid
-          item
-          xs={12}
-          display={"flex"}
-          alignItems={"center"}
-          sx={{
-            maxHeight: 14,
-          }}
-        >
-          <Box
-            sx={{
-              height: "1px",
-              width: "100%",
-              backgroundColor: "secondary.main",
-            }}
-          ></Box>
-          <Typography fontSize={12} fontWeight={"medium"}>
-            OR
-          </Typography>
-          <Box
-            sx={{
-              height: "1px",
-              width: "100%",
-              backgroundColor: "secondary.main",
-            }}
-          ></Box>
-        </Grid>
+
         <ColumnBox>
           <TextField
             size="small"

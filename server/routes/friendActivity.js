@@ -15,17 +15,21 @@ router.get("/", checkJwt, async (req, res) => {
         const userData = await User.findById(friend?.id);
         const userMovieRates = await Rate.find({
           user: userData._id,
-        }).limit(4);
+        })
+          .sort({ createdAt: -1 })
+          .limit(4);
         return {
           id: userData._id,
           username: userData.username,
           nowWatching: userData?.nowWatching,
           rates: userMovieRates,
+          defaultWatchlist: userData?.defaultWatchlist,
+          favoriteMovies: userData?.favoriteMovies,
         };
       })
     );
 
-    return res.status(200).json({ home: friendsData });
+    return res.status(200).json({ friendActivity: friendsData });
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);

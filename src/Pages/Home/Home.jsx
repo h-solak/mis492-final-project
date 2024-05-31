@@ -15,6 +15,7 @@ import NowWatchingBgSvg from "../../assets/backgrounds/nowWatchingRed.svg";
 import NowWatchingSvgIcon from "../../assets/icons/nowWatchingOutlined.svg";
 import ArrowRightSvg from "../../assets/icons/arrowright.svg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { getFriendActivity } from "../../Services/FriendActivity";
 
 const Home = () => {
   const { user } = useUser();
@@ -27,12 +28,12 @@ const Home = () => {
   }
 
   useEffect(() => {
-    handleGetHome();
+    handleGetFriendActivity();
   }, []);
 
-  const handleGetHome = async () => {
+  const handleGetFriendActivity = async () => {
     setIsPageLoading(true);
-    const homeResponse = await getHome();
+    const homeResponse = await getFriendActivity();
     setHomeData(homeResponse);
     setIsPageLoading(false);
   };
