@@ -1,10 +1,8 @@
 import { Box, Grid, IconButton, Tooltip, Typography } from "@mui/material";
 import React from "react";
 import ColumnBox from "../ColumnBox";
-import StarIcon from "@mui/icons-material/Star";
 import { Link, useNavigate } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Bookmark, Favorite, LiveTv, Reviews } from "@mui/icons-material";
 import NowWatchingSvg from "../../assets/icons/movieItem/nowWatching.svg";
 import NowWatchingActiveSvg from "../../assets/icons/movieItem/nowWatchingActive.svg";
 import ReviewSvg from "../../assets/icons/movieItem/review.svg";

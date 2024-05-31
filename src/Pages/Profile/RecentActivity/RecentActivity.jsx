@@ -122,7 +122,7 @@ const RecentActivity = () => {
                         disableFillHover={true}
                         readOnly={true}
                         fillColor="#000"
-                        style={{ marginTop: 8 }}
+                        style={{ marginTop: 8, pointerEvents: "none" }}
                       />
                       <Typography
                         mt={1}

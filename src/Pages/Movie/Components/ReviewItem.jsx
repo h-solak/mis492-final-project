@@ -60,7 +60,7 @@ const ReviewItem = ({ review, handleGetMovieReviews }) => {
               disableFillHover={true}
               readOnly={true}
               fillColor="#000"
-              style={{ marginLeft: "8px" }}
+              style={{ marginLeft: "8px", pointerEvents: "none" }}
             />
             <Typography color={"secondary"} fontSize={12} ml={1}>
               {formatDistance(review?.createdAt, new Date())} ago
