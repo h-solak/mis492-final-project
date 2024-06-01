@@ -55,6 +55,7 @@ router.get("/", checkJwt, async (req, res) => {
           const newPreview = {
             chatId: chatData?._id,
             lastMessage: lastMessage || {},
+            firstMessageSender: chatData?.messages[0]?.sender || "",
             username: userData?.username,
             userAvatar: userData?.crrAvatar,
             unreadMessagesCount: unreadMessagesCount,

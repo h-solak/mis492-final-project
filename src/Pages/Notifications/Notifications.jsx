@@ -133,7 +133,7 @@ const Notifications = () => {
         ) : (
           <Grid item xs={12} mt={2}>
             <Typography fontSize={14}>
-              You haven't recieved any requests yet.
+              You haven't received any requests yet.
             </Typography>
           </Grid>
         )}

@@ -76,7 +76,7 @@ const Match = () => {
       if (!dateString) return false;
       const inputDate = new Date(dateString);
       const twoWeeksAfter = new Date(
-        inputDate.getTime() + 2 * 7 * 24 * 60 * 60 * 1000
+        inputDate.getTime() + 7 * 24 * 60 * 60 * 1000
       );
       const currentDate = new Date();
       return currentDate > twoWeeksAfter;

@@ -4,19 +4,19 @@ import ColumnBox from "../../../Components/ColumnBox";
 
 function CountdownTimer({ initialDate }) {
   const [countdown, setCountdown] = useState({
-    days: "*",
-    hours: "*",
-    minutes: "*",
-    seconds: "*",
+    days: "⏳",
+    hours: "⏳",
+    minutes: "⏳",
+    seconds: "⏳",
   });
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       const providedDate = new Date(initialDate);
-      const twoWeeksLater = new Date(
-        providedDate.getTime() + 14 * 24 * 60 * 60 * 1000
+      const oneWeekLater = new Date(
+        providedDate.getTime() + 7 * 24 * 60 * 60 * 1000
       );
-      const timeDifference = twoWeeksLater.getTime() - Date.now();
+      const timeDifference = oneWeekLater.getTime() - Date.now();
 
       const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
       const hours = Math.floor(

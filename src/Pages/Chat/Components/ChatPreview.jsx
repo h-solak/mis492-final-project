@@ -49,7 +49,11 @@ const ChatPreview = ({ chat }) => {
       }}
       onClick={() => handleGetChat(chat?.chatId, true)}
     >
-      <Avatar name={chat?.username} size={48} />
+      <Avatar
+        name={chat?.username}
+        isMatched={chat?.firstMessageSender == "moviemate"}
+        size={48}
+      />
       <ColumnBox width={"100%"}>
         <Box
           display={"flex"}
@@ -61,7 +65,11 @@ const ChatPreview = ({ chat }) => {
             <Typography fontWeight={"bold"}>{chat?.username}</Typography>
             <Typography
               fontSize={14}
-              color={"secondary.main"}
+              color={
+                chat?.lastMessage?.sender == "moviemate"
+                  ? "primary.light"
+                  : "secondary.main"
+              }
               fontWeight={chat?.unreadMessagesCount > 0 ? "medium" : "regular"}
               maxWidth={100}
               maxHeight={60}
@@ -71,7 +79,9 @@ const ChatPreview = ({ chat }) => {
                 overflow: "hidden",
               }}
             >
-              {lastMessageContent}
+              {chat?.lastMessage?.sender == "moviemate"
+                ? "Matched"
+                : lastMessageContent}
             </Typography>
           </ColumnBox>
           {chat?.lastMessage ? (
