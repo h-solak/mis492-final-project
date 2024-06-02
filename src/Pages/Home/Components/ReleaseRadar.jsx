@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { getReleaseRadar } from "../../../Services/Tmdb";
 import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import ReleaseItem from "./ReleaseItem";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -10,6 +9,7 @@ import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import ColumnBox from "../../../Components/ColumnBox";
 import ShimmerLoading from "../../../Components/Loaders/ShimmerLoading";
+import MovieItem from "../../../components/Movie/MovieItem";
 
 const ReleaseRadar = () => {
   const isXsScreen = useMediaQuery("(max-width:599px)");
@@ -50,7 +50,14 @@ const ReleaseRadar = () => {
           >
             {movies?.map((movie) => (
               <SwiperSlide key={movie?.id}>
-                <ReleaseItem movie={movie} />
+                <MovieItem
+                  movie={movie}
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  lg={12}
+                  xl={12}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
