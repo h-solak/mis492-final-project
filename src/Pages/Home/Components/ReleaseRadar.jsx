@@ -13,6 +13,7 @@ import ShimmerLoading from "../../../Components/Loaders/ShimmerLoading";
 
 const ReleaseRadar = () => {
   const isXsScreen = useMediaQuery("(max-width:599px)");
+  const isSmScreen = useMediaQuery("(max-width:899px)");
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [movies, setMovies] = useState([]);
@@ -42,9 +43,8 @@ const ReleaseRadar = () => {
             modules={[Navigation, Pagination]}
             cssMode={true}
             navigation
-            pagination
-            spaceBetween={50}
-            slidesPerView={isXsScreen ? 2 : 6}
+            spaceBetween={20}
+            slidesPerView={isXsScreen ? 2 : isSmScreen ? 3 : 6}
             //   onSlideChange={() => console.log("slide change")}
             //   onSwiper={(swiper) => console.log(swiper)}
           >

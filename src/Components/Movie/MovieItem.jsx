@@ -187,7 +187,7 @@ const MovieItem = ({ xs = 12, sm = 6, md = 3, height = 240, movie }) => {
         />
 
         {!!(user?.nowWatching?.id == movie?.id) && (
-          <LazyLoadImage
+          <img
             className="opening-animation"
             src={RedTvImg}
             width={40}
@@ -195,7 +195,7 @@ const MovieItem = ({ xs = 12, sm = 6, md = 3, height = 240, movie }) => {
             style={{
               position: "absolute",
               top: -24,
-              right: -16,
+              right: -12,
               objectFit: "cover",
             }}
           />
