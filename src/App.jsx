@@ -28,7 +28,6 @@ import RecentActivity from "./Pages/Profile/RecentActivity/RecentActivity";
 import Settings from "./Pages/Settings/Settings";
 import FriendsActivity from "./Pages/FriendsActivity/FriendsActivity";
 import RecentComments from "./Pages/Profile/RecentComments/RecentComments";
-import CustomWatchlist from "./Pages/CustomWatchlist/CustomWatchlist";
 
 function App() {
   return (
@@ -64,11 +63,6 @@ function App() {
                 element={<AuthGuard component={<Favorites />} />}
               />
               <Route
-                key="Custom Watchlist"
-                path="/profile/:username/watchlist/:watchlistId"
-                element={<AuthGuard component={<CustomWatchlist />} />}
-              />
-              <Route
                 key="WatchlistNavigator"
                 path="/watchlist"
                 element={<AuthGuard component={<WatchlistNavigator />} />}
@@ -83,7 +77,6 @@ function App() {
                 path="/profile/:username/recent-comments"
                 element={<AuthGuard component={<RecentComments />} />}
               />
-
               <Route
                 key="Chat"
                 path="/chat"

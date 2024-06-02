@@ -1,42 +1,32 @@
-const { Schema } = require("mongoose");
 const mongoose = require("mongoose");
 
-const movieSchema = new Schema(
+const WatchlistSchema = new mongoose.Schema(
   {
-    // Define the structure of the movie object here
-    id: {
-      type: String,
-    },
     title: {
+      //id of the creator user
       type: String,
+      required: true,
     },
-    poster_path: {
+    creator: {
+      //id of the creator user
       type: String,
+      required: true,
     },
-    release_date: {
-      type: String || Date,
+    // type: {
+    //   type: String,
+    //   default: "default", //default (1 user) or collaborative
+    // },
+    collaborators: {
+      //if array.length > 0 --> collaborative playlist
+      type: Array,
+      default: [],
+    },
+    movies: {
+      type: Array,
+      default: [],
     },
   },
-  { _id: false }
-); // Prevents Mongoose from adding an _id field to each movie object
+  { timestamps: true }
+);
 
-const watchlistSchema = new Schema({
-  _id: Schema.Types.ObjectId,
-  title: {
-    type: String,
-    required: true,
-  },
-  creator: {
-    //id of the creator user
-    type: String,
-    required: true,
-  },
-  collaborators: {
-    //array of user ids. If array.length > 0 --> collaborative playlist
-    type: Array,
-    default: [],
-  },
-  movies: [movieSchema],
-});
-
-module.exports = mongoose.model("Watchlist", watchlistSchema);
+module.exports = mongoose.model("Watchlist", WatchlistSchema);
