@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { searchMulti } from "../../../../Services/Tmdb";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import ColumnBox from "../../../../Components/ColumnBox";
+import MovieAwardsSvg from "../../../../assets/illustrations/movieawards.svg";
+import CenteredBox from "../../../../Components/CenteredBox";
 
 const MultiSearch = ({ searchParams, setSearchParams, setSearchMode }) => {
   const [searchInput, setSearchInput] = useState("");
@@ -59,6 +61,7 @@ const MultiSearch = ({ searchParams, setSearchParams, setSearchMode }) => {
   return (
     <Grid item xs={12} lg={6} mt={4}>
       <TextField
+        autoFocus
         placeholder="Search for movies, tv shows, directors, actors..."
         InputProps={{
           startAdornment: <SearchRounded color="disabled" sx={{ mr: 1 }} />,
@@ -95,7 +98,7 @@ const MultiSearch = ({ searchParams, setSearchParams, setSearchMode }) => {
         }}
       />
 
-      {!!response?.data?.results && (
+      {!!response?.data?.results ? (
         <Grid container mt={4}>
           {response?.data?.results.map((item) => (
             <Grid
@@ -180,6 +183,20 @@ const MultiSearch = ({ searchParams, setSearchParams, setSearchMode }) => {
             </Grid>
           ))}
         </Grid>
+      ) : (
+        <CenteredBox width="100%">
+          <ColumnBox alignItems="center">
+            <img
+              className="fade-in-ltr"
+              src={MovieAwardsSvg}
+              width={250}
+              alt="people"
+            />
+            <Typography className="fade-in-rtl" mt={1} color={"secondary"}>
+              Start exploring movies, actors, directors...
+            </Typography>
+          </ColumnBox>
+        </CenteredBox>
       )}
     </Grid>
   );

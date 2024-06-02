@@ -62,7 +62,8 @@ const Movie = () => {
   const getMovie = async () => {
     const crrMovie = await getMovieDetails(movieId);
     setMovie(crrMovie);
-    // const streamingServices = await getStreamingServices(movieId);
+    const streamingServices = await getStreamingServices(movieId);
+    console.log(streamingServices);
     setIsLoading(false);
   };
 

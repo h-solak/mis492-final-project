@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import ColumnBox from "../../Components/ColumnBox";
 import { respondToFriendRequest } from "../../Services/Friends";
 import Avatar from "../../Components/Avatar";
+import FriendsSvg from "../../assets/illustrations/friends.svg";
 
 const Notifications = () => {
   const [pageLoading, setPageLoading] = useState(true);
@@ -70,7 +71,7 @@ const Notifications = () => {
         ]}
       />
       <Grid container>
-        <Typography>
+        <Typography fontWeight={700}>
           Friend Requests{" "}
           {!!(friendRequests?.length > 0) && `(${friendRequests?.length})`}
         </Typography>
@@ -131,8 +132,14 @@ const Notifications = () => {
             </Grid>
           ))
         ) : (
-          <Grid item xs={12} mt={2}>
-            <Typography fontSize={14}>
+          <Grid item xs={12} mt={4}>
+            <img src={FriendsSvg} width={200} className="fade-in-ltr" />
+            <Typography
+              fontSize={14}
+              mt={1}
+              color={"secondary"}
+              className="fade-in-rtl"
+            >
               You haven't received any requests yet.
             </Typography>
           </Grid>

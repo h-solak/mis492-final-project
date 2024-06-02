@@ -30,7 +30,7 @@ const Layout = ({
             {...props}
           >
             {pageLoading ? (
-              <CenteredBox>
+              <CenteredBox height={"100vh"}>
                 <Lottie
                   animationData={PopcornLoader}
                   loop={true}

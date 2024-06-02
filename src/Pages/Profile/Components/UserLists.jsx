@@ -46,23 +46,141 @@ const UserLists = ({ rate }) => {
         <Grid item>
           <Link to={`/profile/${profileUser?.username}/watchlist`}>
             <ColumnBox alignItems="center" gap={0.5}>
-              <Box
-                display={"flex"}
-                justifyContent={"center"}
-                alignItems={"center"}
-                sx={{
-                  height: 200,
-                  width: 150,
-                  backgroundColor: "primary.light",
-                }}
-              >
-                <Bookmark
+              {profileUser?.defaultWatchlist?.length < 4 ? (
+                <Box
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
                   sx={{
-                    color: "#fff",
-                    fontSize: 64,
+                    height: 200,
+                    width: 150,
+                    backgroundColor: "primary.light",
                   }}
-                />
-              </Box>
+                >
+                  <Bookmark
+                    sx={{
+                      color: "#fff",
+                      fontSize: 64,
+                    }}
+                  />
+                </Box>
+              ) : (
+                <Box
+                  position="relative"
+                  sx={{
+                    height: 200,
+                    width: 150,
+                    backgroundColor: "primary.light",
+                  }}
+                >
+                  <Bookmark
+                    sx={{
+                      color: "#fff",
+                      fontSize: 64,
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      zIndex: 999,
+                    }}
+                  />
+                  <ColumnBox>
+                    <Box display="flex">
+                      <img
+                        src={
+                          profileUser?.defaultWatchlist[
+                            profileUser?.defaultWatchlist?.length - 1
+                          ]?.poster_path
+                            ? `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${
+                                profileUser?.defaultWatchlist[
+                                  profileUser?.defaultWatchlist?.length - 1
+                                ]?.poster_path
+                              }`
+                            : "https://cataas.com/cat"
+                        }
+                        height={200 / 2}
+                        width={150 / 2}
+                        alt="movie picture"
+                        style={{
+                          position: "relative",
+                          objectFit: "cover",
+                          opacity: 0.6,
+                          filter: "blur(1px)",
+                        }}
+                      />
+                      <LazyLoadImage
+                        src={
+                          profileUser?.defaultWatchlist[
+                            profileUser?.defaultWatchlist?.length - 2
+                          ]?.poster_path
+                            ? `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${
+                                profileUser?.defaultWatchlist[
+                                  profileUser?.defaultWatchlist?.length - 2
+                                ]?.poster_path
+                              }`
+                            : "https://cataas.com/cat"
+                        }
+                        height={200 / 2}
+                        width={150 / 2}
+                        alt="movie picture"
+                        style={{
+                          position: "relative",
+                          objectFit: "cover",
+                          opacity: 0.6,
+                          filter: "blur(1px)",
+                        }}
+                      />
+                    </Box>
+                    <Box display="flex">
+                      <img
+                        src={
+                          profileUser?.defaultWatchlist[
+                            profileUser?.defaultWatchlist?.length - 3
+                          ]?.poster_path
+                            ? `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${
+                                profileUser?.defaultWatchlist[
+                                  profileUser?.defaultWatchlist?.length - 3
+                                ]?.poster_path
+                              }`
+                            : "https://cataas.com/cat"
+                        }
+                        height={200 / 2}
+                        width={150 / 2}
+                        alt="movie picture"
+                        style={{
+                          position: "relative",
+                          objectFit: "cover",
+                          opacity: 0.6,
+                          filter: "blur(1px)",
+                        }}
+                      />
+                      <LazyLoadImage
+                        src={
+                          profileUser?.defaultWatchlist[
+                            profileUser?.defaultWatchlist?.length - 4
+                          ]?.poster_path
+                            ? `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${
+                                profileUser?.defaultWatchlist[
+                                  profileUser?.defaultWatchlist?.length - 4
+                                ]?.poster_path
+                              }`
+                            : "https://cataas.com/cat"
+                        }
+                        height={200 / 2}
+                        width={150 / 2}
+                        alt="movie picture"
+                        style={{
+                          position: "relative",
+                          objectFit: "cover",
+                          opacity: 0.6,
+                          filter: "blur(1px)",
+                        }}
+                      />
+                    </Box>
+                  </ColumnBox>
+                </Box>
+              )}
+
               <Typography fontSize={14}>
                 Default Watchlist ({profileUser?.defaultWatchlist?.length || 0})
               </Typography>
@@ -72,23 +190,141 @@ const UserLists = ({ rate }) => {
         <Grid item>
           <Link to={`/profile/${profileUser?.username}/favorites`}>
             <ColumnBox alignItems="center" gap={0.5}>
-              <Box
-                display={"flex"}
-                justifyContent={"center"}
-                alignItems={"center"}
-                sx={{
-                  height: 200,
-                  width: 150,
-                  backgroundColor: "primary.light",
-                }}
-              >
-                <Favorite
+              {profileUser?.favoriteMovies?.length < 4 ? (
+                <Box
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
                   sx={{
-                    color: "#fff",
-                    fontSize: 64,
+                    height: 200,
+                    width: 150,
+                    backgroundColor: "primary.light",
                   }}
-                />
-              </Box>
+                >
+                  <Favorite
+                    sx={{
+                      color: "#fff",
+                      fontSize: 64,
+                    }}
+                  />
+                </Box>
+              ) : (
+                <Box
+                  position="relative"
+                  sx={{
+                    height: 200,
+                    width: 150,
+                    backgroundColor: "primary.light",
+                  }}
+                >
+                  <Favorite
+                    sx={{
+                      color: "#fff",
+                      fontSize: 64,
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      zIndex: 999,
+                    }}
+                  />
+                  <ColumnBox>
+                    <Box display="flex">
+                      <img
+                        src={
+                          profileUser?.favoriteMovies[
+                            profileUser?.favoriteMovies?.length - 1
+                          ]?.poster_path
+                            ? `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${
+                                profileUser?.favoriteMovies[
+                                  profileUser?.favoriteMovies?.length - 1
+                                ]?.poster_path
+                              }`
+                            : "https://cataas.com/cat"
+                        }
+                        height={200 / 2}
+                        width={150 / 2}
+                        alt="movie picture"
+                        style={{
+                          position: "relative",
+                          objectFit: "cover",
+                          opacity: 0.6,
+                          filter: "blur(1px)",
+                        }}
+                      />
+                      <LazyLoadImage
+                        src={
+                          profileUser?.favoriteMovies[
+                            profileUser?.favoriteMovies?.length - 2
+                          ]?.poster_path
+                            ? `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${
+                                profileUser?.favoriteMovies[
+                                  profileUser?.favoriteMovies?.length - 2
+                                ]?.poster_path
+                              }`
+                            : "https://cataas.com/cat"
+                        }
+                        height={200 / 2}
+                        width={150 / 2}
+                        alt="movie picture"
+                        style={{
+                          position: "relative",
+                          objectFit: "cover",
+                          opacity: 0.6,
+                          filter: "blur(1px)",
+                        }}
+                      />
+                    </Box>
+                    <Box display="flex">
+                      <img
+                        src={
+                          profileUser?.favoriteMovies[
+                            profileUser?.favoriteMovies?.length - 3
+                          ]?.poster_path
+                            ? `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${
+                                profileUser?.favoriteMovies[
+                                  profileUser?.favoriteMovies?.length - 3
+                                ]?.poster_path
+                              }`
+                            : "https://cataas.com/cat"
+                        }
+                        height={200 / 2}
+                        width={150 / 2}
+                        alt="movie picture"
+                        style={{
+                          position: "relative",
+                          objectFit: "cover",
+                          opacity: 0.6,
+                          filter: "blur(1px)",
+                        }}
+                      />
+                      <LazyLoadImage
+                        src={
+                          profileUser?.favoriteMovies[
+                            profileUser?.favoriteMovies?.length - 4
+                          ]?.poster_path
+                            ? `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${
+                                profileUser?.favoriteMovies[
+                                  profileUser?.favoriteMovies?.length - 4
+                                ]?.poster_path
+                              }`
+                            : "https://cataas.com/cat"
+                        }
+                        height={200 / 2}
+                        width={150 / 2}
+                        alt="movie picture"
+                        style={{
+                          position: "relative",
+                          objectFit: "cover",
+                          opacity: 0.6,
+                          filter: "blur(1px)",
+                        }}
+                      />
+                    </Box>
+                  </ColumnBox>
+                </Box>
+              )}
+
               <Typography fontSize={14}>
                 Favorites ({profileUser?.favoriteMovies?.length || 0})
               </Typography>

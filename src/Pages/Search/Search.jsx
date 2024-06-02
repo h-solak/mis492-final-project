@@ -36,12 +36,18 @@ const Search = () => {
         <Button
           variant={searchMode == "multi" ? "contained" : "outlined"}
           onClick={() => setSearchMode("multi")}
+          sx={{
+            borderRadius: 32,
+          }}
         >
           Movies / Tv Shows / Directors
         </Button>
         <Button
           variant={searchMode == "users" ? "contained" : "outlined"}
           onClick={() => setSearchMode("users")}
+          sx={{
+            borderRadius: 32,
+          }}
         >
           Users
         </Button>

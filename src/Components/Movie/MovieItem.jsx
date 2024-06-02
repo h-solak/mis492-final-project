@@ -146,7 +146,15 @@ const Bottombar = ({ height, movie }) => {
     </Box>
   );
 };
-const MovieItem = ({ xs = 12, sm = 6, md = 3, height = 240, movie }) => {
+const MovieItem = ({
+  xs = 12,
+  sm = 6,
+  md = 4,
+  lg = 3,
+  xl = 2,
+  height = 240,
+  movie,
+}) => {
   const navigate = useNavigate();
   const { user } = useUser();
 
@@ -154,7 +162,15 @@ const MovieItem = ({ xs = 12, sm = 6, md = 3, height = 240, movie }) => {
     return null;
   }
   return (
-    <Grid item xs={xs} sm={sm} md={md} className="opening-animation">
+    <Grid
+      item
+      xs={xs}
+      sm={sm}
+      md={md}
+      lg={lg}
+      xl={xl}
+      className="opening-animation"
+    >
       {/* Grid in this component is a container, ColumnBox is the actual movie item user see on the screen */}
       <ColumnBox
         className="movie-item"

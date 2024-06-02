@@ -300,7 +300,9 @@ const Chat = () => {
             <CenteredBox flexDirection="column" gap={2}>
               <img src={ChatSvg} width={200} />
               <Typography color={"secondary"}>
-                Click on a chat to start the conversation!
+                {chats?.length > 0
+                  ? "Click on a chat to start the conversation!"
+                  : "Find new friends using MovieMate and comeback to chat with them!"}
               </Typography>
             </CenteredBox>
           )}

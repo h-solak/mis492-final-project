@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Grid, IconButton, TextField, Typography } from "@mui/material";
-import { CloseRounded, SearchRounded } from "@mui/icons-material";
+import { CloseRounded, People, SearchRounded } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { getUsersWithUsernameSearch } from "../../../../Services/Users";
 import UserItem from "./UserItem";
 import SearchLoader from "../../../../Components/Loaders/SearchLoader";
 import NoResults from "../../../../Components/NoResults";
 import CenteredBox from "../../../../Components/CenteredBox";
+import ColumnBox from "../../../../Components/ColumnBox";
+import PeopleSvg from "../../../../assets/illustrations/people.svg";
+
 const UserSearch = ({ searchParams, setSearchParams }) => {
   const [userList, setUserList] = useState({
     data: [],
@@ -49,6 +52,7 @@ const UserSearch = ({ searchParams, setSearchParams }) => {
   return (
     <Grid item xs={12} lg={6} mt={4}>
       <TextField
+        autoFocus
         placeholder="Search for users..."
         InputProps={{
           startAdornment: <SearchRounded color="disabled" sx={{ mr: 1 }} />,
@@ -103,7 +107,19 @@ const UserSearch = ({ searchParams, setSearchParams }) => {
         ) : searchParams.get("users") ? (
           <NoResults height={"55dvh"} />
         ) : (
-          <CenteredBox>Start exploring!</CenteredBox>
+          <CenteredBox>
+            <ColumnBox alignItems="center">
+              <img
+                className="fade-in-ltr"
+                src={PeopleSvg}
+                width={250}
+                alt="people"
+              />
+              <Typography className="fade-in-rtl" mt={1} color={"secondary"}>
+                Start exploring new potential friends!
+              </Typography>
+            </ColumnBox>
+          </CenteredBox>
         )}
       </Grid>
     </Grid>

@@ -12,6 +12,8 @@ import { Rating } from "react-simple-star-rating";
 import ColumnBox from "../../Components/ColumnBox";
 import NotesIcon from "@mui/icons-material/Notes";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import CenteredBox from "../../Components/CenteredBox";
+import { NaturePeople } from "@mui/icons-material";
 
 const sortByDate = (array, latestFirst = true) => {
   return array.sort((a, b) =>
@@ -32,6 +34,7 @@ const FriendsActivity = () => {
   }, []);
 
   const handleGetFriendActivity = async () => {
+    setLoading(true);
     const homeResponse = await getFriendActivity();
     setHomeData(homeResponse);
 
@@ -100,7 +103,7 @@ const FriendsActivity = () => {
     setLoading(false);
   };
   return (
-    <Layout>
+    <Layout pageLoading={loading}>
       <NowWatching homeData={homeData} loading={loading} />
 
       <Grid container mt={12}>
@@ -109,7 +112,7 @@ const FriendsActivity = () => {
             Friends' Activity
           </Typography>
         </Grid>
-        {!!allActivites?.length > 0 && (
+        {!!allActivites?.length > 0 ? (
           <Grid container>
             {allActivites
               ?.filter(
@@ -250,6 +253,21 @@ const FriendsActivity = () => {
                 </Grid>
               ))}
           </Grid>
+        ) : (
+          <ColumnBox mt={4} className="opening-animation">
+            <Box display={"flex"} alignItems={"center"} gap={1}>
+              <NaturePeople
+                sx={{
+                  fontSize: 48,
+                }}
+              />
+              <Typography fontWeight={"bold"}>No Activities Found</Typography>
+            </Box>
+            <Typography color={"secondary"} width={"60%"} mt={1}>
+              If you are looking for some friends, try taking our character
+              survey and match with people like you!
+            </Typography>
+          </ColumnBox>
         )}
       </Grid>
     </Layout>
