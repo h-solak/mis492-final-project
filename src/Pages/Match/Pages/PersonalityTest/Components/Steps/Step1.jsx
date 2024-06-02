@@ -121,7 +121,7 @@ const Step1 = ({ setCurrentStep, setMatrices }) => {
             Visual and Technical Elements
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={5}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -139,7 +139,7 @@ const Step1 = ({ setCurrentStep, setMatrices }) => {
             Emotional Impact
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={5}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -157,7 +157,7 @@ const Step1 = ({ setCurrentStep, setMatrices }) => {
             Emotional Impact
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={5}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}

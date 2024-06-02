@@ -181,7 +181,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Romantic
           </Typography>
           <Slider
-            defaultValue={8}
+            defaultValue={5}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -199,7 +199,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Comedy
           </Typography>
           <Slider
-            defaultValue={8}
+            defaultValue={5}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -217,7 +217,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Mystery
           </Typography>
           <Slider
-            defaultValue={8}
+            defaultValue={5}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -235,7 +235,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Action
           </Typography>
           <Slider
-            defaultValue={8}
+            defaultValue={5}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -253,7 +253,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Action
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={5}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -271,7 +271,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Action
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={5}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -289,7 +289,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Action
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={5}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -307,7 +307,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Mystery
           </Typography>
           <Slider
-            defaultValue={3}
+            defaultValue={5}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
@@ -325,7 +325,7 @@ const Step2 = ({ setCurrentStep, setMatrices }) => {
             Romantic
           </Typography>
           <Slider
-            defaultValue={4}
+            defaultValue={5}
             valueLabelDisplay="off"
             marks={ahpMarks}
             min={1}
