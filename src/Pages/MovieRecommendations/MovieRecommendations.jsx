@@ -127,11 +127,11 @@ const MovieRecommendations = () => {
               />
             </IconButton>
             <Typography fontSize={12}>
-              Page {crrPage}/{movieRecommendations?.total_results || 0}
+              Page {crrPage}/{movieRecommendations?.total_pages || 0}
             </Typography>
             <IconButton
               onClick={() => {
-                if (crrPage < movieRecommendations?.total_results) {
+                if (crrPage < movieRecommendations?.total_pages) {
                   setCrrPage((oldPage) => oldPage + 1);
                 }
               }}
@@ -188,11 +188,11 @@ const MovieRecommendations = () => {
               />
             </IconButton>
             <Typography>
-              Page {crrPage}/{movieRecommendations?.total_results || 0}
+              Page {crrPage}/{movieRecommendations?.total_pages || 0}
             </Typography>
             <IconButton
               onClick={() => {
-                if (crrPage < movieRecommendations?.total_results) {
+                if (crrPage < movieRecommendations?.total_pages) {
                   setCrrPage((oldPage) => oldPage + 1);
                 }
               }}
