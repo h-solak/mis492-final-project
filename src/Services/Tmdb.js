@@ -72,6 +72,7 @@ const getRecommendationsForAMovie = async (movieId, page = 1) => {
     const res = await tmdbBaseAxios.get(
       `/movie/${movieId}/recommendations?api_key=${tmdbAPIKey}&page=${page}`
     );
+    console.log(res);
     return res?.data;
   } catch (err) {
     console.error(err);

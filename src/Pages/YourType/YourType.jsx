@@ -215,7 +215,7 @@ const YourType = () => {
                     : user?.personality?.type == "Comic Sans"
                     ? ComedyImg
                     : user?.personality?.type == "Mystic Wizard"
-                    ? MysticWizard
+                    ? MysteryImg
                     : user?.personality?.type == "Romantic Warrior"
                     ? RomanticImg
                     : QuestionImg
@@ -320,22 +320,29 @@ const YourType = () => {
             style={{ borderRadius: 40 }}
           />
         </Grid>
-        {!!movieRecommendations && (
-          <Grid item xs={12} mt={8} px={8}>
-            <Typography fontSize={20} fontWeight={"bold"}>
-              {user?.personality?.type}'s Recommendations
-            </Typography>
-            <Typography>
-              Here are some customized movie recommendations for you! Moviemate
-              will get the best movies after analyzing your movie taste.
-            </Typography>
+
+        <Grid item xs={12} mt={8} px={8}>
+          <Typography fontSize={20} fontWeight={"bold"}>
+            {user?.personality?.type}'s Recommendations
+          </Typography>
+          <Typography>
+            Here are some customized movie recommendations for you! Moviemate
+            will get the best movies after analyzing your movie taste.
+          </Typography>
+          {!!movieRecommendations?.length > 0 ? (
             <Grid container mt={1} pl={2} spacing={4}>
               {movieRecommendations?.map((movie) => (
                 <MovieItem key={movie?.id} movie={movie} />
               ))}
             </Grid>
-          </Grid>
-        )}
+          ) : (
+            <Grid mt={2}>
+              <Typography color={"secondary"}>
+                :( Sorry, we couldn't find any recommendations for you.
+              </Typography>
+            </Grid>
+          )}
+        </Grid>
 
         <Grid
           item
