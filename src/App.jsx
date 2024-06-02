@@ -31,6 +31,7 @@ import RecentComments from "./Pages/Profile/RecentComments/RecentComments";
 import MovieRecommendations from "./Pages/MovieRecommendations/MovieRecommendations";
 
 function App() {
+  //
   return (
     <React.Fragment>
       <Toaster />
