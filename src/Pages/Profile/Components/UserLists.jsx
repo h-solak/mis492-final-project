@@ -40,14 +40,6 @@ const UserLists = ({ rate }) => {
           py={1}
         >
           <Typography fontWeight={"medium"}>User Lists</Typography>
-          <Button
-            size="small"
-            sx={{
-              textTransform: "none",
-            }}
-          >
-            See All Lists
-          </Button>
         </Box>
       </Grid>
       <Grid container spacing={2} mt={1}>
@@ -103,32 +95,6 @@ const UserLists = ({ rate }) => {
             </ColumnBox>
           </Link>
         </Grid>
-        {!!(user?.username == profileUser?.username) && (
-          <Grid item>
-            <Link to={`/profile/${profileUser?.username}/favorites`}>
-              <ColumnBox alignItems="center" gap={0.5}>
-                <Box
-                  display={"flex"}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                  sx={{
-                    height: 200,
-                    width: 150,
-                    backgroundColor: "secondary.light",
-                  }}
-                >
-                  <BookmarkAdd
-                    sx={{
-                      color: "#000",
-                      fontSize: 64,
-                    }}
-                  />
-                </Box>
-                <Typography fontSize={14}>Create List</Typography>
-              </ColumnBox>
-            </Link>
-          </Grid>
-        )}
       </Grid>
     </Grid>
   );
