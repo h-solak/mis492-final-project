@@ -220,7 +220,7 @@ const YourType = () => {
                     ? RomanticImg
                     : QuestionImg
                 }
-                width={100}
+                width={125}
                 alt="metric"
                 style={{
                   borderRadius: 24,
@@ -258,7 +258,7 @@ const YourType = () => {
                     ? ActionImg
                     : QuestionImg
                 }
-                width={100}
+                width={125}
                 alt="metric"
                 style={{
                   borderRadius: 24,
@@ -292,7 +292,7 @@ const YourType = () => {
                     ? VisualTechnicalElementsImg
                     : FluidityImg
                 }
-                width={100}
+                width={125}
                 alt="metric"
                 style={{
                   borderRadius: 24,

@@ -3,13 +3,14 @@ import React, { createContext, useEffect, useRef, useState } from "react";
 import {
   deleteMessage,
   getChat,
+  getChatIdByUserId,
   getChatList,
   sendMessage,
 } from "../../Services/Chat";
 import Layout from "../../Layout/Layout";
 import ChatPreview from "./Components/ChatPreview";
 import CurrentChat from "./Components/CurrentChat";
-import { ChatRounded } from "@mui/icons-material";
+import { ChatRounded, PersonSearch } from "@mui/icons-material";
 import CenteredBox from "../../Components/CenteredBox";
 import ChatSvg from "../../assets/illustrations/phonechat.svg";
 import { io } from "socket.io-client";
@@ -17,11 +18,14 @@ import useUser from "../../Contexts/User/useUser";
 import toast from "react-hot-toast";
 import Avatar from "../../Components/Avatar";
 import ChatPreviewLoader from "./Components/ChatPreviewLoader";
-import { useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import Modal from "../../Components/Modals/Modal";
+import { getUsers } from "../../Services/Users";
 
 export const ChatContext = createContext();
 
 const Chat = () => {
+  const navigate = useNavigate();
   const { user } = useUser();
   let [searchParams, setSearchParams] = useSearchParams();
   const [chatPreviewsAreLoading, setChatPreviewsAreLoading] = useState(true);
@@ -32,9 +36,21 @@ const Chat = () => {
   const [userIsOnChat, setUserIsOnChat] = useState(false);
   const socket = useRef(null);
 
+  const [friends, setFriends] = useState([]);
+  const [friendsModal, setFriendsModal] = useState(false);
+
+  const handleGetFriends = async () => {
+    const userFriends = user?.friends?.map((friend) => friend?.id);
+    if (!userFriends?.length > 0) return;
+    const usersData = await getUsers(userFriends);
+    setFriends(usersData);
+  };
+
   useEffect(() => {
     /* Get chats on page load */
     handleGetChats();
+
+    handleGetFriends(); //for friends modal *to message*
 
     if (searchParams.get("chatId")) {
       handleGetChat(searchParams.get("chatId"));
@@ -156,6 +172,18 @@ const Chat = () => {
     });
   };
 
+  //inside friends modal
+  const handleOpenChatOrCreateOne = async (id, isMatch) => {
+    //SHOULD CREATE CHAT AND SET THE FIRST MESSAGE TO ***YOU ARE A MATCH***
+    const chatId = await getChatIdByUserId(id, isMatch);
+    if (chatId) {
+      handleGetChat(chatId);
+      setFriendsModal(false);
+    } else {
+      toast.error("Something went wrong!");
+    }
+  };
+
   return (
     <Layout disablePaddingX disablePaddingY>
       <ChatContext.Provider
@@ -210,6 +238,33 @@ const Chat = () => {
               maxHeight: "calc(100% - 66px)",
             }}
           >
+            <Grid
+              item
+              xs={12}
+              className="light-hvr"
+              display={"flex"}
+              alignItems={"center"}
+              gap={1}
+              px={4}
+              py={1}
+              borderBottom={2}
+              borderColor={"secondary.light"}
+              sx={{
+                cursor: "pointer",
+              }}
+              height={60}
+              onClick={() => setFriendsModal(true)}
+            >
+              <Box
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                gap={1}
+              >
+                <PersonSearch />
+                <Typography fontWeight={600}>Find your friends</Typography>
+              </Box>
+            </Grid>
             {!!chatPreviewsAreLoading && <ChatPreviewLoader />}
             {chats?.length > 0 ? (
               chats?.map((chatPreviewItem) => (
@@ -250,6 +305,68 @@ const Chat = () => {
             </CenteredBox>
           )}
         </Grid>
+        {/* Friends Modal */}
+        <Modal isModalOpen={friendsModal} setIsModalOpen={setFriendsModal}>
+          <Grid
+            container
+            spacing={3}
+            sx={{
+              overflowY: "scroll",
+              height: "60vh",
+            }}
+          >
+            <Grid item xs={12}>
+              <Typography fontSize={18} fontWeight={700}>
+                Your Friends
+              </Typography>
+            </Grid>
+            {!!friends?.length > 0 &&
+              friends?.map((friend) => {
+                const { _id, username } = friend;
+                const isMatched =
+                  user?.friends?.find((userItem) => userItem?.id == _id)
+                    ?.type == "match";
+                return (
+                  <Grid
+                    item
+                    xs={12}
+                    key={_id}
+                    display={"flex"}
+                    justifyContent={"space-between"}
+                    alignItems={"center"}
+                    px={2}
+                  >
+                    <Link to={`/profile/${username}`}>
+                      <Box display={"flex"} alignItems={"center"} gap={1}>
+                        <Avatar
+                          name={username}
+                          size={40}
+                          style={{
+                            boxShadow:
+                              user?._id == _id
+                                ? "rgba(0, 0, 0, 0.16) 0px 1px4px, rgba(255, 0, 0, 0.8) 0px 0px 0px 3px"
+                                : 0,
+                          }}
+                          isMatched={isMatched}
+                        />{" "}
+                        <Typography>{username}</Typography>
+                      </Box>
+                    </Link>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      startIcon={<ChatRounded />}
+                      onClick={() =>
+                        handleOpenChatOrCreateOne(_id, isMatched ? "yes" : "no")
+                      }
+                    >
+                      Message
+                    </Button>
+                  </Grid>
+                );
+              })}
+          </Grid>
+        </Modal>
       </ChatContext.Provider>
     </Layout>
   );
