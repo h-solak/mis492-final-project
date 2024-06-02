@@ -7,9 +7,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
-import ColumnBox from "../../../components/ColumnBox";
+import ColumnBox from "../../../Components/ColumnBox";
 import ShimmerLoading from "../../../Components/Loaders/ShimmerLoading";
-import MovieItem from "../../../components/Movie/MovieItem";
+import MovieItem from "../../../Components/Movie/MovieItem";
 
 const ReleaseRadar = () => {
   const isXsScreen = useMediaQuery("(max-width:599px)");
