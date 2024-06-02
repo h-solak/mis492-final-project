@@ -18,6 +18,7 @@ import {
 } from "../../Services/Watchlist";
 import { addToFavorites, removeFromFavorites } from "../../Services/Favorites";
 import { removeNowWatching, setNowWatching } from "../../Services/NowWatching";
+import RedTvImg from "../../assets/images/redtv.png";
 
 const Bottombar = ({ height, movie }) => {
   const navigate = useNavigate();
@@ -157,12 +158,12 @@ const MovieItem = ({ xs = 12, sm = 6, md = 3, height = 240, movie }) => {
       {/* Grid in this component is a container, ColumnBox is the actual movie item user see on the screen */}
       <ColumnBox
         className="movie-item"
+        onClick={() => navigate("/movies/" + movie?.id)}
+        height={height}
         sx={{
           position: "relative",
           cursor: "pointer",
         }}
-        onClick={() => navigate("/movies/" + movie?.id)}
-        height={height}
       >
         <LazyLoadImage
           src={
@@ -176,8 +177,29 @@ const MovieItem = ({ xs = 12, sm = 6, md = 3, height = 240, movie }) => {
           style={{
             position: "relative",
             objectFit: "cover",
+            // border:
+            //   user?.nowWatching?.id == movie?.id ? "8px solid #F94040" : "none",
+            boxShadow:
+              user?.nowWatching?.id == movie?.id
+                ? "rgba(255, 0, 0, 1) 0px 0px 0px 4px"
+                : "none",
           }}
         />
+
+        {!!(user?.nowWatching?.id == movie?.id) && (
+          <LazyLoadImage
+            className="opening-animation"
+            src={RedTvImg}
+            width={40}
+            alt="tv picture"
+            style={{
+              position: "absolute",
+              top: -24,
+              right: -16,
+              objectFit: "cover",
+            }}
+          />
+        )}
         {/* Image Overlay */}
         <Box
           sx={{

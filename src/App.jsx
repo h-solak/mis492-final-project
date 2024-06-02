@@ -28,6 +28,7 @@ import RecentActivity from "./Pages/Profile/RecentActivity/RecentActivity";
 import Settings from "./Pages/Settings/Settings";
 import FriendsActivity from "./Pages/FriendsActivity/FriendsActivity";
 import RecentComments from "./Pages/Profile/RecentComments/RecentComments";
+import MovieRecommendations from "./Pages/MovieRecommendations/MovieRecommendations";
 
 function App() {
   return (
@@ -91,6 +92,11 @@ function App() {
                 key="Movie"
                 path="/movies/:movieId"
                 element={<AuthGuard component={<Movie />} />}
+              />
+              <Route
+                key="Movie Recommendations"
+                path="/movies/recommendations/:movieId"
+                element={<AuthGuard component={<MovieRecommendations />} />}
               />
               <Route
                 key="Notifications"

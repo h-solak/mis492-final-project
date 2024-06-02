@@ -67,10 +67,10 @@ const discoverMovies = async ({ withGenreIds, withoutGenreIds }) => {
 };
 
 //get movie recommendations based on a movie
-const getRecommendationsForAMovie = async (movieId) => {
+const getRecommendationsForAMovie = async (movieId, page = 1) => {
   try {
     const res = await tmdbBaseAxios.get(
-      `/movie/${movieId}/recommendations?api_key=${tmdbAPIKey}`
+      `/movie/${movieId}/recommendations?api_key=${tmdbAPIKey}&page=${page}`
     );
     return res?.data;
   } catch (err) {
@@ -79,6 +79,17 @@ const getRecommendationsForAMovie = async (movieId) => {
 };
 
 //get streaming services https://api.themoviedb.org/3/movie/{movie_id}/watch/providers
+const getStreamingServices = async (movieId) => {
+  try {
+    const res = await tmdbBaseAxios.get(
+      `/movie/${movieId}/watch/providers?api_key=${tmdbAPIKey}`
+    );
+    return res?.data?.results?.TR;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 // response.data.TR türkiye oluyor
 export {
   searchMovie,
@@ -86,4 +97,6 @@ export {
   getReleaseRadar,
   searchMulti,
   discoverMovies,
+  getRecommendationsForAMovie,
+  getStreamingServices,
 };

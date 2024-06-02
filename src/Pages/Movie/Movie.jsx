@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getMovieDetails } from "../../Services/Tmdb";
+import { Link, useParams } from "react-router-dom";
+import { getMovieDetails, getStreamingServices } from "../../Services/Tmdb";
 import ColumnBox from "../../Components/ColumnBox";
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import { Star, Timer } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import { SavedSearch, Star, Timer } from "@mui/icons-material";
 import Layout from "../../Layout/Layout";
 import {
   getMovieReviews,
@@ -37,6 +45,7 @@ const Movie = () => {
   const { user, setUser } = useUser();
   const [isLoading, setIsLoading] = useState(true);
   const [movie, setMovie] = useState({}); //current movie
+  const [streamingServices, setStreamingServices] = useState({}); //current movie
   const [rating, setRating] = useState(0); //user's rating
   const [review, setReview] = useState(""); //user's review textfield
   const [userReviews, setUserReviews] = useState([]); //all reviews about the movie
@@ -53,6 +62,7 @@ const Movie = () => {
   const getMovie = async () => {
     const crrMovie = await getMovieDetails(movieId);
     setMovie(crrMovie);
+    // const streamingServices = await getStreamingServices(movieId);
     setIsLoading(false);
   };
 
@@ -186,6 +196,24 @@ const Movie = () => {
         justifyContent={"space-between"}
         position={"relative"}
       >
+        <Tooltip title="Get movie recommendations">
+          <IconButton
+            sx={{
+              position: "absolute",
+              right: 25,
+              top: 25,
+            }}
+          >
+            <Link to={`/movies/recommendations/${movieId}`}>
+              <SavedSearch
+                sx={{
+                  fontSize: 42,
+                  color: "highlight.main",
+                }}
+              />
+            </Link>
+          </IconButton>
+        </Tooltip>
         <Grid item xs={8} md={8.5} px={4}>
           <ColumnBox justifyContent="center" px={4}>
             <Typography
