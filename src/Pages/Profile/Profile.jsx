@@ -29,8 +29,6 @@ const Profile = () => {
     (friend) => friend.id == profileUser?._id
   );
 
-  console.log(isFriend);
-
   useEffect(() => {
     //Call this function everytime username param changes, empty brackets cause problems when user jumps on another user's profile
     handleGetProfileUser();

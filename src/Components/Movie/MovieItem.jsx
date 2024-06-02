@@ -1,5 +1,16 @@
-import { Box, Grid, IconButton, Tooltip, Typography } from "@mui/material";
-import React from "react";
+import {
+  Box,
+  Button,
+  FormControl,
+  Grid,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import React, { useState } from "react";
 import ColumnBox from "../ColumnBox";
 import { Link, useNavigate } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -13,18 +24,24 @@ import FavoriteSvg from "../../assets/icons/movieItem/favorite.svg";
 import FavoriteActiveSvg from "../../assets/icons/movieItem/favoriteActive.svg";
 import useUser from "../../Contexts/User/useUser";
 import {
+  addMovieToCustomWatchlist,
   addToDefaultWatchlist,
   removeFromDefaultWatchlist,
 } from "../../Services/Watchlist";
 import { addToFavorites, removeFromFavorites } from "../../Services/Favorites";
 import { removeNowWatching, setNowWatching } from "../../Services/NowWatching";
+import Modal from "../Modals/Modal";
+import { Close } from "@mui/icons-material";
+import toast from "react-hot-toast";
 
 const Bottombar = ({ height, movie }) => {
-  const navigate = useNavigate();
   const movieId = movie?.id;
   const { user, setUser } = useUser();
+  const [addToWatchlistModal, setAddToWatchlistModal] = useState(false);
+  const [selectedWatchlist, setSelectedWatchlist] =
+    useState("defaultWatchlist");
 
-  const handleWatchlist = async () => {
+  const handleDefaultWatchlist = async () => {
     if (!user?.defaultWatchlist?.find((item) => item?.id == movieId)) {
       //add to default watchlist
       const newWatchlist = await addToDefaultWatchlist({
@@ -47,6 +64,7 @@ const Bottombar = ({ height, movie }) => {
           ...userItem,
           defaultWatchlist: newWatchlist,
         }));
+        setAddToWatchlistModal(false);
       }
     }
   };
@@ -91,6 +109,64 @@ const Bottombar = ({ height, movie }) => {
     }
   };
 
+  //custom watchlists, default watchlist, favorites...
+  const handleAddToWatchlist = async () => {
+    if (selectedWatchlist == "favorites") {
+      await handleFavorites();
+      setAddToWatchlistModal(false);
+      toast(
+        <Typography>
+          <b>{movie?.title}</b> is added to{" "}
+          <Typography variant="span" fontWeight={600}>
+            Favorites
+          </Typography>
+        </Typography>,
+        {
+          icon: "❤️",
+        }
+      );
+    } else if (selectedWatchlist == "defaultWatchlist") {
+      await handleDefaultWatchlist();
+      setAddToWatchlistModal(false);
+      toast(
+        <Typography>
+          <b>{movie?.title}</b> is added to{" "}
+          <Typography variant="span" fontWeight={600}>
+            Default Watchlist
+          </Typography>
+        </Typography>,
+        {
+          icon: "🎬",
+        }
+      );
+    } else {
+      const newUser = await addMovieToCustomWatchlist({
+        watchlistId: selectedWatchlist,
+        movieId: movieId,
+        title: movie?.title,
+        posterPath: movie?.poster_path,
+        releaseDate: movie?.release_date,
+      });
+      console.log(newUser);
+      if (newUser?._id) {
+        setUser(newUser);
+        toast(
+          <Typography>
+            <b>{movie?.title}</b> is added to{" "}
+            <Typography variant="span" fontWeight={600}>
+              {user?.watchlists?.find((item) => item?._id == selectedWatchlist)
+                ?.title || "Watchlist"}
+            </Typography>
+          </Typography>,
+          {
+            icon: "🎬",
+          }
+        );
+        setAddToWatchlistModal(false);
+      }
+    }
+  };
+
   return (
     <Box
       className="movie-item-bottombar"
@@ -117,7 +193,11 @@ const Bottombar = ({ height, movie }) => {
           )}
         </IconButton>
       </Tooltip>
-      <Tooltip title="Add to watchlist" onClick={handleWatchlist}>
+      <Tooltip
+        title="Add to watchlist"
+        onClick={() => setAddToWatchlistModal(true)}
+        // onClick={handleWatchlist}
+      >
         <IconButton className="fade-in">
           {user?.defaultWatchlist?.find((item) => item?.id == movieId) ? (
             <img src={BookmarkActiveSvg} width={15} alt="Bookmark" />
@@ -142,6 +222,106 @@ const Bottombar = ({ height, movie }) => {
           )}
         </IconButton>
       </Tooltip>
+      {/* Add to a watchlist modal */}
+      <Modal
+        isModalOpen={addToWatchlistModal}
+        setIsModalOpen={setAddToWatchlistModal}
+      >
+        <Box
+          width={"100%"}
+          mb={4}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+        >
+          <Typography fontSize={18} fontWeight={700}>
+            Add to a List
+          </Typography>
+          <IconButton onClick={() => setAddToWatchlistModal(false)}>
+            <Close
+              sx={{
+                color: "#000",
+              }}
+            />
+          </IconButton>
+        </Box>
+        <Box
+          display={"flex"}
+          alignItems={"center"}
+          gap={4}
+          px={4}
+          py={1}
+          mb={2}
+        >
+          <LazyLoadImage
+            src={
+              movie?.poster_path
+                ? `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${movie?.poster_path}`
+                : "https://cataas.com/cat"
+            }
+            height={240}
+            alt="movie picture"
+            style={{
+              position: "relative",
+              objectFit: "cover",
+            }}
+          />
+          <ColumnBox gap={8}>
+            <ColumnBox gap={2}>
+              <Typography fontWeight={700} fontSize={18}>
+                Great Choice!
+              </Typography>
+              <Typography>
+                Please choose to which lists you would like to add{" "}
+                <Typography
+                  variant="span"
+                  color={"primary.main"}
+                  fontWeight={600}
+                >
+                  {movie?.title}
+                </Typography>
+                .
+              </Typography>
+            </ColumnBox>
+            <Box display={"flex"} alignItems={"center"} gap={2}>
+              <FormControl fullWidth variant="outlined">
+                <InputLabel id="watchlist-select-label">Watchlist</InputLabel>
+                <Select
+                  labelId="watchlist-select-label"
+                  id="watchlist-select"
+                  defaultValue={"favorites"}
+                  value={selectedWatchlist}
+                  onChange={(e) => setSelectedWatchlist(e.target.value)}
+                  label="Watchlist"
+                  size="small"
+                >
+                  <MenuItem value="favorites">Favorites</MenuItem>
+                  <MenuItem value="defaultWatchlist">
+                    Default Watchlist
+                  </MenuItem>
+                  {!!user?.watchlists?.length > 0 &&
+                    user?.watchlists.map((watchlist) => (
+                      <MenuItem key={watchlist?._id} value={watchlist?._id}>
+                        {watchlist?.title}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+              <Button
+                onClick={handleAddToWatchlist}
+                variant="contained"
+                sx={{
+                  borderRadius: 99,
+                  py: 1,
+                  px: 6,
+                }}
+              >
+                Add
+              </Button>
+            </Box>
+          </ColumnBox>
+        </Box>
+      </Modal>
     </Box>
   );
 };
@@ -205,57 +385,3 @@ const MovieItem = ({ xs = 12, sm = 6, md = 3, height = 240, movie }) => {
 };
 
 export default MovieItem;
-
-//Movie
-// {
-//
-//         {
-//           "adult": false,
-//           "backdrop_path": "/7jjwdoIVPJp7gcDo9uE1sVZi2Rs.jpg",
-//           "genre_ids": [
-//               18,
-//               10749
-//           ],
-//           "id": 296096,
-//           "original_language": "en",
-//           "original_title": "Me Before You",
-//           "overview": "A small town girl is caught between dead-end jobs. A high-profile, successful man becomes wheelchair bound following an accident. The man decides his life is not worth living until the girl is hired for six months to be his new caretaker. Worlds apart and trapped together by circumstance, the two get off to a rocky start. But the girl becomes determined to prove to the man that life is worth living and as they embark on a series of adventures together, each finds their world changing in ways neither of them could begin to imagine.",
-//           "popularity": 109.532,
-//           "poster_path": "/Ia3dzj5LnCj1ZBdlVeJrbKJQxG.jpg",
-//           "release_date": "2016-06-01",
-//           "title": "Me Before You",
-//           "video": false,
-//           "vote_average": 7.924,
-//           "vote_count": 11784
-//       }
-
-// {/* Vote Average  */}
-// {movie?.vote_average && (
-//   <Box
-//     display={"flex"}
-//     alignItems={"center"}
-//     sx={{
-//       position: "absolute",
-//       right: "0%",
-//       top: "0",
-//       p: 1,
-//       background: "#00000050",
-//       borderRadius: 2,
-//     }}
-//   >
-//     <StarIcon
-//       sx={{
-//         fontSize: 14,
-//         color: "orange",
-//       }}
-//     />
-//     <Typography
-//       fontSize={12}
-//       sx={{
-//         color: "#fff",
-//       }}
-//     >
-//       {movie?.vote_average?.toString()?.slice(0, 3)}
-//     </Typography>
-//   </Box>
-// )}
