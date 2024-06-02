@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
-import ColumnBox from "../../../Components/ColumnBox";
+import ColumnBox from "../../../components/ColumnBox";
 import ShimmerLoading from "../../../Components/Loaders/ShimmerLoading";
 import MovieItem from "../../../components/Movie/MovieItem";
 
