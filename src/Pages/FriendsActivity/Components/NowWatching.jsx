@@ -1,13 +1,30 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { format } from "date-fns";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ColumnBox from "../../../Components/ColumnBox";
 import RedTvImg from "../../../assets/images/redtv.png";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import ShimmerLoading from "../../../Components/Loaders/ShimmerLoading";
 
+const sortNowWatchingByDate = (array, latestFirst = true) => {
+  return array.sort((a, b) =>
+    latestFirst
+      ? new Date(b?.nowWatching?.watchDate) -
+        new Date(a?.nowWatching?.watchDate)
+      : new Date(a?.nowWatching?.watchDate) -
+        new Date(b?.nowWatching?.watchDate)
+  );
+};
+
 const NowWatching = ({ homeData, loading }) => {
+  const [nowWatchingUserData, setNowWatchingUserData] = useState();
+  useEffect(() => {
+    let newData = sortNowWatchingByDate(
+      homeData.filter((userItem) => userItem?.nowWatching?.id)
+    );
+    setNowWatchingUserData(newData);
+  }, [homeData]);
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -46,9 +63,9 @@ const NowWatching = ({ homeData, loading }) => {
               </Box>
             </ColumnBox>
           </>
-        ) : homeData?.filter((userItem) => userItem?.nowWatching?.id)?.length >
-          0 ? (
-          homeData
+        ) : nowWatchingUserData?.filter((userItem) => userItem?.nowWatching?.id)
+            ?.length > 0 ? (
+          nowWatchingUserData
             ?.filter((userItem) => userItem?.nowWatching?.id)
             ?.map((userItem) => {
               const watchDate = userItem?.nowWatching?.watchDate || new Date();
