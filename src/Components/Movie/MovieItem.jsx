@@ -172,62 +172,63 @@ const MovieItem = ({
       className="opening-animation"
     >
       {/* Grid in this component is a container, ColumnBox is the actual movie item user see on the screen */}
-      <Link to={"/movies/" + movie?.id}>
-        <ColumnBox
-          className="movie-item"
+      <ColumnBox
+        className="movie-item"
+        height={height}
+        onClick={() => navigate("/movies/" + movie?.id)}
+        sx={{
+          position: "relative",
+          cursor: "pointer",
+        }}
+      >
+        <LazyLoadImage
+          src={
+            movie?.poster_path
+              ? `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${movie?.poster_path}`
+              : "https://cataas.com/cat"
+          }
+          width={"100%"}
           height={height}
-          sx={{
+          alt="movie picture"
+          style={{
             position: "relative",
-            cursor: "pointer",
+            objectFit: "cover",
+            // border:
+            //   user?.nowWatching?.id == movie?.id ? "8px solid #F94040" : "none",
+            boxShadow:
+              user?.nowWatching?.id == movie?.id
+                ? "rgba(255, 0, 0, 1) 0px 0px 0px 4px"
+                : "none",
           }}
-        >
-          <LazyLoadImage
-            src={
-              movie?.poster_path
-                ? `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${movie?.poster_path}`
-                : "https://cataas.com/cat"
-            }
-            width={"100%"}
-            height={height}
-            alt="movie picture"
+        />
+
+        {!!(user?.nowWatching?.id == movie?.id) && (
+          <img
+            className="opening-animation"
+            src={RedTvImg}
+            width={40}
+            alt="tv picture"
             style={{
-              position: "relative",
+              position: "absolute",
+              top: -24,
+              right: -12,
               objectFit: "cover",
-              // border:
-              //   user?.nowWatching?.id == movie?.id ? "8px solid #F94040" : "none",
-              boxShadow:
-                user?.nowWatching?.id == movie?.id
-                  ? "rgba(255, 0, 0, 1) 0px 0px 0px 4px"
-                  : "none",
             }}
           />
-
-          {!!(user?.nowWatching?.id == movie?.id) && (
-            <img
-              className="opening-animation"
-              src={RedTvImg}
-              width={40}
-              alt="tv picture"
-              style={{
-                position: "absolute",
-                top: -24,
-                right: -12,
-                objectFit: "cover",
-              }}
-            />
-          )}
-          {/* Image Overlay */}
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              width: "100%",
-              height: "%50" /* Adjust this value to control darkness */,
-              background:
-                "linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1))" /* Adjust the last value to control opacity */,
-            }}
-          ></Box>
+        )}
+        {/* Image Overlay */}
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            width: "100%",
+            height: "%50" /* Adjust this value to control darkness */,
+            background:
+              "linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1))" /* Adjust the last value to control opacity */,
+          }}
+        ></Box>
+        <Link to={"/movies/" + movie?.id}>
           <ColumnBox pt={0.5} position="absolute" sx={{ top: 0, p: 1 }}>
             <Typography fontSize={14} sx={{ color: "#fff" }}>
               {movie?.title}
@@ -236,9 +237,10 @@ const MovieItem = ({
               {movie?.release_date.slice(0, 4)}
             </Typography>
           </ColumnBox>
-          <Bottombar height={40} movie={movie} />
-        </ColumnBox>
-      </Link>
+        </Link>
+
+        <Bottombar height={40} movie={movie} />
+      </ColumnBox>
     </Grid>
   );
 };
