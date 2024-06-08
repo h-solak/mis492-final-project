@@ -9,7 +9,6 @@ const getUserIdFromToken = require("../utils/getUserIdFromToken");
 router.post("/register", async (req, res) => {
   try {
     //generate crypted password
-
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
@@ -41,9 +40,11 @@ router.post("/login", async (req, res) => {
     !user && res.status(404).send({ desc: "Invalid username or password" });
 
     const validPassword = await bcrypt.compare(
+      //compare the password user sent and the actual one
       req.body.password,
       user.password
-    ); //compare the password user sent and the actual one
+    );
+
     !validPassword &&
       res.status(400).json({ desc: "Wrong password, try again *-*" });
 
@@ -51,9 +52,7 @@ router.post("/login", async (req, res) => {
       expiresIn: "24h",
     });
 
-    // const { password, ...other } = user._doc;
     return res.status(200).json({
-      // data: other,
       loggedIn: true,
       jwtToken: jwtToken,
     });
