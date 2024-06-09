@@ -43,12 +43,10 @@ const Bottombar = ({ height, movie }) => {
     } else {
       //remove movie from watchlist
       const newWatchlist = await removeFromDefaultWatchlist({ movieId });
-      if (newWatchlist?.length > 0) {
-        setUser((userItem) => ({
-          ...userItem,
-          defaultWatchlist: newWatchlist,
-        }));
-      }
+      setUser((userItem) => ({
+        ...userItem,
+        defaultWatchlist: newWatchlist || [],
+      }));
     }
   };
 
@@ -70,12 +68,10 @@ const Bottombar = ({ height, movie }) => {
     } else {
       //remove movie from favorites
       const newFavorites = await removeFromFavorites({ movieId });
-      if (newFavorites?.length > 0) {
-        setUser((userItem) => ({
-          ...userItem,
-          favoriteMovies: newFavorites,
-        }));
-      }
+      setUser((userItem) => ({
+        ...userItem,
+        favoriteMovies: newFavorites || [],
+      }));
     }
   };
 
@@ -134,8 +130,8 @@ const Bottombar = ({ height, movie }) => {
           </IconButton>
         </Link>
       </Tooltip>
-      <Tooltip title="Now watching" onClick={handleNowWatching}>
-        <IconButton className="fade-in">
+      <Tooltip title="Now watching">
+        <IconButton className="fade-in" onClick={handleNowWatching}>
           {user?.nowWatching?.id == movieId ? (
             <img src={NowWatchingActiveSvg} width={21} alt="Now Watching" />
           ) : (
